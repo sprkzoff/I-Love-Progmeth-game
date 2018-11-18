@@ -2,9 +2,10 @@ package logic;
 
 import java.util.ArrayList;
 
-public class Warior extends Character {
+public class Warrior extends Character {
 	private int shield;
-	public Warior(int shield) {
+	public static int MAX_HP=1200;
+	public Warrior(int shield) {
 		super(300,1200);
 		this.shield = shield;
 	}

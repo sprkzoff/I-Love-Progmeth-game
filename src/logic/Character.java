@@ -5,12 +5,25 @@ import java.util.ArrayList;
 public class Character {
 	private int atk;
 	private int hp;
+	
 	private ArrayList<String> buffs;
 	private ArrayList<String> debuffs;
 	private boolean dead;
 	private boolean stun;
 	private boolean freeze;
 	private boolean burn;
+	private boolean bleed;
+	public static int MAX_HP;
+	
+	public boolean isBleed() {
+		return bleed;
+	}
+
+
+	public void setBleed(boolean bleed) {
+		this.bleed = bleed;
+	}
+	
 	public Character() {
 		super();
 		this.dead = false;
@@ -19,9 +32,18 @@ public class Character {
 		this.burn = false;
 		this.atk = 0;
 		this.hp = 1000;
+		this.MAX_HP = this.hp;
 		this.buffs = new ArrayList<String>(); //change type of array later
 		this.debuffs = new ArrayList<String>();
 	}
+	
+	
+	
+	public void attack(Character enemy)
+	{
+		enemy.attacked_by_enemy(this.getAtk());
+	}
+	
 	public boolean isStun() {
 		return stun;
 	}
@@ -48,6 +70,7 @@ public class Character {
 		this.burn = false;
 		this.atk = atk;
 		this.hp = hp;
+		this.MAX_HP = this.hp;
 		this.buffs = new ArrayList<String>(); //change type of array later
 		this.debuffs = new ArrayList<String>();
 	}
