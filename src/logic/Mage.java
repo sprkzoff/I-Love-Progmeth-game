@@ -6,6 +6,7 @@ public class Mage extends Character {
 	private int mp;
 	
 	public Mage() {
+		super(70,800);
 		this.mp = 100;
 	}
 	public int getMp() {
