@@ -35,7 +35,6 @@ public class Main extends Application{
 		
 		GridPane root = new GridPane();
 		root.setAlignment(Pos.CENTER);
-		
 		addCharactersForPlayer1();
 		addCharactersForPlayer2();
 		characterPane1 = new CharacterPane(player1Characters);
@@ -47,7 +46,7 @@ public class Main extends Application{
 		root.add(textPane, 0, 1, 2, 1);
 		root.add(controlPane, 0, 2, 3, 2);
 		Scene scene = new Scene(root, 1000, 750);
-		primaryStage.setTitle("MyJavaFX"); // Set the stage title
+		primaryStage.setTitle("I love Progmeth"); // Set the stage title
 		primaryStage.setScene(scene); // Place the scene
 		primaryStage.show();
 	}
