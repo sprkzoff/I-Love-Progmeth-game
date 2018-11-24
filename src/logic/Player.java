@@ -2,6 +2,8 @@ package logic;
 
 import java.util.ArrayList;
 
+import character.Character;
+
 public class Player{
 	private int totaldmg_hit;
 	private int totaldmg_get;
