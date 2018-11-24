@@ -1,6 +1,7 @@
-package logic;
+package pane;
 import java.util.ArrayList;
 
+import character.Character;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.image.Image;

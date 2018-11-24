@@ -10,7 +10,17 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import pane.CharacterPane;
+import pane.ControlPane;
+import pane.TextPane;
+
 import java.util.ArrayList;
+
+import character.Assassin;
+import character.Character;
+import character.Healer;
+import character.Mage;
+import character.Warrior;
 
 public class Main extends Application{
 	
@@ -19,6 +29,7 @@ public class Main extends Application{
 	private CharacterPane characterPane1;
 	private CharacterPane characterPane2;
 	private ControlPane controlPane;
+	private TextPane textPane;
 	@Override
 	public void start(Stage primaryStage) {
 		
@@ -30,9 +41,11 @@ public class Main extends Application{
 		characterPane1 = new CharacterPane(player1Characters);
 		characterPane2 = new CharacterPane(player2Characters);
 		controlPane = new ControlPane(player1Characters.get(0));
+		textPane = new TextPane();
 		root.add(characterPane1, 0, 0);
 		root.add(characterPane2, 1, 0);
-		root.add(controlPane, 0, 1, 2, 2);
+		root.add(textPane, 0, 1, 2, 1);
+		root.add(controlPane, 0, 2, 3, 2);
 		Scene scene = new Scene(root, 1000, 750);
 		primaryStage.setTitle("MyJavaFX"); // Set the stage title
 		primaryStage.setScene(scene); // Place the scene

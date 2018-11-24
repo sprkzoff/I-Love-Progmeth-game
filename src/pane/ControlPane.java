@@ -1,7 +1,8 @@
-package logic;
+package pane;
 
 import java.util.ArrayList;
 
+import character.Character;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
