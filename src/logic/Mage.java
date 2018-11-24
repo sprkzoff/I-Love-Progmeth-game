@@ -15,7 +15,7 @@ public class Mage extends Character {
 		this.mp = mp;
 	}
 	public void freezingField(ArrayList<Character> characters, int damage) { //AoE cc with moderate amount of dmg
-		if(this.mp < 25) return;
+		if(this.getMp() < 25) return;
 		this.mp -= 25;
 		for(int i = 0; i < characters.size(); i++) {
 			Character temp = characters.get(i);
@@ -26,7 +26,7 @@ public class Mage extends Character {
 		}
 	}
 	public void chaosMeteor(ArrayList<Character> characters, int damage) { //deal dmg to all enemy and set burn on them, deal additional dmg if they're already burned
-		if(this.mp < 30) return;
+		if(this.getMp() < 30) return;
 		this.mp -= 30;
 		for(int i = 0; i < characters.size(); i++) {
 			Character temp = characters.get(i);
@@ -38,15 +38,15 @@ public class Mage extends Character {
 		}
 	}
 	public void detonate(Character character) { //denonate away enemy's debuffs to deal damage based on remaining mp
-		if(this.mp < 15) return;
+		if(this.getMp() < 15) return;
 		this.mp -= 15;
 		if(character.isBurn()) {
 			character.setBurn(false);
-			character.attacked_by_enemy(this.mp); // attack by remaining mp
+			character.attacked_by_enemy(this.getMp()); // attack by remaining mp
 		}
 		if(character.isFreeze()) {
 			character.setFreeze(false);
-			character.attacked_by_enemy(this.mp);
+			character.attacked_by_enemy(this.getMp());
 		}
 		
 	}
