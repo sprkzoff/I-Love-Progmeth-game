@@ -9,45 +9,48 @@ public class Application {
 	Player player1 = new Player();
 	Player player2 = new Player();
 	
-	for(int i=0;i<6;i++)
-	{
-		if(i%2==0)
+	public void selectCharacter() {
+		for(int i=0;i<6;i++)
 		{
-			//player1 select character
-		}
-		else
-		{
-			//player2 select character
+			if(i%2==0)
+			{
+				//player1 select character
+			}
+			else
+			{
+				//player2 select character
+			}
 		}
 	}
 	
-	
 	//start game
-	public int turn = 1; 
-	while(!player1.All_dead() && !player2.All_dead())
-	{
-		if(player1.All_dead())
+	public void startGame() {
+		int turn = 1; 
+		while(!player1.All_dead() && !player2.All_dead())
 		{
-			//player2 win
-			break;
-		}
-		else if(player2.All_dead())
-		{
-			//player1 win
-			break;
-		}
-		else // no one win the game yet
-		{
-			if(turn % 2 == 1) // player1 turn
+			if(player1.All_dead())
 			{
-				//player1 do something
+				//player2 win
+				break;
 			}
-			else // player2 turn
+			else if(player2.All_dead())
 			{
-				//player2 do something
+				//player1 win
+				break;
 			}
+			else // no one win the game yet
+			{
+				if(turn % 2 == 1) // player1 turn
+				{
+					//player1 do something
+				}
+				else // player2 turn
+				{
+					//player2 do something
+				}
+			}
+			turn+=1;
 		}
-		turn+=1;
 	}
 	//end game
 }
