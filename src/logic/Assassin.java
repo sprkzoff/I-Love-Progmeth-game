@@ -4,10 +4,12 @@ import java.util.ArrayList;
 
 //Have two active skills & 1 passive skill (evade)
 
-public class Assasin extends Character {
+public class Assassin extends Character {
 	private boolean Stealth;
-	public Assasin() {
+	
+	public Assassin() {
 		super(100,900);
+		setSkillNames("Stealth Attack", "Evade", "Bleeding Blade");
 		Stealth = false;
 	}
 	public boolean isStealth() {
@@ -17,7 +19,7 @@ public class Assasin extends Character {
 		Stealth = stealth;
 	}
 	
-	public void Stealth_Attack(Character enemy,int damage)
+	public void stealthAttack(Character enemy,int damage)
 	{
 		if(((enemy.getHp())/enemy.MAX_HP)*100 < 35.0) // if HP < 35% -> set assasin dmg*3
 		{
@@ -43,7 +45,7 @@ public class Assasin extends Character {
 		return random <= 5? true : false ;
 	}
 	
-	public void Bleeding_blade(Character enemy) //when attack bleeding enemy plus 100dmg && set enemy bleed to false
+	public void bleedingBlade(Character enemy) //when attack bleeding enemy plus 100dmg && set enemy bleed to false
 	{
 		if(!enemy.isBleed())
 		{

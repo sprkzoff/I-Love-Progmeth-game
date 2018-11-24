@@ -18,7 +18,7 @@ public class Main extends Application{
 	private ArrayList<Character> player2Characters = new ArrayList<Character>();
 	private CharacterPane characterPane1;
 	private CharacterPane characterPane2;
-	
+	private ControlPane controlPane;
 	@Override
 	public void start(Stage primaryStage) {
 		
@@ -29,10 +29,10 @@ public class Main extends Application{
 		addCharactersForPlayer2();
 		characterPane1 = new CharacterPane(player1Characters);
 		characterPane2 = new CharacterPane(player2Characters);
-		
+		controlPane = new ControlPane(player1Characters.get(0));
 		root.add(characterPane1, 0, 0);
 		root.add(characterPane2, 1, 0);
-		
+		root.add(controlPane, 0, 1, 2, 2);
 		Scene scene = new Scene(root, 1000, 750);
 		primaryStage.setTitle("MyJavaFX"); // Set the stage title
 		primaryStage.setScene(scene); // Place the scene
@@ -46,7 +46,7 @@ public class Main extends Application{
 	}
 	
 	public void addCharactersForPlayer2() {
-		player2Characters.add(new Assasin());
+		player2Characters.add(new Assassin());
 		player2Characters.add(new Healer());
 		player2Characters.add(new Mage());
 	}

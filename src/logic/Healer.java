@@ -6,8 +6,9 @@ public class Healer extends Character {
 	public static int MAX_HP=800;
 	public Healer() {
 		super(60,1000);
+		setSkillNames("Heal", "Cleansing", "Hands Of God");
 	}
-	public void Heal(Character friend,int plus_hp)
+	public void heal(Character friend,int plus_hp)
 	{
 		if(friend.isDead())
 		{
@@ -18,7 +19,7 @@ public class Healer extends Character {
 			friend.setHp(friend.getHp()+plus_hp);
 		}
 	}
-	public void Clear_debuff(Character friend)
+	public void cleansing(Character friend)
 	{
 		friend.setBleed(false);
 		friend.setBurn(false);
@@ -26,7 +27,7 @@ public class Healer extends Character {
 		friend.setStun(false);
 	}
 	
-	public void AllHeal(ArrayList<Character> friends,int plus_hp)
+	public void handsOfGod(ArrayList<Character> friends,int plus_hp)
 	{
 		for(int i=0;i<friends.size();i++)
 		{

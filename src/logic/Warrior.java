@@ -7,6 +7,7 @@ public class Warrior extends Character {
 	public static int MAX_HP=1200;
 	public Warrior(int shield) {
 		super(300,1200);
+		setSkillNames("War Cry", "Direct Strike", "Fearless");
 		this.shield = shield;
 	}
 	public int getShield() {
@@ -16,7 +17,7 @@ public class Warrior extends Character {
 		this.shield = shield;
 	}
 	
-	public void Warcry(ArrayList<Character> enemies,int damage) //deal every enemy dmg=???
+	public void warcry(ArrayList<Character> enemies,int damage) //deal every enemy dmg=???
 	{
 		for(int i=0;i<enemies.size();i++)
 		{
@@ -29,13 +30,13 @@ public class Warrior extends Character {
 		}
 	}
 	
-	public void Directstrike(Character enemy,int damage) //direct hit enemy with stunning dmg=???
+	public void directStrike(Character enemy,int damage) //direct hit enemy with stunning dmg=???
 	{
 		enemy.attacked_by_enemy(damage);
 		enemy.setStun(true);
 	}
 	
-	public void Fearless(int powerup_shield) //plus shield
+	public void fearless(int powerup_shield) //plus shield
 	{
 		this.setShield(this.getShield()+powerup_shield);
 	}

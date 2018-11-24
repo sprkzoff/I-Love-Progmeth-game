@@ -18,7 +18,9 @@ public class Character {
 	private boolean freeze;
 	private boolean burn;
 	private boolean bleed;
-	public static int MAX_HP;
+	public final int MAX_HP;
+	
+	private ArrayList<String> skillNames;
 	
 	public boolean isBleed() {
 		return bleed;
@@ -153,5 +155,14 @@ public class Character {
 	}
 	public ImageView getImage() {
 		return imageView;
+	}
+	public void setSkillNames(String s1, String s2, String s3) {
+		this.skillNames = new ArrayList<String>();
+		skillNames.add(s1);
+		skillNames.add(s2);
+		skillNames.add(s3);
+	}
+	public ArrayList<String> getSkillNames(){
+		return skillNames;
 	}
 }

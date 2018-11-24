@@ -6,7 +6,8 @@ public class Mage extends Character {
 	private int mp;
 	
 	public Mage() {
-		super();
+		super(300, 700);
+		setSkillNames("Freezing Field", "Chaos Meteor", "Detonate");
 		this.mp = 100;
 	}
 	public int getMp() {
