@@ -2,7 +2,7 @@ package logic;
 
 import java.util.ArrayList;
 
-public class Application {
+public class Logic {
 	
 	//Create player
 	

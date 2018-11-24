@@ -1,10 +1,15 @@
 package logic;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
 public class Character {
 	private int atk;
 	private int hp;
+	private ImageView imageView;
 	
 	private ArrayList<String> buffs;
 	private ArrayList<String> debuffs;
@@ -26,6 +31,7 @@ public class Character {
 	
 	public Character() {
 		super();
+		setImage("resources/default.jpg");
 		this.dead = false;
 		this.stun = false;
 		this.freeze = false;
@@ -64,6 +70,21 @@ public class Character {
 	}
 	public Character(int atk,int hp) {
 		super();
+		setImage("resources/default.jpg");
+		this.dead = false;
+		this.stun = false;
+		this.freeze = false;
+		this.burn = false;
+		this.atk = atk;
+		this.hp = hp;
+		this.MAX_HP = this.hp;
+		this.buffs = new ArrayList<String>(); //change type of array later
+		this.debuffs = new ArrayList<String>();
+	}
+	
+	public Character(int atk,int hp, String imagePath) { //with imagePath
+		super();
+		setImage(imagePath);
 		this.dead = false;
 		this.stun = false;
 		this.freeze = false;
@@ -118,5 +139,19 @@ public class Character {
 	public void setDebuffs(ArrayList<String> debuffs) {
 		this.debuffs = debuffs;
 	}
-	
+	public void setImage(String url) {
+		FileInputStream input;
+		try {
+			input = new FileInputStream(url);
+			Image image = new Image(input, 400, 150 , false, false);
+			imageView = new ImageView(image);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	public ImageView getImage() {
+		return imageView;
+	}
 }
