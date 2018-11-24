@@ -5,27 +5,35 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.util.ArrayList;
 
 public class Main extends Application{
 	
-	ArrayList<Character> player1Characters = new ArrayList<Character>();
-	ArrayList<Character> player2Characters = new ArrayList<Character>();
+	private ArrayList<Character> player1Characters = new ArrayList<Character>();
+	private ArrayList<Character> player2Characters = new ArrayList<Character>();
+	private CharacterPane characterPane1;
+	private CharacterPane characterPane2;
 	
 	@Override
 	public void start(Stage primaryStage) {
-		// Create a scene and place a button in the scene
-		HBox root = new HBox();
-		//root.setSpacing(10);
-		//root.setPadding(new Insets(15));
+		
+		GridPane root = new GridPane();
+		root.setAlignment(Pos.CENTER);
+		
 		addCharactersForPlayer1();
 		addCharactersForPlayer2();
-		CharacterPane characterPane1 = new CharacterPane(player1Characters);
-		CharacterPane characterPane2 = new CharacterPane(player2Characters);
-		root.getChildren().addAll(characterPane1, characterPane2);
-		Scene scene = new Scene(root, 800, 600);
+		characterPane1 = new CharacterPane(player1Characters);
+		characterPane2 = new CharacterPane(player2Characters);
+		
+		root.add(characterPane1, 0, 0);
+		root.add(characterPane2, 1, 0);
+		
+		Scene scene = new Scene(root, 1000, 750);
 		primaryStage.setTitle("MyJavaFX"); // Set the stage title
 		primaryStage.setScene(scene); // Place the scene
 		primaryStage.show();
@@ -38,9 +46,9 @@ public class Main extends Application{
 	}
 	
 	public void addCharactersForPlayer2() {
-		player1Characters.add(new Assasin());
-		player1Characters.add(new Healer());
-		player1Characters.add(new Mage());
+		player2Characters.add(new Assasin());
+		player2Characters.add(new Healer());
+		player2Characters.add(new Mage());
 	}
 	
 	public static void main(String[] args) {
