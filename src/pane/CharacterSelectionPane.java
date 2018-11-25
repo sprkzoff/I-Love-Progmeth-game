@@ -117,8 +117,8 @@ public class CharacterSelectionPane extends Stage {
 		b.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override public void handle(ActionEvent e) {
 		    	Alert alert = new Alert(AlertType.CONFIRMATION);
-		    	alert.setTitle("Confirmation Dialog with Custom Actions");
-		    	alert.setHeaderText("Look, a Confirmation Dialog with Custom Actions");
+		    	alert.setTitle("Confirmation");
+		    	alert.setHeaderText("Are you sure you want to pick this character?");
 		    	alert.setContentText("Choose your option.");
 
 		    	ButtonType yes = new ButtonType("Yes");
