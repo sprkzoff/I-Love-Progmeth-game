@@ -26,7 +26,6 @@ public class Character {
 		return bleed;
 	}
 
-
 	public void setBleed(boolean bleed) {
 		this.bleed = bleed;
 	}
@@ -164,5 +163,8 @@ public class Character {
 	}
 	public ArrayList<String> getSkillNames(){
 		return skillNames;
+	}
+	public String getInstance() {
+		return "Character";
 	}
 }

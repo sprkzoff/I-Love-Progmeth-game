@@ -11,6 +11,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import pane.CharacterPane;
+import pane.CharacterSelectionPane;
 import pane.ControlPane;
 import pane.TextPane;
 
@@ -30,11 +31,17 @@ public class Main extends Application{
 	private CharacterPane characterPane2;
 	private ControlPane controlPane;
 	private TextPane textPane;
+	private CharacterSelectionPane select;
 	@Override
 	public void start(Stage primaryStage) {
 		
 		GridPane root = new GridPane();
 		root.setAlignment(Pos.CENTER);
+		
+		
+		select = new CharacterSelectionPane();
+		select.showAndWait();
+		
 		addCharactersForPlayer1();
 		addCharactersForPlayer2();
 		characterPane1 = new CharacterPane(player1Characters);
@@ -45,26 +52,34 @@ public class Main extends Application{
 		root.add(characterPane2, 1, 0);
 		root.add(textPane, 0, 1, 2, 1);
 		root.add(controlPane, 0, 2, 3, 2);
+		
 		Scene scene = new Scene(root, 1000, 750);
 		primaryStage.setTitle("I love Progmeth"); // Set the stage title
 		primaryStage.setScene(scene); // Place the scene
 		primaryStage.show();
+		
+		
 	}
 
 	public void addCharactersForPlayer1() {
-		player1Characters.add(new Mage());
-		player1Characters.add(new Warrior(20));
-		player1Characters.add(new Healer());
+		for(int i = 0; i < select.getPlayer1Characters().size(); i++) {
+			if(select.getPlayer1Characters().get(i) == "Warrior") player1Characters.add(new Warrior()); 
+			if(select.getPlayer1Characters().get(i) == "Mage") player1Characters.add(new Mage()); 
+			if(select.getPlayer1Characters().get(i) == "Assassin") player1Characters.add(new Assassin()); 
+			if(select.getPlayer1Characters().get(i) == "Healer") player1Characters.add(new Healer()); 
+		}
 	}
 	
 	public void addCharactersForPlayer2() {
-		player2Characters.add(new Assassin());
-		player2Characters.add(new Healer());
-		player2Characters.add(new Mage());
+		for(int i = 0; i < select.getPlayer2Characters().size(); i++) {
+			if(select.getPlayer2Characters().get(i) == "Warrior") player2Characters.add(new Warrior()); 
+			if(select.getPlayer2Characters().get(i) == "Mage") player2Characters.add(new Mage()); 
+			if(select.getPlayer2Characters().get(i) == "Assassin") player2Characters.add(new Assassin()); 
+			if(select.getPlayer2Characters().get(i) == "Healer") player2Characters.add(new Healer()); 
+		}
 	}
 	
 	public static void main(String[] args) {
 		launch(args);
 	}
-
 }

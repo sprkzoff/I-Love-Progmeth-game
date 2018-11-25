@@ -7,6 +7,7 @@ public class Mage extends Character {
 	
 	public Mage() {
 		super(300, 700);
+		setImage("resources/mage.jpg");
 		setSkillNames("Freezing Field", "Chaos Meteor", "Detonate");
 		this.mp = 100;
 	}
@@ -55,4 +56,9 @@ public class Mage extends Character {
 	public void updateMage() { //call this when game loop occurs 
 		this.mp += 20;
 	}
+	@Override
+	public String getInstance() {
+		return "Mage";
+	}
+	
 }

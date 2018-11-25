@@ -9,6 +9,7 @@ public class Assassin extends Character {
 	
 	public Assassin() {
 		super(100,900);
+		setImage("resources/assassin.jpg");
 		setSkillNames("Stealth Attack", "Evade", "Bleeding Blade");
 		Stealth = false;
 	}
@@ -57,7 +58,10 @@ public class Assassin extends Character {
 		}
 	}
 	
-	
+	@Override
+	public String getInstance() {
+		return "Assassin";
+	}
 	
 	
 }

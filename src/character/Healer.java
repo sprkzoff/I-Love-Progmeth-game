@@ -6,6 +6,7 @@ public class Healer extends Character {
 	public static int MAX_HP=800;
 	public Healer() {
 		super(60,1000);
+		setImage("resources/druid.jpg");
 		setSkillNames("Heal", "Cleansing", "Hands Of God");
 	}
 	public void heal(Character friend,int plus_hp)
@@ -42,4 +43,9 @@ public class Healer extends Character {
 			}
 		}
 	}
+	@Override
+	public String getInstance() {
+		return "Healer";
+	}
+	
 }
