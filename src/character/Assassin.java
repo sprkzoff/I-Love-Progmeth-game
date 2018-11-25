@@ -20,7 +20,7 @@ public class Assassin extends Character {
 		Stealth = stealth;
 	}
 	
-	public void stealthAttack(Character enemy,int damage)
+	public String stealthAttack(Character enemy,int damage)
 	{
 		if(((enemy.getHp())/enemy.MAX_HP)*100 < 35.0) // if HP < 35% -> set assasin dmg*3
 		{
@@ -38,6 +38,7 @@ public class Assassin extends Character {
 		{
 			enemy.attacked_by_enemy(damage);
 		}
+		return "Stealth Attackk";
 	}
 	
 	public boolean evade() //passive evade
@@ -46,7 +47,7 @@ public class Assassin extends Character {
 		return random <= 5? true : false ;
 	}
 	
-	public void bleedingBlade(Character enemy) //when attack bleeding enemy plus 100dmg && set enemy bleed to false
+	public String bleedingBlade(Character enemy) //when attack bleeding enemy plus 100dmg && set enemy bleed to false
 	{
 		if(!enemy.isBleed())
 		{
@@ -56,6 +57,7 @@ public class Assassin extends Character {
 		{
 			System.out.println("Enemy is already bleed!!!");
 		}
+		return "Bleeding Blade";
 	}
 	
 	@Override
