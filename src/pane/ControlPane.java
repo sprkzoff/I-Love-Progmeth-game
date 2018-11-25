@@ -37,4 +37,10 @@ public class ControlPane extends GridPane {
 		}
 		
 	}
+	public ArrayList<Button> getButtons() {
+		return buttons;
+	}
+	public void setButtons(ArrayList<Button> buttons) {
+		this.buttons = buttons;
+	}
 }

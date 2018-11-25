@@ -45,6 +45,8 @@ public class Main extends Application{
 		root.add(characterPane2, 1, 0);
 		root.add(textPane, 0, 1, 2, 1);
 		root.add(controlPane, 0, 2, 3, 2);
+		EventManager ev = new EventManager(controlPane);
+		ev.setUpSkillButtonEvent(controlPane.getButtons());
 		Scene scene = new Scene(root, 1000, 750);
 		primaryStage.setTitle("I love Progmeth"); // Set the stage title
 		primaryStage.setScene(scene); // Place the scene
