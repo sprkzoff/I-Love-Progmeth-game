@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Character {
+public abstract class Character {
 	private int atk;
 	private int hp;
 	private ImageView imageView;
@@ -43,8 +43,6 @@ public class Character {
 		this.buffs = new ArrayList<String>(); //change type of array later
 		this.debuffs = new ArrayList<String>();
 	}
-	
-	
 	
 	public void attack(Character enemy)
 	{

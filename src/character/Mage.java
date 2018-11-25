@@ -17,8 +17,8 @@ public class Mage extends Character {
 	public void setMp(int mp) {
 		this.mp = mp;
 	}
-	public void freezingField(ArrayList<Character> characters, int damage) { //AoE cc with moderate amount of dmg
-		if(this.getMp() < 25) return;
+	public String freezingField(ArrayList<Character> characters, int damage) { //AoE cc with moderate amount of dmg
+		if(this.getMp() < 25) return "Freezing Field";
 		this.mp -= 25;
 		for(int i = 0; i < characters.size(); i++) {
 			Character temp = characters.get(i);
@@ -27,9 +27,10 @@ public class Mage extends Character {
 				temp.attacked_by_enemy(damage);
 			}
 		}
+		return "Freezing Field";
 	}
-	public void chaosMeteor(ArrayList<Character> characters, int damage) { //deal dmg to all enemy and set burn on them, deal additional dmg if they're already burned
-		if(this.getMp() < 30) return;
+	public String chaosMeteor(ArrayList<Character> characters, int damage) { //deal dmg to all enemy and set burn on them, deal additional dmg if they're already burned
+		if(this.getMp() < 30) return "Chaos Meteor";
 		this.mp -= 30;
 		for(int i = 0; i < characters.size(); i++) {
 			Character temp = characters.get(i);
@@ -39,9 +40,10 @@ public class Mage extends Character {
 				else temp.attacked_by_enemy(damage * 2);
 			}
 		}
+		return "Chaos Meteor";
 	}
-	public void detonate(Character character) { //denonate away enemy's debuffs to deal damage based on remaining mp
-		if(this.getMp() < 15) return;
+	public String detonate(Character character) { //denonate away enemy's debuffs to deal damage based on remaining mp
+		if(this.getMp() < 15) return "Detonate";
 		this.mp -= 15;
 		if(character.isBurn()) {
 			character.setBurn(false);
@@ -51,7 +53,7 @@ public class Mage extends Character {
 			character.setFreeze(false);
 			character.attacked_by_enemy(this.getMp());
 		}
-		
+		return "Detonate";
 	}
 	public void updateMage() { //call this when game loop occurs 
 		this.mp += 20;

@@ -26,7 +26,7 @@ public class Warrior extends Character {
 		this.shield = shield;
 	}
 	
-	public void warcry(ArrayList<Character> enemies,int damage) //deal every enemy dmg=???
+	public String warcry(ArrayList<Character> enemies,int damage) //deal every enemy dmg=???
 	{
 		for(int i=0;i<enemies.size();i++)
 		{
@@ -37,17 +37,20 @@ public class Warrior extends Character {
 			}
 			
 		}
+		return "War Cry";
 	}
 	
-	public void directStrike(Character enemy,int damage) //direct hit enemy with stunning dmg=???
+	public String directStrike(Character enemy,int damage) //direct hit enemy with stunning dmg=???
 	{
 		enemy.attacked_by_enemy(damage);
 		enemy.setStun(true);
+		return "Direct Strike";
 	}
 	
-	public void fearless(int powerup_shield) //plus shield
+	public String fearless(int powerup_shield) //plus shield
 	{
 		this.setShield(this.getShield()+powerup_shield);
+		return "Fearless";
 	}
 	
 	@Override

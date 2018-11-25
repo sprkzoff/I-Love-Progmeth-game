@@ -9,7 +9,7 @@ public class Healer extends Character {
 		setImage("resources/druid.jpg");
 		setSkillNames("Heal", "Cleansing", "Hands Of God");
 	}
-	public void heal(Character friend,int plus_hp)
+	public String heal(Character friend,int plus_hp)
 	{
 		if(friend.isDead())
 		{
@@ -19,16 +19,18 @@ public class Healer extends Character {
 		{
 			friend.setHp(friend.getHp()+plus_hp);
 		}
+		return "Heal";
 	}
-	public void cleansing(Character friend)
+	public String cleansing(Character friend)
 	{
 		friend.setBleed(false);
 		friend.setBurn(false);
 		friend.setFreeze(false);
 		friend.setStun(false);
+		return "Cleansing";
 	}
 	
-	public void handsOfGod(ArrayList<Character> friends,int plus_hp)
+	public String handsOfGod(ArrayList<Character> friends,int plus_hp)
 	{
 		for(int i=0;i<friends.size();i++)
 		{
@@ -42,6 +44,7 @@ public class Healer extends Character {
 				temp.setHp(temp.getHp()+plus_hp);
 			}
 		}
+		return "Hands of God";
 	}
 	@Override
 	public String getInstance() {

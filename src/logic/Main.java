@@ -2,6 +2,7 @@ package logic;
 
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,13 +11,20 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import pane.CharacterPane;
 import pane.CharacterSelectionPane;
 import pane.ControlPane;
 import pane.TextPane;
+import utility.MusicPlayer;
 
+import java.io.File;
 import java.util.ArrayList;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import character.Assassin;
 import character.Character;
@@ -33,6 +41,10 @@ public class Main extends Application{
 	private ControlPane controlPane;
 	private TextPane textPane;
 	private CharacterSelectionPane select;
+	
+	private MusicPlayer PROOF_OF_A_HERO = new MusicPlayer("resources/001.wav");
+	
+	
 	@Override
 	public void start(Stage primaryStage) {
 		
@@ -41,6 +53,7 @@ public class Main extends Application{
 		
 		
 		select = new CharacterSelectionPane();
+		PROOF_OF_A_HERO.start();
 		select.showAndWait();
 		if(!select.isReady()) System.exit(1);
 		
@@ -85,4 +98,6 @@ public class Main extends Application{
 	public static void main(String[] args) {
 		launch(args);
 	}
+	
+	
 }
