@@ -1,6 +1,7 @@
 package logic;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -41,6 +42,7 @@ public class Main extends Application{
 		
 		select = new CharacterSelectionPane();
 		select.showAndWait();
+		if(!select.isReady()) System.exit(1);
 		
 		addCharactersForPlayer1();
 		addCharactersForPlayer2();

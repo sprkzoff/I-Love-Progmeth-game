@@ -3,41 +3,23 @@ package pane;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import com.sun.prism.paint.Color;
-
 import character.Assassin;
 import character.Healer;
 import character.Mage;
 import character.Warrior;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.BorderStrokeStyle;
-import javafx.scene.layout.BorderWidths;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
-
-import javafx.scene.layout.CornerRadii;
 
 public class CharacterSelectionPane extends Stage {
 	
@@ -217,5 +199,9 @@ public class CharacterSelectionPane extends Stage {
 	
 	public ArrayList<String> getPlayer2Characters(){
 		return player2Characters;
+	}
+	
+	public boolean isReady() {
+		return charCount == 6;
 	}
 }
