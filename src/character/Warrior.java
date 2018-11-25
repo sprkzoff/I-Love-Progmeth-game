@@ -5,8 +5,17 @@ import java.util.ArrayList;
 public class Warrior extends Character {
 	private int shield;
 	public static int MAX_HP=1200;
+	
+	public Warrior() {
+		super(300,1200);
+		setImage("resources/warrior.jpg");
+		setSkillNames("War Cry", "Direct Strike", "Fearless");
+		this.shield = 20;
+	}
+	
 	public Warrior(int shield) {
 		super(300,1200);
+		setImage("resources/warrior.jpg");
 		setSkillNames("War Cry", "Direct Strike", "Fearless");
 		this.shield = shield;
 	}
@@ -54,4 +63,9 @@ public class Warrior extends Character {
 			this.setHp((this.getHp()+this.getShield())-damage);
 		}
 	}
+	@Override
+	public String getInstance() {
+		return "Warrior";
+	}
+	
 }
