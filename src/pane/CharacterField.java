@@ -11,12 +11,12 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
 public class CharacterField extends HBox {
-	private TextField name;
+	private Text name;
 	private Text hp;
 	private ColoredProgressBar hpBar;
 	
 	public CharacterField(Character character) {
-		name = new TextField(character.getClass().toString());
+		name = new Text(" "+character.getInstance().toString()+" ");
 		hp = new Text(" "+Integer.toString(character.getHp())+"/"+Integer.toString(character.MAX_HP));
 		hpBar = new ColoredProgressBar("green-bar",1);
 		hpBar.setPrefWidth(100);
