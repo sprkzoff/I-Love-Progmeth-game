@@ -115,7 +115,8 @@ public class CharacterSelectionPane extends Stage {
 	
 	public void setEvent(Button b, Object character) {
 		b.setOnAction(new EventHandler<ActionEvent>() {
-		    @Override public void handle(ActionEvent e) {
+		    @Override 
+		    public void handle(ActionEvent e) {
 		    	Alert alert = new Alert(AlertType.CONFIRMATION);
 		    	alert.setTitle("Confirmation");
 		    	alert.setHeaderText("Are you sure you want to pick this character?");

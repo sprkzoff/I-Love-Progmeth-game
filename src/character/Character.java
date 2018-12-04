@@ -14,19 +14,22 @@ public abstract class Character {
 	private ArrayList<String> buffs;
 	private ArrayList<String> debuffs;
 	private boolean dead;
-	private boolean stun;
-	private boolean freeze;
-	private boolean burn;
-	private boolean bleed;
+	private int stun;
+	private int freeze;
+	private int burn;
+	private int bleed;
 	public final int MAX_HP;
 	
 	private ArrayList<String> skillNames;
 	
-	public boolean isBleed() {
+	public int getBleed() {
 		return bleed;
 	}
+	public boolean isBleed() {
+		return bleed > 0;
+	}
 
-	public void setBleed(boolean bleed) {
+	public void setBleed(int bleed) {
 		this.bleed = bleed;
 	}
 	
@@ -34,9 +37,9 @@ public abstract class Character {
 		super();
 		setImage("resources/default.jpg");
 		this.dead = false;
-		this.stun = false;
-		this.freeze = false;
-		this.burn = false;
+		this.stun = 0;
+		this.freeze = 0;
+		this.burn = 0;
 		this.atk = 0;
 		this.hp = 1000;
 		this.MAX_HP = this.hp;
@@ -46,34 +49,42 @@ public abstract class Character {
 	
 	public void attack(Character enemy)
 	{
-		enemy.attacked_by_enemy(this.getAtk());
+		enemy.attackByEnemy(this.getAtk());
 	}
-	
-	public boolean isStun() {
+	public int getStun() {
 		return stun;
 	}
-	public void setStun(boolean stun) {
+	public boolean isStun() {
+		return stun > 0;
+	}
+	public void setStun(int stun) {
 		this.stun = stun;
 	}
-	public boolean isFreeze() {
+	public int getFreeze() {
 		return freeze;
 	}
-	public void setFreeze(boolean freeze) {
+	public boolean isFreeze() {
+		return freeze > 0;
+	}
+	public void setFreeze(int freeze) {
 		this.freeze = freeze;
 	}
-	public boolean isBurn() {
+	public int getBurn() {
 		return burn;
 	}
-	public void setBurn(boolean burn) {
+	public boolean isBurn() {
+		return burn > 0;
+	}
+	public void setBurn(int burn) {
 		this.burn = burn;
 	}
 	public Character(int atk,int hp) {
 		super();
 		setImage("resources/default.jpg");
 		this.dead = false;
-		this.stun = false;
-		this.freeze = false;
-		this.burn = false;
+		this.stun = 0;
+		this.freeze = 0;
+		this.burn = 0;
 		this.atk = atk;
 		this.hp = hp;
 		this.MAX_HP = this.hp;
@@ -85,27 +96,14 @@ public abstract class Character {
 		super();
 		setImage(imagePath);
 		this.dead = false;
-		this.stun = false;
-		this.freeze = false;
-		this.burn = false;
+		this.stun = 0;
+		this.freeze = 0;
+		this.burn = 0;
 		this.atk = atk;
 		this.hp = hp;
 		this.MAX_HP = this.hp;
 		this.buffs = new ArrayList<String>(); //change type of array later
 		this.debuffs = new ArrayList<String>();
-	}
-	
-	public void attacked_by_enemy(int damage)
-	{
-		if(this.getHp()-damage <= 0)
-		{
-			this.setHp(0);
-			this.setDead(true);
-		}
-		else
-		{
-			this.setHp(this.getHp()-damage);
-		}
 	}
 	
 	public boolean isDead() {
@@ -125,6 +123,9 @@ public abstract class Character {
 	}
 	public void setHp(int hp) {
 		this.hp = hp;
+	}
+	public int getMaxHp() {
+		return this.MAX_HP;
 	}
 	public ArrayList<String> getBuffs() {
 		return buffs;
@@ -164,5 +165,20 @@ public abstract class Character {
 	}
 	public String getInstance() {
 		return "Character";
+	}
+	
+	public int attackByEnemy(int damage)
+	{
+		if(isFreeze()) damage = damage / 2;
+		if((this.getHp()-damage <= 0))
+		{
+			this.setHp(0);
+			this.setDead(true);
+		}
+		else
+		{
+			this.setHp(this.getHp()-damage);
+		}
+		return damage;
 	}
 }

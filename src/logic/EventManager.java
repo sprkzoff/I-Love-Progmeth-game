@@ -9,33 +9,19 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import pane.CharacterPane;
 import pane.ControlPane;
 
 public class EventManager {
 	private ControlPane ctrlPane;
-
-	public EventManager(ControlPane ctrlPane) {
+	private CharacterPane c1;
+	private CharacterPane c2;
+	
+	public EventManager(ControlPane ctrlPane, CharacterPane c1, CharacterPane c2) {
 		this.ctrlPane = ctrlPane;
-	}
-	
-	public void setUpSkillButtonEvent(ArrayList<Button> SkillButtons) {
-		for(int i=0;i<SkillButtons.size();i++)
-			SkillButtons.get(i).setOnAction(new SkillButtonEventHandler(SkillButtons.get(i).getText()));
+		this.c1 = c1;
+		this.c2 = c2;
 	}
 	
 	
-	private class SkillButtonEventHandler implements EventHandler<ActionEvent> {
-
-		private String name;
-		
-
-		public SkillButtonEventHandler(String Skillname) {
-			this.name = Skillname;
-		}
-
-		@Override
-		public void handle(ActionEvent arg0) {
-			System.out.println(this.name);
-		}
-	}
 }

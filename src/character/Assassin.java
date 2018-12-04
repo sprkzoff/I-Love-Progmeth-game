@@ -24,19 +24,12 @@ public class Assassin extends Character {
 	{
 		if(((enemy.getHp())/enemy.MAX_HP)*100 < 35.0) // if HP < 35% -> set assasin dmg*3
 		{
-			if(enemy instanceof Warrior) //break the warrior shield
-			{
-				Warrior temp = (Warrior)enemy;
-				enemy.attacked_by_enemy((damage*3)+temp.getShield());
-			}
-			else
-			{
-				enemy.attacked_by_enemy(damage*3);
-			}
+			enemy.attackByEnemy(damage*3);
+			
 		}
 		else
 		{
-			enemy.attacked_by_enemy(damage);
+			enemy.attackByEnemy(damage);
 		}
 		return "Stealth Attackk";
 	}
@@ -51,7 +44,7 @@ public class Assassin extends Character {
 	{
 		if(!enemy.isBleed())
 		{
-			enemy.setBleed(true);
+			enemy.setBleed(1);
 		}
 		else
 		{
