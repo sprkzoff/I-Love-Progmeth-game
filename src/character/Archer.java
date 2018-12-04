@@ -46,7 +46,7 @@ public class Archer extends Character {
 	
 	public void Knockback (Character enemy)
 	{
-		enemy.setStun(true);
+		enemy.setStun(1);
 		System.out.println("the enemy is stunned");
 		int random = (int )(Math.random() * 10 + 1);
 		if(random <= 2)
@@ -65,11 +65,11 @@ public class Archer extends Character {
 		// TODO Auto-generated method stub
 		if(Critical())
 		{
-			enemy.attacked_by_enemy(this.getAtk()*2);
+			enemy.attackByEnemy(this.getAtk()*2);
 		}
 		else
 		{
-			enemy.attacked_by_enemy(this.getAtk());
+			enemy.attackByEnemy(this.getAtk());
 		}
 		setFocus(false);
 	}
