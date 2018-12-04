@@ -6,9 +6,9 @@ import java.util.ArrayList;
 
 public class Assassin extends Character {
 	private boolean Stealth;
-	
+	public static final int EVADE_CHANCE = 30;
 	public Assassin() {
-		super(100,900);
+		super(150,900);
 		setImage("resources/assassin.jpg");
 		setSkillNames("Stealth Attack", "Evade", "Bleeding Blade");
 		Stealth = false;
@@ -20,18 +20,18 @@ public class Assassin extends Character {
 		Stealth = stealth;
 	}
 	
-	public String stealthAttack(Character enemy,int damage)
+	public boolean stealthAttack(Character enemy)
 	{
-		if(((enemy.getHp())/enemy.MAX_HP)*100 < 35.0) // if HP < 35% -> set assasin dmg*3
+		int damage = 300;
+		if(((enemy.getHp())/enemy.MAX_HP)*100 < 35.0) // if HP < 35% -> set assassin dmg*3
 		{
 			enemy.attackByEnemy(damage*3);
-			
 		}
 		else
 		{
 			enemy.attackByEnemy(damage);
 		}
-		return "Stealth Attackk";
+		return true;
 	}
 	
 	public boolean evade() //passive evade
@@ -40,17 +40,18 @@ public class Assassin extends Character {
 		return random <= 5? true : false ;
 	}
 	
-	public String bleedingBlade(Character enemy) //when attack bleeding enemy plus 100dmg && set enemy bleed to false
+	public boolean bleedingBlade(Character enemy) //when attack bleeding enemy plus 100dmg && set enemy bleed to false
 	{
 		if(!enemy.isBleed())
 		{
 			enemy.setBleed(1);
+			return true;
 		}
 		else
 		{
 			System.out.println("Enemy is already bleed!!!");
+			return false;
 		}
-		return "Bleeding Blade";
 	}
 	
 	@Override
