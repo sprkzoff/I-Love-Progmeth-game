@@ -23,10 +23,10 @@ public class Healer extends Character {
 	}
 	public String cleansing(Character friend)
 	{
-		friend.setBleed(false);
-		friend.setBurn(false);
-		friend.setFreeze(false);
-		friend.setStun(false);
+		friend.setBleed(0);
+		friend.setBurn(0);
+		friend.setFreeze(0);
+		friend.setStun(0);
 		return "Cleansing";
 	}
 	

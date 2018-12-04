@@ -3,69 +3,42 @@ package character;
 import java.util.ArrayList;
 
 public class Warrior extends Character {
-	private int shield;
 	public static int MAX_HP=1200;
 	
 	public Warrior() {
-		super(300,1200);
+		super(200,1200);
 		setImage("resources/warrior.jpg");
-		setSkillNames("War Cry", "Direct Strike", "Fearless");
-		this.shield = 20;
+		setSkillNames("War Cry", "Direct Strike", "Berserk");
 	}
 	
-	public Warrior(int shield) {
-		super(300,1200);
-		setImage("resources/warrior.jpg");
-		setSkillNames("War Cry", "Direct Strike", "Fearless");
-		this.shield = shield;
-	}
-	public int getShield() {
-		return shield;
-	}
-	public void setShield(int shield) {
-		this.shield = shield;
-	}
-	
-	public String warcry(ArrayList<Character> enemies,int damage) //deal every enemy dmg=???
+	public void warcry(ArrayList<Character> enemies) //deal every enemy dmg=???
 	{
+		int damage = this.getAtk();
 		for(int i=0;i<enemies.size();i++)
 		{
 			Character temp = enemies.get(i);
 			if(!temp.isDead())
 			{
-				temp.attacked_by_enemy(damage);
+				temp.attackByEnemy(damage);
 			}
 			
 		}
-		return "War Cry";
 	}
 	
-	public String directStrike(Character enemy,int damage) //direct hit enemy with stunning dmg=???
+	public void directStrike(Character enemy) //direct hit enemy with stunning dmg=???
 	{
-		enemy.attacked_by_enemy(damage);
-		enemy.setStun(true);
-		return "Direct Strike";
+		int damage = this.getAtk();
+		enemy.attackByEnemy(damage);
+		enemy.setStun(1);
 	}
 	
-	public String fearless(int powerup_shield) //plus shield
+	public void berserk(Character enemy) //plus shield
 	{
-		this.setShield(this.getShield()+powerup_shield);
-		return "Fearless";
+		int damage = this.getMaxHp() - this.getHp();
+		enemy.attackByEnemy(damage);
 	}
 	
-	@Override
-	public void attacked_by_enemy(int damage)
-	{
-		if((this.getHp()+this.getShield())-damage <= 0)
-		{
-			this.setHp(0);
-			this.setDead(true);
-		}
-		else
-		{
-			this.setHp((this.getHp()+this.getShield())-damage);
-		}
-	}
+	
 	@Override
 	public String getInstance() {
 		return "Warrior";

@@ -1,5 +1,6 @@
 package pane;
 
+import javafx.geometry.Insets;
 import javafx.scene.control.ProgressBar;
 
 import java.awt.event.ActionEvent;
@@ -8,27 +9,63 @@ import java.awt.event.ActionListener;
 import javax.swing.event.ChangeListener;
 
 import character.Character;
+import character.Mage;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
-public class CharacterField extends HBox{
+public class CharacterField extends GridPane {
 	private Text name;
 	private Text hp;
+	private Text mp;
+	private Text stun;
+	private Text freeze;
+	private Text burn;
+	private Text bleed;
 	private ColoredProgressBar hpBar;
-	private Character Owner;
+	private ColoredProgressBar mpBar;
+	private Character owner;
 	
 	public CharacterField(Character character) {
-		Owner = character;
+		setPadding(new Insets(10));
+		setHgap(5);
+		setVgap(5);
+		owner = character;
 		name = new Text(" "+character.getInstance().toString()+" ");
 		hp = new Text(" "+Integer.toString(character.getHp())+"/"+Integer.toString(character.MAX_HP));
+		stun = new Text("Stun: 0");
+		freeze = new Text("Freeze: 0");
+		burn = new Text("Burn: 0");
+		bleed = new Text("Bleed: 0");
 		hpBar = new ColoredProgressBar("green-bar",1);
 		hpBar.setPrefWidth(100);
-		hpBar.setPrefHeight(26);
+		hpBar.setPrefHeight(18);
+		add(name, 0, 0);
+		add(hpBar, 1, 0);
+		add(hp, 2, 0);
+		add(stun, 3, 0);
+		add(freeze, 4, 0);
+		add(burn, 3, 1);
+		add(bleed, 4, 1);
+		if(character instanceof Mage) {
+			mp = new Text(" 100/100");
+			mpBar = new ColoredProgressBar("blue-bar",1);
+			mpBar.setPrefWidth(100);
+			mpBar.setPrefHeight(18);
+			add(mpBar, 1, 1);
+			add(mp, 2, 1);
+		}
 		getStylesheets().add(getClass().getResource("progress.css").toExternalForm());
-		
-		getChildren().addAll(name,hpBar,hp);
 	}
 
 	public Text getName() {
@@ -56,11 +93,29 @@ public class CharacterField extends HBox{
 	}
 
 	public Character getOwner() {
-		return Owner;
+		return owner;
 	}
 
 	public void setOwner(Character owner) {
-		Owner = owner;
+		this.owner = owner;
+	}
+	
+	public void updateHp() {
+		this.hp.setText(" " + Integer.toString(owner.getHp()) + "/" + Integer.toString(owner.MAX_HP));
+		hpBar.setProgress((double)owner.getHp() / (double) owner.MAX_HP);
+		this.stun.setText("Stun: " + Integer.toString(owner.getStun()));
+		this.freeze.setText("Freeze: " + Integer.toString(owner.getFreeze()));
+		this.burn.setText("Burn: " + Integer.toString(owner.getBurn()));
+		this.bleed.setText("Bleed: " + Integer.toString(owner.getBleed()));
+	}
+	
+	public void updateMp() {
+		Mage mage = (Mage)owner;
+		this.mp.setText(" " + Integer.toString(mage.getMp()) + "/100");
+		mpBar.setProgress((double)mage.getMp() / (double)100);
+	}
+	public void setBackground() {
+		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
 	}
 }
 

@@ -3,10 +3,15 @@ package logic;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
@@ -21,6 +26,8 @@ import utility.MusicPlayer;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Optional;
+import java.util.Random;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -38,12 +45,15 @@ public class Main extends Application{
 	private ArrayList<Character> player2Characters = new ArrayList<Character>();
 	private CharacterPane characterPane1;
 	private CharacterPane characterPane2;
-	private ControlPane controlPane;
+	private ArrayList<ControlPane> controlPanes;
 	private TextPane textPane;
 	private CharacterSelectionPane select;
 	
 	private MusicPlayer PROOF_OF_A_HERO = new MusicPlayer("resources/001.wav");
 	
+	public int turnNumber = 0;
+	
+	private static int FREEZING_CHANCE = 30;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -61,22 +71,202 @@ public class Main extends Application{
 		addCharactersForPlayer2();
 		characterPane1 = new CharacterPane(player1Characters);
 		characterPane2 = new CharacterPane(player2Characters);
-		controlPane = new ControlPane(player1Characters.get(0));
+		
+		controlPanes = new ArrayList<ControlPane>();
+		
+		
+		for(int i = 0; i < 3; i++) {
+			ControlPane c1 = new ControlPane(player1Characters.get(i));
+			ControlPane c2 = new ControlPane(player2Characters.get(i));
+			controlPanes.add(c1);
+			controlPanes.add(c2);
+		}
+		
+		
 		textPane = new TextPane();
 		root.add(characterPane1, 0, 0);
 		root.add(characterPane2, 1, 0);
 		root.add(textPane, 0, 1, 2, 1);
-		root.add(controlPane, 0, 2, 3, 2);
-		EventManager ev = new EventManager(controlPane);
-		ev.setUpSkillButtonEvent(controlPane.getButtons());
-		Scene scene = new Scene(root, 1000, 750);
+		
+		for(int i = 0; i < 6; i++) {
+			for(int j = 0; j < 4; j++) {
+				Button b = controlPanes.get(i).getButtons().get(j);
+				Character c = controlPanes.get(i).getCharacter();
+				setEvent(b, b.getText(), c);
+			}
+			controlPanes.get(i).setVisible(false);
+			root.add(controlPanes.get(i), 0, 2, 3, 2);
+		}
+		
+		controlPanes.get(0).setVisible(true);
+		
+		Scene scene = new Scene(root);
 		primaryStage.setTitle("I love Progmeth"); // Set the stage title
 		primaryStage.setScene(scene); // Place the scene
 		primaryStage.show();
 		
+	}
+	
+	private void runGameLoop() {
+		turnNumber++;
+		Character current = controlPanes.get(turnNumber % 6).getCharacter();
+		if(current instanceof Mage) {
+			Mage mage = (Mage)current;
+			if(mage.getMp() < 100) mage.updateMage();
+		}
+		handleCharacterField();
+		controlPanes.get(turnNumber % 6).setVisible(true);
+		controlPanes.get((turnNumber - 1) % 6).setVisible(false);
+		if(current.isStun()) {
+			current.setStun(current.getStun() - 1);
+			throwAlert(current, "Stun");
+			runGameLoop();
+		}
+		else if(current.isFreeze()) {
+			current.setFreeze(current.getFreeze()-1);
+			Random r = new Random();
+			int ran = r.nextInt(100);
+			if(ran >= FREEZING_CHANCE) {
+				throwAlert(current, "Frozen");
+				runGameLoop();
+			}
+			
+		}
+	}
+	
+	private void setEvent(Button b, String skillName, Character character) {
+		b.setOnAction(new EventHandler<ActionEvent>() {
+		    @Override 
+		    public void handle(ActionEvent e) {
+		    	Character selectedCharacter;
+		    	boolean success = true;
+		    	if(skillName == "Attack") {
+		    		selectedCharacter = selectTarget(character);
+		    		selectedCharacter.attackByEnemy(character.getAtk());
+
+		    	}
+		    	else if(character instanceof Warrior) {
+		    		Warrior warrior = (Warrior)character;
+		    		if(skillName == "War Cry") {
+		    			warrior.warcry(getTargetCharacters());
+			    	}
+			    	else if(skillName == "Direct Strike") {
+			    		selectedCharacter = selectTarget(character);
+			    		warrior.directStrike(selectedCharacter);
+			    	}
+			    	else if(skillName == "Berserk") {
+			    		selectedCharacter = selectTarget(character);
+			    		warrior.berserk(selectedCharacter);
+			    	}
+		    	}
+		    	
+		    	else if(character instanceof Mage) {
+		    		Mage mage = (Mage)character;
+		    		if(skillName == "Chaos Meteor") {
+		    			success = mage.chaosMeteor(getTargetCharacters());
+			    	}
+			    	else if(skillName == "Freezing Field") {
+			    		success = mage.freezingField(getTargetCharacters());
+			    	}
+			    	else if(skillName == "Detonate") {
+			    		selectedCharacter = selectTarget(character);
+			    		success = mage.detonate(selectedCharacter);
+			    	}
+		    		if(!success) throwAlert(character, "Not enough mana");
+		    	}
+		    	if(success == true) runGameLoop();
+		    }
+		    
+		});
+	}
+	private void handleCharacterField() {
+		for(int i = 0; i < 3; i++) {
+			pane.CharacterField c1 = characterPane1.getCharacterFields().get(i);
+			pane.CharacterField c2 = characterPane2.getCharacterFields().get(i);
+			c1.updateHp();
+			c2.updateHp();
+			if(c1.getOwner() instanceof Mage) {
+				c1.updateMp();
+			}
+			if(c2.getOwner() instanceof Mage) {
+				c2.updateMp();
+			}
+		}
+	}
+	
+	private void throwAlert(Character character, String reason) {
+		if(reason == "Not enough mana") {
+			Alert alert = new Alert(AlertType.INFORMATION);
+	    	alert.setTitle("Caution");
+	    	alert.setHeaderText("Not Enough Mana!");
+	    	alert.setContentText("You need more mana to activate that skill");
+	    	alert.showAndWait();
+		}
+		else {
+			Alert alert = new Alert(AlertType.INFORMATION);
+	    	alert.setTitle("Your character is " + (reason == "Stun" ? "Stunned" : "Frozen"));
+	    	alert.setHeaderText("Notice!!");
+	    	alert.setContentText(character.getInstance() + " is " + (reason == "Stun" ? "stunned" : "frozen") + ". Sadly, he/she won't be able to act this turn.");
+	    	alert.showAndWait();
+		}
 		
 	}
+	
+	private void handleHpBar(Character selectedCharacter) {
+		if(getN() % 2 == 0) { //player 1's turn
+			for(int i = 0; i < 3; i++) {
+				if(characterPane2.getCharacterFields().get(i).getOwner() == selectedCharacter) {
+					characterPane2.getCharacterFields().get(i).updateHp();
+				}
+			}
+		}
+		else {
+			for(int i = 0; i < 3; i++) {
+				if(characterPane1.getCharacterFields().get(i).getOwner() == selectedCharacter) {
+					characterPane1.getCharacterFields().get(i).updateHp();
+				}
+			}
+		}
+	}
+	
+	private int getN() {
+		return turnNumber % 6; 
+	}
+	
+	private ArrayList<Character> getTargetCharacters(){
+		return turnNumber % 2 == 1 ? player1Characters : player2Characters;
+	}
+	
+	public Character selectTarget(Character character) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Select your target");
+    	alert.setHeaderText("Which target do you prefer to attack on?");
+    	alert.setContentText("Choose your option.");
+    	
+    	ArrayList<Character> targets = new ArrayList<Character>();
+    	
+    	if(turnNumber % 2 == 0) { // player 1's turn
+    		targets = player2Characters;
+    	}
+    	else {
+    		targets = player1Characters;
+    	}
+    	ButtonType t1 = new ButtonType(targets.get(0).getInstance());
+    	ButtonType t2 = new ButtonType(targets.get(1).getInstance());
+    	ButtonType t3 = new ButtonType(targets.get(2).getInstance());
 
+    	alert.getButtonTypes().setAll(t1, t2, t3);
+
+    	Optional<ButtonType> result = alert.showAndWait();
+    	
+    	Character returnCharacter;
+    	if (result.get() == t1) returnCharacter = targets.get(0);
+    	else if (result.get() == t2) returnCharacter = targets.get(1);
+    	else returnCharacter = targets.get(2);
+    	
+    	return returnCharacter;
+	}
+	
 	public void addCharactersForPlayer1() {
 		for(int i = 0; i < select.getPlayer1Characters().size(); i++) {
 			if(select.getPlayer1Characters().get(i) == "Warrior") player1Characters.add(new Warrior()); 
@@ -99,5 +289,7 @@ public class Main extends Application{
 		launch(args);
 	}
 	
-	
+	public ArrayList<ControlPane> getControlPanes() {
+		return controlPanes;
+	}
 }
