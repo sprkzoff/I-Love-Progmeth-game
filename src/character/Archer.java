@@ -1,34 +1,34 @@
 package character;
 
 public class Archer extends Character {
-	private boolean focus;
+	private int focus;
 	public Archer() {
-		super(200,1200);
-		this.focus=false;
+		super(200, 800);
+		this.focus = 0;
 		setImage("resources/archer.jpg");
-		setSkillNames("Focusshot", "Critical", "Knockback");
+		setSkillNames("Focus Shot", "Critical", "Knockback");
 	}
 	
 
-	public void focusShot()
+	public boolean focusShot()
 	{
-		if(isFocus())
-		{
-			System.out.println("Already Focus!!!");
+		if(isFocus()) return false;
+		else {
+			setFocus(2);
+			return true;
 		}
-		else
-		{
-			setFocus(true);
-			System.out.println("Focus!!!");
-		}
+	}
+	
+	public int getFocus() {
+		return focus;
 	}
 	
 	public boolean isFocus() {
-		return focus;
+		return focus > 0;
 	}
 
 
-	public void setFocus(boolean focus) {
+	public void setFocus(int focus) {
 		this.focus = focus;
 	}
 
@@ -44,7 +44,7 @@ public class Archer extends Character {
 		return random <= 3? true : false ;
 	}
 	
-	public void Knockback (Character enemy)
+	public boolean Knockback (Character enemy)
 	{
 		enemy.setStun(1);
 		System.out.println("the enemy is stunned");
@@ -53,25 +53,25 @@ public class Archer extends Character {
 		{
 			if(!isFocus())
 			{
-				setFocus(true);
+				setFocus(this.focus + 2);
 				System.out.println("Bonus : the enemy is stunned,you have a time to focus");
+				return true;
 			}
 		}
-		
+		return false;
 	}
 	
-	@Override
-	public void attack(Character enemy) {
-		// TODO Auto-generated method stub
+	public boolean attackWithCritical(Character enemy) {
 		if(critical())
 		{
 			enemy.attackByEnemy(this.getAtk()*2);
+			return true;
 		}
 		else
 		{
 			enemy.attackByEnemy(this.getAtk());
+			return false;
 		}
-		setFocus(false);
 	}
 	
 	

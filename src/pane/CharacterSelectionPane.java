@@ -3,6 +3,7 @@ package pane;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import character.Archer;
 import character.Assassin;
 import character.Healer;
 import character.Mage;
@@ -31,6 +32,7 @@ public class CharacterSelectionPane extends Stage {
 	private Button mageButton;
 	private Button healerButton;
 	private Button assassinButton;
+	private Button archerButton;
 	
 	private TextField textField;
 	private TextField player1Field;
@@ -42,6 +44,7 @@ public class CharacterSelectionPane extends Stage {
 	private Mage mage = new Mage();
 	private Healer healer = new Healer();
 	private Assassin assassin = new Assassin();
+	private Archer archer = new Archer();
 	
 	private Label l1;
 	private Label l2;
@@ -61,16 +64,19 @@ public class CharacterSelectionPane extends Stage {
 		mageButton = new Button();
 		healerButton = new Button();
 		assassinButton = new Button();
+		archerButton = new Button();
 		
 		setEvent(warriorButton, warrior);
 		setEvent(mageButton, mage);
 		setEvent(healerButton, healer);
 		setEvent(assassinButton, assassin);
+		setEvent(archerButton, archer);
 		
 		warriorButton.setGraphic(warrior.getImage());
 		mageButton.setGraphic(mage.getImage());
 		healerButton.setGraphic(healer.getImage());
 		assassinButton.setGraphic(assassin.getImage());
+		archerButton.setGraphic(archer.getImage());
 		
 		textField = new TextField("Please choose your character");
 		textField.setPrefSize(400, 50);
@@ -97,7 +103,8 @@ public class CharacterSelectionPane extends Stage {
 		root.add(mageButton, 1, 0);
 		root.add(healerButton, 0, 1);
 		root.add(assassinButton, 1, 1);
-		root.add(textField, 0, 2, 2, 2);
+		root.add(archerButton, 0, 2);
+		root.add(textField, 0, 3, 2, 3);
 		
 		GridPane statusPane = new GridPane();
 		
@@ -106,7 +113,7 @@ public class CharacterSelectionPane extends Stage {
 		statusPane.add(l2, 0, 1);
 		statusPane.add(player2Field, 1, 1);
 		
-		root.add(statusPane, 0, 4, 2, 5);
+		root.add(statusPane, 0, 6, 2, 7);
 		
 		Scene scene = new Scene(root);
 		setScene(scene);
@@ -141,6 +148,9 @@ public class CharacterSelectionPane extends Stage {
 		    	    }
 		    	    else if(character instanceof Assassin) {
 		    	    	process(assassin);
+		    	    }
+		    	    else if(character instanceof Archer) {
+		    	    	process(archer);
 		    	    }
 		    	    if(charCount == 6) close();
 		    	}

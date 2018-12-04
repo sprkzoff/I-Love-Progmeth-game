@@ -57,7 +57,7 @@ public class ControlPane extends GridPane {
 			Button skillButton = new Button(skillName);
 			skillButton.setPrefWidth(400);
 			skillButton.getStylesheets().add(getClass().getResource("skillbuttonstyle.css").toExternalForm());
-			if(skillName == "Evade") skillButton.setDisable(true);
+			if(skillName == "Evade" || skillName == "Critical") skillButton.setDisable(true);
 			buttons.add(skillButton);
 			if(i == 0) add(skillButton, 1, 0);
 			else if(i == 1) add(skillButton, 0, 1);
