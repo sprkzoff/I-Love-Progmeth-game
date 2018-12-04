@@ -10,7 +10,7 @@ public class Archer extends Character {
 	}
 	
 
-	public void Focusshot()
+	public void focusShot()
 	{
 		if(isFocus())
 		{
@@ -33,7 +33,7 @@ public class Archer extends Character {
 	}
 
 
-	public boolean Critical() //passive critical
+	public boolean critical() //passive critical
 	{
 		int range=10;
 		if(isFocus())
@@ -63,7 +63,7 @@ public class Archer extends Character {
 	@Override
 	public void attack(Character enemy) {
 		// TODO Auto-generated method stub
-		if(Critical())
+		if(critical())
 		{
 			enemy.attackByEnemy(this.getAtk()*2);
 		}

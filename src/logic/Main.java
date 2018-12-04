@@ -33,6 +33,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
+import character.Archer;
 import character.Assassin;
 import character.Character;
 import character.Healer;
@@ -193,6 +194,23 @@ public class Main extends Application{
 			    	}
 		    	}
 		    	
+		    	else if(character instanceof Assassin) {
+		    		Assassin assassin = (Assassin)character;
+		    		if(skillName == "Stealth Attack") {
+		    			selectedCharacter = selectTarget(character);
+		    			assassin.stealthAttack(selectedCharacter);
+		    		}
+		    		else if(skillName == "Bleeding Blade") {
+		    			selectedCharacter = selectTarget(character);
+		    			success = assassin.bleedingBlade(selectedCharacter);
+		    			if(!success) throwAlert(character, "Is already bleeding");
+		    		}
+		    	}
+		    	
+		    	else if(character instanceof Archer) {
+		    		Archer archer = (Archer)character;
+		    	}
+		    	
 		    	if(success == true) runGameLoop();
 		    }
 		    
@@ -213,7 +231,7 @@ public class Main extends Application{
 		}
 	}
 	
-	private void throwAlert(Character character, String reason) {
+	public static void throwAlert(Character character, String reason) {
 		String title = "Caution";
 		String headerText = "you're so noob";
 		String contentText = "ggez";
@@ -233,6 +251,15 @@ public class Main extends Application{
 		else if(reason == "Full HP") {
 			headerText = "All of your character is still at full HP";
 			contentText = "Don't use that skill you fool!";
+		}
+		else if(reason == "Is already bleeding") {
+			headerText = "The target is already bleeded";
+			contentText = "The character you chose is already bleed, please choose to attack someone else";
+		}
+		else if(reason == "Evade") {
+			title = "Evade";
+			headerText = "Awww";
+			contentText = "The assassin has evaded your attack! what a lucky bastard!!";
 		}
 		else {
 	    	headerText = "Your character is " + (reason == "Stun" ? "Stunned" : "Frozen");

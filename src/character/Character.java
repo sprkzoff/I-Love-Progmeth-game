@@ -3,8 +3,11 @@ package character;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
+
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import logic.Main;
 
 public abstract class Character {
 	private int atk;
@@ -169,7 +172,15 @@ public abstract class Character {
 	
 	public int attackByEnemy(int damage)
 	{
-		if(isFreeze()) damage = damage / 2;
+		if(this instanceof Assassin) {
+			Random random = new Random();
+			int ran = random.nextInt(100);
+			if(ran < Assassin.EVADE_CHANCE) {
+				Main.throwAlert(this, "Evade");
+				return 0;
+			}
+		}
+		if(this.isBleed()) damage *= 2;
 		if((this.getHp()-damage <= 0))
 		{
 			this.setHp(0);
