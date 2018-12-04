@@ -50,6 +50,7 @@ public class CharacterSelectionPane extends Stage {
 	
 	public CharacterSelectionPane() {
 		root = new GridPane();
+		root.getStylesheets().add(getClass().getResource("\\..\\logic\\application.css").toExternalForm());
 		root.setAlignment(Pos.CENTER);
 		
 		player1Characters = new ArrayList<String>();

@@ -35,14 +35,14 @@ public class CharacterPane extends VBox {
 	public CharacterPane(ArrayList<Character> characters) {
 		//setAlignment(Pos.CENTER);
 		this.characters = characters;
-		
+		getStylesheets().add(getClass().getResource("\\..\\logic\\application.css").toExternalForm());
 		setPrefWidth(450);
 		setPadding(new Insets(15));
 		setSpacing(10);
 		
 		characterFields = new ArrayList<CharacterField>();
 		
-		setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		setBorder(new Border(new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		setBackground(new Background(new BackgroundFill(Color.IVORY, null, null)));
 		for(int i = 0; i < characters.size(); i++) {
 			CharacterField characterField = new CharacterField(characters.get(i));

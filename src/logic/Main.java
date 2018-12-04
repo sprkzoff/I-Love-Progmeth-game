@@ -60,6 +60,7 @@ public class Main extends Application{
 		
 		GridPane root = new GridPane();
 		root.setAlignment(Pos.CENTER);
+		root.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 		
 		
 		select = new CharacterSelectionPane();
