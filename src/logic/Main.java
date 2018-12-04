@@ -174,6 +174,25 @@ public class Main extends Application{
 			    	}
 		    		if(!success) throwAlert(character, "Not enough mana");
 		    	}
+		    	
+		    	else if(character instanceof Healer) {
+		    		Healer healer = (Healer)character;
+		    		if(skillName == "Heal") {
+		    			selectedCharacter = selectFriendlyTarget(character);
+		    			success = healer.heal(selectedCharacter);
+		    			if(!success) throwAlert(character, "Your friend is dead");
+			    	}
+			    	else if(skillName == "Cleansing") {
+			    		selectedCharacter = selectFriendlyTarget(character);
+			    		success = healer.cleansing(selectedCharacter);
+			    		if(!success) throwAlert(character, "No debuff");
+			    	}
+			    	else if(skillName == "Hands Of God") {
+			    		success = healer.handsOfGod(getFriendlyTargetCharacters());
+			    		if(!success) throwAlert(character, "Full HP");
+			    	}
+		    	}
+		    	
 		    	if(success == true) runGameLoop();
 		    }
 		    
@@ -195,21 +214,34 @@ public class Main extends Application{
 	}
 	
 	private void throwAlert(Character character, String reason) {
+		String title = "Caution";
+		String headerText = "you're so noob";
+		String contentText = "ggez";
+		Alert alert = new Alert(AlertType.INFORMATION);
 		if(reason == "Not enough mana") {
-			Alert alert = new Alert(AlertType.INFORMATION);
-	    	alert.setTitle("Caution");
-	    	alert.setHeaderText("Not Enough Mana!");
-	    	alert.setContentText("You need more mana to activate that skill");
-	    	alert.showAndWait();
+	    	headerText = "Not Enough Mana!";
+	    	contentText = "You need more mana to activate that skill";
+		}
+		else if(reason == "Your friend is dead") {
+			headerText = "You can't heal that target";
+			contentText = "The character you chose is already dead, please choose to heal someone else";
+		}
+		else if(reason == "No debuff") {
+			headerText = "You can't cleanse that target";
+			contentText = "The character you chose has no debuff, no need to cleanse him/her!!!";
+		}
+		else if(reason == "Full HP") {
+			headerText = "All of your character is still at full HP";
+			contentText = "Don't use that skill you fool!";
 		}
 		else {
-			Alert alert = new Alert(AlertType.INFORMATION);
-	    	alert.setTitle("Your character is " + (reason == "Stun" ? "Stunned" : "Frozen"));
-	    	alert.setHeaderText("Notice!!");
-	    	alert.setContentText(character.getInstance() + " is " + (reason == "Stun" ? "stunned" : "frozen") + ". Sadly, he/she won't be able to act this turn.");
-	    	alert.showAndWait();
+	    	headerText = "Your character is " + (reason == "Stun" ? "Stunned" : "Frozen");
+	    	contentText = character.getInstance() + " is " + (reason == "Stun" ? "stunned" : "frozen") + ". Sadly, he/she won't be able to act this turn.";
 		}
-		
+		alert.setTitle(title);
+    	alert.setHeaderText(headerText);
+    	alert.setContentText(contentText);
+    	alert.showAndWait();
 	}
 	
 	private void handleHpBar(Character selectedCharacter) {
@@ -237,6 +269,10 @@ public class Main extends Application{
 		return turnNumber % 2 == 1 ? player1Characters : player2Characters;
 	}
 	
+	private ArrayList<Character> getFriendlyTargetCharacters(){
+		return turnNumber % 2 == 0 ? player1Characters : player2Characters;
+	}
+	
 	public Character selectTarget(Character character) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
     	alert.setTitle("Select your target");
@@ -250,6 +286,36 @@ public class Main extends Application{
     	}
     	else {
     		targets = player1Characters;
+    	}
+    	ButtonType t1 = new ButtonType(targets.get(0).getInstance());
+    	ButtonType t2 = new ButtonType(targets.get(1).getInstance());
+    	ButtonType t3 = new ButtonType(targets.get(2).getInstance());
+
+    	alert.getButtonTypes().setAll(t1, t2, t3);
+
+    	Optional<ButtonType> result = alert.showAndWait();
+    	
+    	Character returnCharacter;
+    	if (result.get() == t1) returnCharacter = targets.get(0);
+    	else if (result.get() == t2) returnCharacter = targets.get(1);
+    	else returnCharacter = targets.get(2);
+    	
+    	return returnCharacter;
+	}
+	
+	public Character selectFriendlyTarget(Character character) {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+    	alert.setTitle("Select your target");
+    	alert.setHeaderText("Which target do you prefer to attack on?");
+    	alert.setContentText("Choose your option.");
+    	
+    	ArrayList<Character> targets = new ArrayList<Character>();
+    	
+    	if(turnNumber % 2 == 0) { // player 1's turn
+    		targets = player1Characters;
+    	}
+    	else {
+    		targets = player2Characters;
     	}
     	ButtonType t1 = new ButtonType(targets.get(0).getInstance());
     	ButtonType t2 = new ButtonType(targets.get(1).getInstance());
