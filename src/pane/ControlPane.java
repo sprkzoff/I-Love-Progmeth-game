@@ -42,15 +42,21 @@ public class ControlPane extends GridPane {
 				CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		setBackground(new Background(new BackgroundFill(Color.IVORY, null, null)));
 		buttons = new ArrayList<Button>();
+		// Attack button
+		
 		String skillName = "Attack";
 		Button b = new Button(skillName);
 		b.setPrefWidth(400);
+		b.getStylesheets().add(getClass().getResource("skillbuttonstyle.css").toExternalForm());
 		add(b, 0, 0);
 		buttons.add(b);
+		
+		//skill button
 		for(int i = 0; i < character.getSkillNames().size(); i++) {
 			skillName = character.getSkillNames().get(i);
 			Button skillButton = new Button(skillName);
 			skillButton.setPrefWidth(400);
+			skillButton.getStylesheets().add(getClass().getResource("skillbuttonstyle.css").toExternalForm());
 			buttons.add(skillButton);
 			if(i == 0) add(skillButton, 1, 0);
 			else if(i == 1) add(skillButton, 0, 1);
