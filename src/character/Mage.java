@@ -32,8 +32,8 @@ public class Mage extends Character {
 	}
 	public boolean chaosMeteor(ArrayList<Character> characters) { //deal dmg to all enemy and set burn on them, deal additional dmg if they're already burned
 		int damage = this.getAtk();
-		if(this.getMp() < 101) return false;
-		this.mp -= 101;
+		if(this.getMp() < 30) return false;
+		this.mp -= 30;
 		for(int i = 0; i < characters.size(); i++) {
 			Character temp = characters.get(i);
 			if(!temp.isDead()) {

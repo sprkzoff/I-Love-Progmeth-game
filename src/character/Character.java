@@ -181,4 +181,8 @@ public abstract class Character {
 		}
 		return damage;
 	}
+	
+	public boolean isAffectedByStatus() {
+		return burn > 0 || freeze > 0 || stun > 0 || bleed > 0;
+	}
 }
