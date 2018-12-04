@@ -54,7 +54,7 @@ public class Main extends Application{
 	
 	public int turnNumber = 0;
 	
-	private static int FREEZING_CHANCE = 30;
+	private final static int FREEZING_CHANCE = 30;
 	
 	@Override
 	public void start(Stage primaryStage) {
@@ -142,8 +142,20 @@ public class Main extends Application{
 		    	Character selectedCharacter;
 		    	boolean success = true;
 		    	if(skillName == "Attack") {
-		    		selectedCharacter = selectTarget(character);
-		    		selectedCharacter.attackByEnemy(character.getAtk());
+		    		if(character instanceof Archer) {
+		    			boolean check;
+		    			Archer archer = (Archer)character;
+		    			selectedCharacter = selectTarget(character);
+		    			check = archer.attackWithCritical(selectedCharacter);
+		    			if(archer.isFocus()) {
+		    				archer.setFocus(archer.getFocus() - 1);
+		    			}
+		    			if(check) throwAlert(character, "Critical");
+		    		}
+		    		else {
+		    			selectedCharacter = selectTarget(character);
+			    		selectedCharacter.attackByEnemy(character.getAtk());
+		    		}
 
 		    	}
 		    	else if(character instanceof Warrior) {
@@ -209,6 +221,14 @@ public class Main extends Application{
 		    	
 		    	else if(character instanceof Archer) {
 		    		Archer archer = (Archer)character;
+		    		if(skillName == "Focus Shot") { //did not implement focus mechanic yet
+		    			success = archer.focusShot();
+		    			if(!success) throwAlert(character, "Is already focused");
+		    		}
+		    		else if(skillName == "Knockback") { 
+		    			selectedCharacter = selectTarget(character);
+		    			archer.Knockback(selectedCharacter);
+		    		}
 		    	}
 		    	
 		    	if(success == true) runGameLoop();
@@ -228,6 +248,8 @@ public class Main extends Application{
 			if(c2.getOwner() instanceof Mage) {
 				c2.updateMp();
 			}
+			if(c1.getOwner() instanceof Archer) c1.updateFocus();
+			if(c2.getOwner() instanceof Archer) c2.updateFocus();
 		}
 	}
 	
@@ -256,10 +278,19 @@ public class Main extends Application{
 			headerText = "The target is already bleeded";
 			contentText = "The character you chose is already bleed, please choose to attack someone else";
 		}
+		else if(reason == "Is already focused") {
+			headerText = "Already Focused";
+			contentText = "This character is already focused!!!";
+		}
 		else if(reason == "Evade") {
 			title = "Evade";
 			headerText = "Awww";
 			contentText = "The assassin has evaded your attack! what a lucky bastard!!";
+		}
+		else if(reason == "Critical") {
+			title = "Success!";
+			headerText = "Critical Hit!";
+			contentText = "Your archer has landed a critical hit, nice job!";
 		}
 		else {
 	    	headerText = "Your character is " + (reason == "Stun" ? "Stunned" : "Frozen");
@@ -366,6 +397,7 @@ public class Main extends Application{
 			if(select.getPlayer1Characters().get(i) == "Mage") player1Characters.add(new Mage()); 
 			if(select.getPlayer1Characters().get(i) == "Assassin") player1Characters.add(new Assassin()); 
 			if(select.getPlayer1Characters().get(i) == "Healer") player1Characters.add(new Healer()); 
+			if(select.getPlayer1Characters().get(i) == "Archer") player1Characters.add(new Archer()); 
 		}
 	}
 	
@@ -375,6 +407,7 @@ public class Main extends Application{
 			if(select.getPlayer2Characters().get(i) == "Mage") player2Characters.add(new Mage()); 
 			if(select.getPlayer2Characters().get(i) == "Assassin") player2Characters.add(new Assassin()); 
 			if(select.getPlayer2Characters().get(i) == "Healer") player2Characters.add(new Healer()); 
+			if(select.getPlayer1Characters().get(i) == "Archer") player2Characters.add(new Archer()); 
 		}
 	}
 	

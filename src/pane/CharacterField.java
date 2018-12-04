@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.event.ChangeListener;
 
+import character.Archer;
 import character.Character;
 import character.Mage;
 import javafx.scene.control.TextField;
@@ -28,6 +29,7 @@ public class CharacterField extends GridPane {
 	private Text name;
 	private Text hp;
 	private Text mp;
+	private Text focus;
 	private Text stun;
 	private Text freeze;
 	private Text burn;
@@ -64,6 +66,10 @@ public class CharacterField extends GridPane {
 			mpBar.setPrefHeight(18);
 			add(mpBar, 1, 1);
 			add(mp, 2, 1);
+		}
+		if(character instanceof Archer) {
+			focus = new Text("Focus: 0");
+			add(focus, 1, 1);
 		}
 		getStylesheets().add(getClass().getResource("progress.css").toExternalForm());
 	}
@@ -113,6 +119,11 @@ public class CharacterField extends GridPane {
 		Mage mage = (Mage)owner;
 		this.mp.setText(" " + Integer.toString(mage.getMp()) + "/100");
 		mpBar.setProgress((double)mage.getMp() / (double)100);
+	}
+	
+	public void updateFocus() {
+		Archer archer = (Archer)owner;
+		this.focus.setText("Focus: " + Integer.toString(archer.getFocus()));
 	}
 	public void setBackground() {
 		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
