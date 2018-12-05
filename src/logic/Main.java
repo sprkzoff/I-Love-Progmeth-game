@@ -50,7 +50,8 @@ public class Main extends Application{
 	private TextPane textPane;
 	private CharacterSelectionPane select;
 	
-	private MusicPlayer PROOF_OF_A_HERO = new MusicPlayer("resources/001.wav");
+	private static MusicPlayer PROOF_OF_A_HERO = new MusicPlayer("resources/001.wav");
+	private static MusicPlayer KUSHALA = new MusicPlayer("resources/Kushala.wav");
 	
 	public int turnNumber = 0;
 	
@@ -68,6 +69,7 @@ public class Main extends Application{
 		PROOF_OF_A_HERO.start();
 		select.showAndWait();
 		if(!select.isReady()) System.exit(1);
+		PROOF_OF_A_HERO.doStop();
 		
 		addCharactersForPlayer1();
 		addCharactersForPlayer2();
@@ -102,11 +104,13 @@ public class Main extends Application{
 		
 		controlPanes.get(0).setVisible(true);
 		
-		Scene scene = new Scene(root);
-		primaryStage.setTitle("I love Progmeth"); // Set the stage title
-		primaryStage.setScene(scene); // Place the scene
-		primaryStage.show();
 		
+		
+		Scene scene = new Scene(root);
+		primaryStage.setTitle("I love Progmeth");
+		primaryStage.setScene(scene);
+		primaryStage.show();
+		KUSHALA.start();
 	}
 	
 	private void runGameLoop() {
