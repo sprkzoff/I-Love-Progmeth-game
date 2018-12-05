@@ -23,6 +23,7 @@ import pane.CharacterField;
 import pane.CharacterPane;
 import pane.CharacterSelectionPane;
 import pane.ControlPane;
+import pane.LandingPane;
 import pane.TextPane;
 import utility.MusicPlayer;
 
@@ -53,7 +54,7 @@ public class Main extends Application{
 	private ArrayList<CharacterField> characterFields;
 	private TextPane textPane;
 	private CharacterSelectionPane select;
-	
+	private LandingPane landing;
 	private static MusicPlayer PROOF_OF_A_HERO = new MusicPlayer("resources/001.wav");
 	private static MusicPlayer KUSHALA = new MusicPlayer("resources/Kushala.wav");
 	
@@ -68,8 +69,9 @@ public class Main extends Application{
 		GridPane root = new GridPane();
 		root.setAlignment(Pos.CENTER);
 		root.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		
-		
+		landing = new LandingPane();
+		landing.showAndWait();
+		if(!landing.isReady()) System.exit(1);
 		select = new CharacterSelectionPane();
 		PROOF_OF_A_HERO.start();
 		select.showAndWait();
