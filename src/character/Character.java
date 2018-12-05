@@ -13,6 +13,7 @@ public abstract class Character {
 	private int atk;
 	private int hp;
 	private ImageView imageView;
+	private ImageView deadImage;
 	
 	private ArrayList<String> buffs;
 	private ArrayList<String> debuffs;
@@ -21,6 +22,7 @@ public abstract class Character {
 	private int freeze;
 	private int burn;
 	private int bleed;
+	private int shield;
 	public final int MAX_HP;
 	
 	private ArrayList<String> skillNames;
@@ -149,10 +151,21 @@ public abstract class Character {
 			Image image = new Image(input, 400, 150 , false, false);
 			imageView = new ImageView(image);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+	}
+	public void setDeadImage(String url) {
+		FileInputStream input;
+		try {
+			input = new FileInputStream(url);
+			Image image = new Image(input, 400, 150 , false, false);
+			deadImage = new ImageView(image);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	public ImageView getDeadImage() {
+		return deadImage;
 	}
 	public ImageView getImage() {
 		return imageView;
@@ -180,7 +193,8 @@ public abstract class Character {
 				return 0;
 			}
 		}
-		if(this.isBleed()) damage *= 2;
+		if(this.isBleed()) damage *= 1.5;
+		if(this.isShield()) damage /= 2;
 		if((this.getHp()-damage <= 0))
 		{
 			this.setHp(0);
@@ -195,5 +209,17 @@ public abstract class Character {
 	
 	public boolean isAffectedByStatus() {
 		return burn > 0 || freeze > 0 || stun > 0 || bleed > 0;
+	}
+	
+	public boolean isShield() {
+		return shield > 0;
+	}
+	
+	public void setShield(int shield) {
+		this.shield = shield;
+	}
+	
+	public int getShield() {
+		return shield;
 	}
 }

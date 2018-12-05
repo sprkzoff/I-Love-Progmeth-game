@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 public class Healer extends Character {
 	public static int MAX_HP=800;
-	private static final int HEALING_POWER = 600;
-	private static final int ALL_HEAL_HEALING_POWER = 300;
+	private static final int HEALING_POWER = 400;
+	private static final int ALL_HEAL_HEALING_POWER = 200;
 	public Healer() {
 		super(100,1000);
 		setImage("resources/druid.jpg");
+		setDeadImage("resources/druid_dead.jpg");
 		setSkillNames("Heal", "Cleansing", "Hands Of God");
 	}
 	public boolean heal(Character friend)
@@ -47,6 +48,7 @@ public class Healer extends Character {
 		}
 		return success;
 	}
+	
 	@Override
 	public String getInstance() {
 		return "Healer";

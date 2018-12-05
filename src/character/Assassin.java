@@ -8,8 +8,9 @@ public class Assassin extends Character {
 	private boolean Stealth;
 	public static final int EVADE_CHANCE = 30;
 	public Assassin() {
-		super(150,900);
+		super(200,900);
 		setImage("resources/assassin.jpg");
+		setDeadImage("resources/assassin_dead.jpg");
 		setSkillNames("Stealth Attack", "Evade", "Bleeding Blade");
 		Stealth = false;
 	}
@@ -22,10 +23,11 @@ public class Assassin extends Character {
 	
 	public boolean stealthAttack(Character enemy)
 	{
-		int damage = 300;
-		if(((enemy.getHp())/enemy.MAX_HP)*100 < 35.0) // if HP < 35% -> set assassin dmg*3
+		int damage = (int) (this.getAtk() * 1.5);
+		if((double) enemy.getHp() / (double) enemy.getMaxHp() <= 0.35) // if HP < 35% -> set assassin dmg*3
 		{
-			enemy.attackByEnemy(damage*3);
+			enemy.attackByEnemy(damage*2);
+			
 		}
 		else
 		{
@@ -42,14 +44,15 @@ public class Assassin extends Character {
 	
 	public boolean bleedingBlade(Character enemy) //when attack bleeding enemy plus 100dmg && set enemy bleed to false
 	{
+		int damage = this.getAtk();
+		enemy.attackByEnemy(damage);
 		if(!enemy.isBleed())
 		{
-			enemy.setBleed(1);
+			enemy.setBleed(2);
 			return true;
 		}
 		else
 		{
-			System.out.println("Enemy is already bleed!!!");
 			return false;
 		}
 	}

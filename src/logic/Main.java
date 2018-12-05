@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
@@ -18,6 +19,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
+import pane.CharacterField;
 import pane.CharacterPane;
 import pane.CharacterSelectionPane;
 import pane.ControlPane;
@@ -36,6 +38,7 @@ import javax.sound.sampled.Clip;
 import character.Archer;
 import character.Assassin;
 import character.Character;
+import character.Guardian;
 import character.Healer;
 import character.Mage;
 import character.Warrior;
@@ -47,6 +50,7 @@ public class Main extends Application{
 	private CharacterPane characterPane1;
 	private CharacterPane characterPane2;
 	private ArrayList<ControlPane> controlPanes;
+	private ArrayList<CharacterField> characterFields;
 	private TextPane textPane;
 	private CharacterSelectionPane select;
 	
@@ -55,8 +59,9 @@ public class Main extends Application{
 	
 	public int turnNumber = 0;
 	
-	private final static int FREEZING_CHANCE = 30;
-	
+	private final static int FREEZING_CHANCE = 20;
+	private final static int BURN_AMOUNT = 50;
+	private boolean cancelStatus = false;
 	@Override
 	public void start(Stage primaryStage) {
 		
@@ -102,8 +107,14 @@ public class Main extends Application{
 			root.add(controlPanes.get(i), 0, 2, 3, 2);
 		}
 		
-		controlPanes.get(0).setVisible(true);
+		characterFields = new ArrayList<CharacterField>();
+		for(int i = 0; i < 3; i++) {
+			characterFields.add(characterPane1.getCharacterFields().get(i));
+			characterFields.add(characterPane2.getCharacterFields().get(i));
+		}
 		
+		controlPanes.get(0).setVisible(true);
+		characterPane1.getCharacterFields().get(0).setBackground(true);
 		
 		
 		Scene scene = new Scene(root);
@@ -121,23 +132,43 @@ public class Main extends Application{
 			if(mage.getMp() < 100) mage.updateMage();
 		}
 		handleCharacterField();
+		
 		controlPanes.get(turnNumber % 6).setVisible(true);
 		controlPanes.get((turnNumber - 1) % 6).setVisible(false);
+		
+		if(current.isBleed()) current.setBleed(current.getBleed() - 1);
+		if(current.isShield()) current.setShield(current.getShield() - 1);
+		if(current.isBurn() || !current.isDead()) {
+			current.setBurn(current.getBurn() - 1);
+			current.setHp(current.getHp() - BURN_AMOUNT);
+			if(current.getHp() < 0) {
+				 current.setHp(0);
+				 current.setDead(true);
+			}
+		}
+		if(current.isDead()) {
+			handleCharacterField();
+			runGameLoop();
+		}
 		if(current.isStun()) {
 			current.setStun(current.getStun() - 1);
 			throwAlert(current, "Stun");
+			handleCharacterField();
 			runGameLoop();
 		}
+		
 		else if(current.isFreeze()) {
 			current.setFreeze(current.getFreeze()-1);
 			Random r = new Random();
 			int ran = r.nextInt(100);
-			if(ran >= FREEZING_CHANCE) {
+			if(ran <= FREEZING_CHANCE) {
 				throwAlert(current, "Frozen");
+				handleCharacterField();
 				runGameLoop();
 			}
-			
 		}
+		characterPane1.update();
+		characterPane2.update();
 	}
 	
 	private void setEvent(Button b, String skillName, Character character) {
@@ -151,6 +182,7 @@ public class Main extends Application{
 		    			boolean check;
 		    			Archer archer = (Archer)character;
 		    			selectedCharacter = selectTarget(character);
+		    			if(selectedCharacter == null) return;
 		    			check = archer.attackWithCritical(selectedCharacter);
 		    			if(archer.isFocus()) {
 		    				archer.setFocus(archer.getFocus() - 1);
@@ -159,6 +191,7 @@ public class Main extends Application{
 		    		}
 		    		else {
 		    			selectedCharacter = selectTarget(character);
+		    			if(selectedCharacter == null) return;
 			    		selectedCharacter.attackByEnemy(character.getAtk());
 		    		}
 
@@ -170,10 +203,12 @@ public class Main extends Application{
 			    	}
 			    	else if(skillName == "Direct Strike") {
 			    		selectedCharacter = selectTarget(character);
+			    		if(selectedCharacter == null) return;
 			    		warrior.directStrike(selectedCharacter);
 			    	}
 			    	else if(skillName == "Berserk") {
 			    		selectedCharacter = selectTarget(character);
+			    		if(selectedCharacter == null) return;
 			    		warrior.berserk(selectedCharacter);
 			    	}
 		    	}
@@ -188,6 +223,7 @@ public class Main extends Application{
 			    	}
 			    	else if(skillName == "Detonate") {
 			    		selectedCharacter = selectTarget(character);
+			    		if(selectedCharacter == null) return;
 			    		success = mage.detonate(selectedCharacter);
 			    	}
 		    		if(!success) throwAlert(character, "Not enough mana");
@@ -197,11 +233,13 @@ public class Main extends Application{
 		    		Healer healer = (Healer)character;
 		    		if(skillName == "Heal") {
 		    			selectedCharacter = selectFriendlyTarget(character);
+		    			if(selectedCharacter == null) return;
 		    			success = healer.heal(selectedCharacter);
 		    			if(!success) throwAlert(character, "Your friend is dead");
 			    	}
 			    	else if(skillName == "Cleansing") {
 			    		selectedCharacter = selectFriendlyTarget(character);
+			    		if(selectedCharacter == null) return;
 			    		success = healer.cleansing(selectedCharacter);
 			    		if(!success) throwAlert(character, "No debuff");
 			    	}
@@ -215,10 +253,12 @@ public class Main extends Application{
 		    		Assassin assassin = (Assassin)character;
 		    		if(skillName == "Stealth Attack") {
 		    			selectedCharacter = selectTarget(character);
+		    			if(selectedCharacter == null) return;
 		    			assassin.stealthAttack(selectedCharacter);
 		    		}
 		    		else if(skillName == "Bleeding Blade") {
 		    			selectedCharacter = selectTarget(character);
+		    			if(selectedCharacter == null) return;
 		    			success = assassin.bleedingBlade(selectedCharacter);
 		    			if(!success) throwAlert(character, "Is already bleeding");
 		    		}
@@ -226,17 +266,36 @@ public class Main extends Application{
 		    	
 		    	else if(character instanceof Archer) {
 		    		Archer archer = (Archer)character;
-		    		if(skillName == "Focus Shot") { //did not implement focus mechanic yet
+		    		if(skillName == "Focus Shot") { 
 		    			success = archer.focusShot();
 		    			if(!success) throwAlert(character, "Is already focused");
 		    		}
 		    		else if(skillName == "Knockback") { 
 		    			selectedCharacter = selectTarget(character);
+		    			if(selectedCharacter == null) return;
 		    			archer.Knockback(selectedCharacter);
 		    		}
 		    	}
 		    	
-		    	if(success == true) runGameLoop();
+		    	else if(character instanceof Guardian) {
+		    		Guardian guardian = (Guardian)character;
+		    		if(skillName == "Merciful Intervention") {
+		    			success = guardian.mercifulIntervention(getFriendlyTargetCharacters());
+		    			if(!success) throwAlert(character, "No debuff and already at full HP");
+		    		}
+		    		else if(skillName == "Shield of Courage") {
+		    			selectedCharacter = selectTarget(character);
+		    			Character friendlySelectedCharacter = selectFriendlyTarget(character);
+		    			if(selectedCharacter == null || friendlySelectedCharacter == null) return;
+		    			guardian.shieldOfCourage(selectedCharacter, friendlySelectedCharacter);
+		    		}
+		    		else if(skillName == "Echo of Liberation") {
+		    			success = guardian.echoOfLiberation(getTargetCharacters());
+		    			if(!success) throwAlert(character, "No virtues");
+		    		}
+		    	}
+		    	
+		    	if(success) runGameLoop();
 		    }
 		    
 		});
@@ -256,6 +315,8 @@ public class Main extends Application{
 			if(c1.getOwner() instanceof Archer) c1.updateFocus();
 			if(c2.getOwner() instanceof Archer) c2.updateFocus();
 		}
+		characterFields.get(turnNumber % 6).setBackground(true);
+		characterFields.get((turnNumber - 1) % 6).setBackground(false);
 	}
 	
 	public static void throwAlert(Character character, String reason) {
@@ -296,6 +357,19 @@ public class Main extends Application{
 			title = "Success!";
 			headerText = "Critical Hit!";
 			contentText = "Your archer has landed a critical hit, nice job!";
+		}
+		else if(reason == "Stun") {
+			title = "Success!";
+			headerText = "Stunned!";
+			contentText = "Quick! use this chance to wipe the enemy out";
+		}
+		else if(reason == "No debuff and already at full HP") {
+			headerText = "Am I a joke to you?";
+			contentText = "Why would you wanna heal and cleanse debuff when all of your teammate's HP is already full and doesn't affected by any debuff at all!!!";
+		}
+		else if(reason == "No virtues") {
+			headerText = "Not enough virtues";
+			contentText = "You have no virtues to perform this attack!";
 		}
 		else {
 	    	headerText = "Your character is " + (reason == "Stun" ? "Stunned" : "Frozen");
@@ -338,9 +412,9 @@ public class Main extends Application{
 	
 	public Character selectTarget(Character character) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-    	alert.setTitle("Select your target");
-    	alert.setHeaderText("Which target do you prefer to attack on?");
-    	alert.setContentText("Choose your option.");
+		alert.setTitle("Select your HOSTILE target");
+    	alert.setHeaderText("Choose your option.");
+    	alert.setContentText("Which enemy do you prefer to use your skill on?");
     	
     	ArrayList<Character> targets = new ArrayList<Character>();
     	
@@ -353,24 +427,26 @@ public class Main extends Application{
     	ButtonType t1 = new ButtonType(targets.get(0).getInstance());
     	ButtonType t2 = new ButtonType(targets.get(1).getInstance());
     	ButtonType t3 = new ButtonType(targets.get(2).getInstance());
-
-    	alert.getButtonTypes().setAll(t1, t2, t3);
+    	ButtonType cancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+    	
+    	alert.getButtonTypes().setAll(t1, t2, t3, cancel);
 
     	Optional<ButtonType> result = alert.showAndWait();
     	
     	Character returnCharacter;
     	if (result.get() == t1) returnCharacter = targets.get(0);
     	else if (result.get() == t2) returnCharacter = targets.get(1);
-    	else returnCharacter = targets.get(2);
+    	else if (result.get() == t3) returnCharacter = targets.get(2);
+    	else return null;
     	
     	return returnCharacter;
 	}
 	
 	public Character selectFriendlyTarget(Character character) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
-    	alert.setTitle("Select your target");
-    	alert.setHeaderText("Which target do you prefer to attack on?");
-    	alert.setContentText("Choose your option.");
+    	alert.setTitle("Select your FRIENDLY target");
+    	alert.setHeaderText("Choose your option.");
+    	alert.setContentText("Which ally do you prefer to use your skill on?");
     	
     	ArrayList<Character> targets = new ArrayList<Character>();
     	
@@ -383,8 +459,8 @@ public class Main extends Application{
     	ButtonType t1 = new ButtonType(targets.get(0).getInstance());
     	ButtonType t2 = new ButtonType(targets.get(1).getInstance());
     	ButtonType t3 = new ButtonType(targets.get(2).getInstance());
-
-    	alert.getButtonTypes().setAll(t1, t2, t3);
+    	ButtonType cancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+    	alert.getButtonTypes().setAll(t1, t2, t3, cancel);
 
     	Optional<ButtonType> result = alert.showAndWait();
     	
@@ -403,6 +479,7 @@ public class Main extends Application{
 			if(select.getPlayer1Characters().get(i) == "Assassin") player1Characters.add(new Assassin()); 
 			if(select.getPlayer1Characters().get(i) == "Healer") player1Characters.add(new Healer()); 
 			if(select.getPlayer1Characters().get(i) == "Archer") player1Characters.add(new Archer()); 
+			if(select.getPlayer1Characters().get(i) == "Guardian") player1Characters.add(new Guardian()); 
 		}
 	}
 	
@@ -412,7 +489,8 @@ public class Main extends Application{
 			if(select.getPlayer2Characters().get(i) == "Mage") player2Characters.add(new Mage()); 
 			if(select.getPlayer2Characters().get(i) == "Assassin") player2Characters.add(new Assassin()); 
 			if(select.getPlayer2Characters().get(i) == "Healer") player2Characters.add(new Healer()); 
-			if(select.getPlayer1Characters().get(i) == "Archer") player2Characters.add(new Archer()); 
+			if(select.getPlayer2Characters().get(i) == "Archer") player2Characters.add(new Archer()); 
+			if(select.getPlayer2Characters().get(i) == "Guardian") player2Characters.add(new Guardian()); 
 		}
 	}
 	

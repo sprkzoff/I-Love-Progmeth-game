@@ -8,6 +8,7 @@ public class Mage extends Character {
 	public Mage() {
 		super(150, 700);
 		setImage("resources/mage.jpg");
+		setDeadImage("resources/mage_dead.jpg");
 		setSkillNames("Freezing Field", "Chaos Meteor", "Detonate");
 		this.mp = 100;
 	}
@@ -19,8 +20,8 @@ public class Mage extends Character {
 	}
 	public boolean freezingField(ArrayList<Character> characters) { //AoE cc with moderate amount of dmg
 		int damage = this.getAtk();
-		if(this.getMp() < 25) return false;
-		this.mp -= 25;
+		if(this.getMp() < 40) return false;
+		this.mp -= 40;
 		for(int i = 0; i < characters.size(); i++) {
 			Character temp = characters.get(i);
 			if(!(temp instanceof Mage) && !temp.isDead()) {
@@ -61,6 +62,7 @@ public class Mage extends Character {
 		this.mp += 15;
 		if(this.mp > 100) this.mp = 100;
 	}
+	
 	@Override
 	public String getInstance() {
 		return "Mage";

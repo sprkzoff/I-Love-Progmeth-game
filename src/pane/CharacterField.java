@@ -10,6 +10,7 @@ import javax.swing.event.ChangeListener;
 
 import character.Archer;
 import character.Character;
+import character.Guardian;
 import character.Mage;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Background;
@@ -34,6 +35,9 @@ public class CharacterField extends GridPane {
 	private Text freeze;
 	private Text burn;
 	private Text bleed;
+	private Text shield;
+	private Text virtues;
+	private ColoredProgressBar virtuesBar;
 	private ColoredProgressBar hpBar;
 	private ColoredProgressBar mpBar;
 	private Character owner;
@@ -49,6 +53,7 @@ public class CharacterField extends GridPane {
 		freeze = new Text("Freeze: 0");
 		burn = new Text("Burn: 0");
 		bleed = new Text("Bleed: 0");
+		shield = new Text("Shield: 0");
 		hpBar = new ColoredProgressBar("green-bar",1);
 		hpBar.setPrefWidth(100);
 		hpBar.setPrefHeight(18);
@@ -59,6 +64,7 @@ public class CharacterField extends GridPane {
 		add(freeze, 4, 0);
 		add(burn, 3, 1);
 		add(bleed, 4, 1);
+		add(shield, 5, 0);
 		if(character instanceof Mage) {
 			mp = new Text(" 100/100");
 			mpBar = new ColoredProgressBar("blue-bar",1);
@@ -70,6 +76,14 @@ public class CharacterField extends GridPane {
 		if(character instanceof Archer) {
 			focus = new Text("Focus: 0");
 			add(focus, 1, 1);
+		}
+		if(character instanceof Guardian) {
+			virtues = new Text(" 150/500");
+			virtuesBar = new ColoredProgressBar("skyblue-bar", 0.3);
+			virtuesBar.setPrefWidth(100);
+			virtuesBar.setPrefHeight(18);
+			add(virtuesBar, 1, 1);
+			add(virtues, 2, 1);
 		}
 		getStylesheets().add(getClass().getResource("progress.css").toExternalForm());
 	}
@@ -113,6 +127,12 @@ public class CharacterField extends GridPane {
 		this.freeze.setText("Freeze: " + Integer.toString(owner.getFreeze()));
 		this.burn.setText("Burn: " + Integer.toString(owner.getBurn()));
 		this.bleed.setText("Bleed: " + Integer.toString(owner.getBleed()));
+		this.shield.setText("Shield: " + Integer.toString(owner.getShield()));
+		if(owner instanceof Guardian) {
+			Guardian guardian = (Guardian)owner;
+			this.virtues.setText(" " + Integer.toString(guardian.getVirtues()) + "/500");
+			virtuesBar.setProgress((double)guardian.getVirtues() / (double)500);
+		}
 	}
 	
 	public void updateMp() {
@@ -125,8 +145,9 @@ public class CharacterField extends GridPane {
 		Archer archer = (Archer)owner;
 		this.focus.setText("Focus: " + Integer.toString(archer.getFocus()));
 	}
-	public void setBackground() {
-		setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
+	public void setBackground(boolean b) {
+		if(b) setBackground(new Background(new BackgroundFill(Color.PINK, null, null)));
+		else setBackground(new Background(new BackgroundFill(Color.TRANSPARENT, null, null)));
 	}
 }
 

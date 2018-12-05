@@ -3,8 +3,10 @@ package pane;
 import java.util.ArrayList;
 import java.util.Optional;
 
+import character.Character;
 import character.Archer;
 import character.Assassin;
+import character.Guardian;
 import character.Healer;
 import character.Mage;
 import character.Warrior;
@@ -18,6 +20,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
@@ -33,6 +37,7 @@ public class CharacterSelectionPane extends Stage {
 	private Button healerButton;
 	private Button assassinButton;
 	private Button archerButton;
+	private Button guardianButton;
 	
 	private TextField textField;
 	private TextField player1Field;
@@ -45,6 +50,7 @@ public class CharacterSelectionPane extends Stage {
 	private Healer healer = new Healer();
 	private Assassin assassin = new Assassin();
 	private Archer archer = new Archer();
+	private Guardian guardian = new Guardian();
 	
 	private Label l1;
 	private Label l2;
@@ -54,7 +60,7 @@ public class CharacterSelectionPane extends Stage {
 	public CharacterSelectionPane() {
 		root = new GridPane();
 		root.getStylesheets().add(getClass().getResource("\\..\\logic\\application.css").toExternalForm());
-		root.setAlignment(Pos.CENTER);
+		root.setAlignment(Pos.CENTER_RIGHT);
 		
 		player1Characters = new ArrayList<String>();
 		player2Characters = new ArrayList<String>();
@@ -65,18 +71,21 @@ public class CharacterSelectionPane extends Stage {
 		healerButton = new Button();
 		assassinButton = new Button();
 		archerButton = new Button();
+		guardianButton = new Button();
 		
 		setEvent(warriorButton, warrior);
 		setEvent(mageButton, mage);
 		setEvent(healerButton, healer);
 		setEvent(assassinButton, assassin);
 		setEvent(archerButton, archer);
+		setEvent(guardianButton, guardian);
 		
 		warriorButton.setGraphic(warrior.getImage());
 		mageButton.setGraphic(mage.getImage());
 		healerButton.setGraphic(healer.getImage());
 		assassinButton.setGraphic(assassin.getImage());
 		archerButton.setGraphic(archer.getImage());
+		guardianButton.setGraphic(guardian.getImage());
 		
 		textField = new TextField("Please choose your character");
 		textField.setPrefSize(400, 50);
@@ -104,6 +113,7 @@ public class CharacterSelectionPane extends Stage {
 		root.add(healerButton, 0, 1);
 		root.add(assassinButton, 1, 1);
 		root.add(archerButton, 0, 2);
+		root.add(guardianButton, 1, 2);
 		root.add(textField, 0, 3, 2, 3);
 		
 		GridPane statusPane = new GridPane();
@@ -125,16 +135,11 @@ public class CharacterSelectionPane extends Stage {
 		b.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override 
 		    public void handle(ActionEvent e) {
-		    	Alert alert = new Alert(AlertType.CONFIRMATION);
-		    	alert.setTitle("Confirmation");
-		    	alert.setHeaderText("Are you sure you want to pick this character?");
-		    	alert.setContentText("Choose your option.");
-
+		    	Alert alert = popUpCharacterDetails(character);
 		    	ButtonType yes = new ButtonType("Yes");
 		    	ButtonType no = new ButtonType("No");
 
 		    	alert.getButtonTypes().setAll(yes , no);
-
 		    	Optional<ButtonType> result = alert.showAndWait();
 		    	if (result.get() == yes){
 		    	    if(character instanceof Warrior) {
@@ -152,10 +157,35 @@ public class CharacterSelectionPane extends Stage {
 		    	    else if(character instanceof Archer) {
 		    	    	process(archer);
 		    	    }
+		    	    else if(character instanceof Guardian) {
+		    	    	process(guardian);
+		    	    }
+		    	    else {
+		    	    	
+		    	    }
 		    	    if(charCount == 6) close();
 		    	}
 		    }
 		});
+	}
+	
+	private Alert popUpCharacterDetails(Object o) {
+		Character character = (Character)o;
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		String contentText = character.getInstance() + "'s Skills: | ";
+		for(int i = 0; i < character.getSkillNames().size(); ++i) {
+			contentText = contentText + character.getSkillNames().get(i) + " | ";
+		}
+    	alert.setTitle("Confirmation");
+    	alert.setHeaderText("Are you sure you want to pick " + character.getInstance() + "?");
+    	alert.setContentText(contentText + "\n"
+    			+ character.getInstance() + "'s Stats:\n"
+    			+ "Atk: " + Integer.toString(character.getAtk()) + "\n"
+    			+ "HP: " + Integer.toString(character.getMaxHp()));
+
+    	
+		
+		return alert;
 	}
 	
 	private void throwAlert() {

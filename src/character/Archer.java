@@ -1,11 +1,18 @@
 package character;
 
+import java.util.Random;
+
+import logic.Main;
+
 public class Archer extends Character {
 	private int focus;
+	private static final int FOCUS_CRIT_CHANCE = 75;
+	private static final int CRIT_CHANCE = 30;
 	public Archer() {
 		super(200, 800);
 		this.focus = 0;
 		setImage("resources/archer.jpg");
+		setDeadImage("resources/archer_dead.jpg");
 		setSkillNames("Focus Shot", "Critical", "Knockback");
 	}
 	
@@ -35,30 +42,43 @@ public class Archer extends Character {
 
 	public boolean critical() //passive critical
 	{
-		int range=10;
-		if(isFocus())
-		{
-			range=4;
-		}
-		int random = (int )(Math.random() * range + 1);
-		return random <= 3? true : false ;
+		Random random = new Random();
+		int ran = random.nextInt(100);
+		if(isFocus()) return ran < FOCUS_CRIT_CHANCE;
+		else return ran < CRIT_CHANCE; 
 	}
 	
 	public boolean Knockback (Character enemy)
 	{
-		enemy.setStun(1);
-		System.out.println("the enemy is stunned");
-		int random = (int )(Math.random() * 10 + 1);
-		if(random <= 2)
-		{
-			if(!isFocus())
-			{
-				setFocus(this.focus + 2);
-				System.out.println("Bonus : the enemy is stunned,you have a time to focus");
-				return true;
-			}
+		Random random = new Random();
+		int ran = random.nextInt(100);
+		boolean check = minorAttackWithCritical(enemy);
+		if(check) Main.throwAlert(this, "Critical");
+		if(ran > 50) {
+			enemy.setStun(1);
+			setFocus(this.focus + 2);
+			Main.throwAlert(this, "Stun");
+			return true;
 		}
-		return false;
+		else {
+			setFocus(this.focus + 1);
+			return false;
+		}
+		
+	}
+	
+	
+	public boolean minorAttackWithCritical(Character enemy) {
+		if(critical())
+		{
+			enemy.attackByEnemy(this.getAtk());
+			return true;
+		}
+		else
+		{
+			enemy.attackByEnemy(this.getAtk()/2);
+			return false;
+		}
 	}
 	
 	public boolean attackWithCritical(Character enemy) {
@@ -73,8 +93,7 @@ public class Archer extends Character {
 			return false;
 		}
 	}
-	
-	
+
 	@Override
 	public String getInstance() {
 		return "Archer";
