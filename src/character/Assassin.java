@@ -8,7 +8,7 @@ public class Assassin extends Character {
 	private boolean Stealth;
 	public static final int EVADE_CHANCE = 30;
 	public Assassin() {
-		super(200,900);
+		super(100,900);
 		setImage("resources/assassin.jpg");
 		setDeadImage("resources/assassin_dead.jpg");
 		setSkillNames("Stealth Attack", "Evade", "Bleeding Blade");
@@ -24,7 +24,7 @@ public class Assassin extends Character {
 	public boolean stealthAttack(Character enemy)
 	{
 		int damage = (int) (this.getAtk() * 1.5);
-		if((double) enemy.getHp() / (double) enemy.getMaxHp() <= 0.35) // if HP < 35% -> set assassin dmg*3
+		if((double) enemy.getHp() / (double) enemy.getMaxHp() <= 0.35) // if HP < 35% -> set assassin dmg*2
 		{
 			enemy.attackByEnemy(damage*2);
 			

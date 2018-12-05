@@ -16,7 +16,7 @@ public class Warrior extends Character {
 	
 	public void warcry(ArrayList<Character> enemies) //deal every enemy dmg=???
 	{
-		int damage = this.getAtk();
+		int damage = 120;
 		for(int i=0;i<enemies.size();i++)
 		{
 			Character temp = enemies.get(i);

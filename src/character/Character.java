@@ -35,7 +35,9 @@ public abstract class Character {
 	}
 
 	public void setBleed(int bleed) {
-		this.bleed = bleed;
+		if(bleed >= 0)
+			this.bleed = bleed;
+		else this.bleed = 0;
 	}
 	
 	public Character() {
@@ -63,7 +65,9 @@ public abstract class Character {
 		return stun > 0;
 	}
 	public void setStun(int stun) {
-		this.stun = stun;
+		if(stun >= 0)
+			this.stun = stun;
+		else this.stun = 0;
 	}
 	public int getFreeze() {
 		return freeze;
@@ -72,7 +76,9 @@ public abstract class Character {
 		return freeze > 0;
 	}
 	public void setFreeze(int freeze) {
-		this.freeze = freeze;
+		if(freeze >= 0)
+			this.freeze = freeze;
+		else this.freeze = 0;
 	}
 	public int getBurn() {
 		return burn;
@@ -81,7 +87,9 @@ public abstract class Character {
 		return burn > 0;
 	}
 	public void setBurn(int burn) {
-		this.burn = burn;
+		if(burn >= 0)
+			this.burn = burn;
+		else this.burn = 0;
 	}
 	public Character(int atk,int hp) {
 		super();
@@ -121,13 +129,17 @@ public abstract class Character {
 		return atk;
 	}
 	public void setAtk(int atk) {
-		this.atk = atk;
+		if(atk >= 0)
+			this.atk = atk;
+		else this.atk = 0;
 	}
 	public int getHp() {
 		return hp;
 	}
 	public void setHp(int hp) {
-		this.hp = hp;
+		if(hp >=0)
+			this.hp = hp;
+		else this.hp = 0;
 	}
 	public int getMaxHp() {
 		return this.MAX_HP;
@@ -216,7 +228,9 @@ public abstract class Character {
 	}
 	
 	public void setShield(int shield) {
-		this.shield = shield;
+		if(shield >= 0)
+			this.shield = shield;
+		else this.shield = 0;
 	}
 	
 	public int getShield() {
