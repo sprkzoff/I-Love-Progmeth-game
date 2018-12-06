@@ -8,7 +8,7 @@ public class Assassin extends Character {
 	private boolean Stealth;
 	public static final int EVADE_CHANCE = 30;
 	public Assassin() {
-		super(100,900);
+		super(140,900);
 		setImage("resources/assassin.jpg");
 		setDeadImage("resources/assassin_dead.jpg");
 		setSkillNames("Stealth Attack", "Evade", "Bleeding Blade");

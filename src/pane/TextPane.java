@@ -18,7 +18,7 @@ public class TextPane extends StackPane {
 		setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, 
 				CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		setBackground(new Background(new BackgroundFill(Color.IVORY, null, null)));
-		textField = new TextField("This is a text field!");
+		textField = new TextField("Your skills...");
 		textField.setEditable(false);
 		textField.setPrefWidth(800);
 		getChildren().add(textField);

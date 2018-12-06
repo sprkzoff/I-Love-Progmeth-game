@@ -32,7 +32,7 @@ public class Warrior extends Character {
 	{
 		Random random = new Random();
 		int ran = random.nextInt(100);
-		int damage = this.getAtk();
+		int damage = this.getAtk()-70;
 		enemy.attackByEnemy(damage);
 		if(ran <= 50) {
 			enemy.setStun(1);
@@ -43,6 +43,8 @@ public class Warrior extends Character {
 	public void berserk(Character enemy) //plus shield
 	{
 		int damage = this.getMaxHp() - this.getHp();
+		if(damage > 500)
+			damage = 500;
 		enemy.attackByEnemy(damage);
 	}
 	

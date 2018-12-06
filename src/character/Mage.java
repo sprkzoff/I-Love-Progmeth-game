@@ -6,7 +6,7 @@ public class Mage extends Character {
 	private int mp;
 	
 	public Mage() {
-		super(150, 700);
+		super(120, 700);
 		setImage("resources/mage.jpg");
 		setDeadImage("resources/mage_dead.jpg");
 		setSkillNames("Freezing Field", "Chaos Meteor", "Detonate");
@@ -33,12 +33,12 @@ public class Mage extends Character {
 	}
 	public boolean chaosMeteor(ArrayList<Character> characters) { //deal dmg to all enemy and set burn on them, deal additional dmg if they're already burned
 		int damage = this.getAtk();
-		if(this.getMp() < 30) return false;
-		this.mp -= 30;
+		if(this.getMp() < 60) return false;
+		this.mp -= 60;
 		for(int i = 0; i < characters.size(); i++) {
 			Character temp = characters.get(i);
 			if(!temp.isDead()) {
-				temp.setBurn(3);
+				temp.setBurn(2);
 				if(!temp.isBurn()) temp.attackByEnemy(damage);
 				else temp.attackByEnemy(damage * 2);
 			}

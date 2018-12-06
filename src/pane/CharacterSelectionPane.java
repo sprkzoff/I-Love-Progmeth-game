@@ -87,7 +87,7 @@ public class CharacterSelectionPane extends Stage {
 		archerButton.setGraphic(archer.getImage());
 		guardianButton.setGraphic(guardian.getImage());
 		
-		textField = new TextField("Please choose your character");
+		textField = new TextField("Player 1's Turn to choose");
 		textField.setPrefSize(400, 50);
 		textField.setFont(new Font(20));
 		

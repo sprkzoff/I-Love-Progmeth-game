@@ -48,7 +48,7 @@ public class Guardian extends Character {
 	public boolean echoOfLiberation(ArrayList<Character> enemies) // deal damage based on accumulated healing amount
 	{
 		if(virtues == 0) return false;
-		int damage = this.getAtk() / 2 + virtues / 3;
+		int damage = this.getAtk() / 2 + virtues / 2;
 		virtues = 0;
 		
 		for(int i=0;i<enemies.size();i++)

@@ -138,16 +138,7 @@ public class Main extends Application{
 		controlPanes.get(turnNumber % 6).setVisible(true);
 		controlPanes.get((turnNumber - 1) % 6).setVisible(false);
 		
-		if(current.isBleed()) current.setBleed(current.getBleed() - 1);
-		if(current.isShield()) current.setShield(current.getShield() - 1);
-		if(current.isBurn() || !current.isDead()) {
-			current.setBurn(current.getBurn() - 1);
-			current.setHp(current.getHp() - BURN_AMOUNT);
-			if(current.getHp() < 0) {
-				 current.setHp(0);
-				 current.setDead(true);
-			}
-		}
+		
 		if(current.isDead()) {
 			handleCharacterField();
 			runGameLoop();
@@ -158,7 +149,16 @@ public class Main extends Application{
 			handleCharacterField();
 			runGameLoop();
 		}
-		
+		if(current.isBleed()) current.setBleed(current.getBleed() - 1);
+		if(current.isShield()) current.setShield(current.getShield() - 1);
+		if(current.isBurn() || !current.isDead()) {
+			current.setBurn(current.getBurn() - 1);
+			current.setHp(current.getHp() - BURN_AMOUNT);
+			if(current.getHp() < 0) {
+				 current.setHp(0);
+				 current.setDead(true);
+			}
+		}
 		else if(current.isFreeze()) {
 			current.setFreeze(current.getFreeze()-1);
 			Random r = new Random();
