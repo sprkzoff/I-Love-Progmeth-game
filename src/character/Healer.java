@@ -7,10 +7,19 @@ public class Healer extends Character {
 	private static final int HEALING_POWER = 400;
 	private static final int ALL_HEAL_HEALING_POWER = 200;
 	public Healer() {
-		super(80,1000);
+		super(80,1);
 		setImage("resources/druid.jpg");
 		setDeadImage("resources/druid_dead.jpg");
 		setSkillNames("Heal", "Cleansing", "Hands Of God");
+		addDescription("Healing: " + Integer.toString(HEALING_POWER) + "\n"
+				+ "Target: single ally\n"
+				+ "Heal a targeted ally.");
+		addDescription("Healing: " + Integer.toString(HEALING_POWER / 2) + "\n"
+				+ "Target: single ally\n"
+				+ "Cleanse all of the debuffs on a single ally and heal them for the moderate amount.");
+		addDescription("Healing: " + Integer.toString(ALL_HEAL_HEALING_POWER) + "\n"
+				+ "Target: All allies\n"
+				+ "Heal all of your allies by a moderate amount.");
 	}
 	public boolean heal(Character friend)
 	{
@@ -24,6 +33,8 @@ public class Healer extends Character {
 	}
 	public boolean cleansing(Character friend)
 	{
+		if(friend.getHp() + HEALING_POWER / 2 > friend.getMaxHp()) friend.setHp(friend.getMaxHp());
+		else friend.setHp(friend.getHp() + HEALING_POWER / 2);
 		if(friend.isAffectedByStatus()) {
 			friend.setBleed(0);
 			friend.setBurn(0);
@@ -44,7 +55,7 @@ public class Healer extends Character {
 				if(temp.getHp() + ALL_HEAL_HEALING_POWER > temp.getMaxHp()) temp.setHp(temp.getMaxHp());
 				else temp.setHp(temp.getHp() + ALL_HEAL_HEALING_POWER);
 				success = true;
-			}	
+			}
 		}
 		return success;
 	}

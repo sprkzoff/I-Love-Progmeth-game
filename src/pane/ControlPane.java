@@ -29,6 +29,7 @@ import javafx.stage.Stage;
 
 public class ControlPane extends GridPane {
 	private ArrayList<Button> buttons;
+	private ArrayList<String> skillDescriptions;
 	private ArrayList<Character> player1Characters;
 	private ArrayList<Character> player2Characters;
 	private int turnCount = 0;
@@ -45,6 +46,8 @@ public class ControlPane extends GridPane {
 		// Attack button
 		
 		String skillName = "Attack";
+		skillDescriptions = new ArrayList<String>();
+		skillDescriptions.add("Attack damage: " + Integer.toString(character.getAtk()));
 		Button b = new Button(skillName);
 		b.setPrefWidth(400);
 		b.getStylesheets().add(getClass().getResource("skillbuttonstyle.css").toExternalForm());
@@ -53,6 +56,7 @@ public class ControlPane extends GridPane {
 		
 		//skill button
 		for(int i = 0; i < character.getSkillNames().size(); i++) {
+			skillDescriptions.add(character.getSkillDescriptions().get(i));
 			skillName = character.getSkillNames().get(i);
 			Button skillButton = new Button(skillName);
 			skillButton.setPrefWidth(400);
@@ -73,5 +77,8 @@ public class ControlPane extends GridPane {
 	}
 	public Character getCharacter() {
 		return character;
+	}
+	public ArrayList<String> getSkillDescriptions() {
+		return skillDescriptions;
 	}
 }

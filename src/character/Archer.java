@@ -14,6 +14,12 @@ public class Archer extends Character {
 		setImage("resources/archer.jpg");
 		setDeadImage("resources/archer_dead.jpg");
 		setSkillNames("Focus Shot", "Critical", "Knockback");
+		addDescription("Target: yourself\n"
+				+ "Set yourself into a focus state for 2 turns, while you're in focus state you have a total of 75% critical chance.");
+		addDescription("Archer2");
+		addDescription("Attack damage: " + Integer.toString(this.getAtk() / 2) + "\n"
+				+ "Target: single enemy\n"
+				+ "Has a 50% chance of stunning an enemy, consequencely gives you +2 turns of focus if the stun occured.");
 	}
 	
 

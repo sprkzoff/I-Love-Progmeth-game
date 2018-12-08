@@ -12,6 +12,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -46,8 +47,8 @@ import character.Warrior;
 
 public class Main extends Application{
 	
-	private ArrayList<Character> player1Characters = new ArrayList<Character>();
-	private ArrayList<Character> player2Characters = new ArrayList<Character>();
+	private ArrayList<Character> player1Characters;
+	private ArrayList<Character> player2Characters;
 	private CharacterPane characterPane1;
 	private CharacterPane characterPane2;
 	private ArrayList<ControlPane> controlPanes;
@@ -57,26 +58,35 @@ public class Main extends Application{
 	private LandingPane landing;
 	private static MusicPlayer PROOF_OF_A_HERO = new MusicPlayer("resources/001.wav");
 	private static MusicPlayer KUSHALA = new MusicPlayer("resources/Kushala.wav");
-	
+	private static MusicPlayer VICTORY = new MusicPlayer("resources/victory.wav");
+	private Stage primaryStage;
 	public int turnNumber = 0;
 	
 	private final static int FREEZING_CHANCE = 20;
 	private final static int BURN_AMOUNT = 50;
-	private boolean cancelStatus = false;
+	private boolean firstTime = true;
 	@Override
 	public void start(Stage primaryStage) {
-		
 		GridPane root = new GridPane();
 		root.setAlignment(Pos.CENTER);
 		root.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		landing = new LandingPane();
-		landing.showAndWait();
-		if(!landing.isReady()) System.exit(1);
+		
+		if(firstTime) {
+			landing = new LandingPane();
+			landing.showAndWait();
+			if(!landing.isReady()) System.exit(1);
+		}
+		firstTime = !firstTime;
+		
+		
 		select = new CharacterSelectionPane();
 		PROOF_OF_A_HERO.start();
 		select.showAndWait();
 		if(!select.isReady()) System.exit(1);
 		PROOF_OF_A_HERO.doStop();
+		
+		player1Characters = new ArrayList<Character>();
+		player2Characters = new ArrayList<Character>();
 		
 		addCharactersForPlayer1();
 		addCharactersForPlayer2();
@@ -103,7 +113,9 @@ public class Main extends Application{
 			for(int j = 0; j < 4; j++) {
 				Button b = controlPanes.get(i).getButtons().get(j);
 				Character c = controlPanes.get(i).getCharacter();
+				String description = controlPanes.get(i).getSkillDescriptions().get(j);
 				setEvent(b, b.getText(), c);
+				setButtonDescription(b, description);
 			}
 			controlPanes.get(i).setVisible(false);
 			root.add(controlPanes.get(i), 0, 2, 3, 2);
@@ -123,10 +135,12 @@ public class Main extends Application{
 		primaryStage.setTitle("I love Progmeth");
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		this.primaryStage = primaryStage;
 		KUSHALA.start();
 	}
 	
 	private void runGameLoop() {
+		
 		turnNumber++;
 		Character current = controlPanes.get(turnNumber % 6).getCharacter();
 		if(current instanceof Mage) {
@@ -172,8 +186,16 @@ public class Main extends Application{
 		characterPane1.update();
 		characterPane2.update();
 	}
-	
+	private void setButtonDescription(Button b, String description) {
+		Tooltip tooltip = new Tooltip(description);
+		tooltip.setStyle("-fx-font-family: Arial; "
+			    + "-fx-base: #AE3522; "
+			    + "-fx-text-fill: orange;");
+		b.setTooltip(tooltip);
+		
+	}
 	private void setEvent(Button b, String skillName, Character character) {
+		
 		b.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override 
 		    public void handle(ActionEvent e) {
@@ -298,6 +320,7 @@ public class Main extends Application{
 		    	}
 		    	
 		    	if(success) runGameLoop();
+		    	checkVictoryAndThrowAlert();
 		    }
 		    
 		});
@@ -426,13 +449,17 @@ public class Main extends Application{
     	else {
     		targets = player1Characters;
     	}
+    	
     	ButtonType t1 = new ButtonType(targets.get(0).getInstance());
     	ButtonType t2 = new ButtonType(targets.get(1).getInstance());
     	ButtonType t3 = new ButtonType(targets.get(2).getInstance());
+    	
     	ButtonType cancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
     	
     	alert.getButtonTypes().setAll(t1, t2, t3, cancel);
-
+    	alert.getDialogPane().lookupButton(t1).setDisable(targets.get(0).isDead());
+    	alert.getDialogPane().lookupButton(t2).setDisable(targets.get(1).isDead());
+    	alert.getDialogPane().lookupButton(t3).setDisable(targets.get(2).isDead());
     	Optional<ButtonType> result = alert.showAndWait();
     	
     	Character returnCharacter;
@@ -463,13 +490,16 @@ public class Main extends Application{
     	ButtonType t3 = new ButtonType(targets.get(2).getInstance());
     	ButtonType cancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
     	alert.getButtonTypes().setAll(t1, t2, t3, cancel);
-
+    	alert.getDialogPane().lookupButton(t1).setDisable(targets.get(0).isDead());
+    	alert.getDialogPane().lookupButton(t2).setDisable(targets.get(1).isDead());
+    	alert.getDialogPane().lookupButton(t3).setDisable(targets.get(2).isDead());
     	Optional<ButtonType> result = alert.showAndWait();
     	
     	Character returnCharacter;
     	if (result.get() == t1) returnCharacter = targets.get(0);
     	else if (result.get() == t2) returnCharacter = targets.get(1);
-    	else returnCharacter = targets.get(2);
+    	else if (result.get() == t3) returnCharacter = targets.get(2);
+    	else return null;
     	
     	return returnCharacter;
 	}
@@ -493,6 +523,50 @@ public class Main extends Application{
 			if(select.getPlayer2Characters().get(i) == "Healer") player2Characters.add(new Healer()); 
 			if(select.getPlayer2Characters().get(i) == "Archer") player2Characters.add(new Archer()); 
 			if(select.getPlayer2Characters().get(i) == "Guardian") player2Characters.add(new Guardian()); 
+		}
+	}
+	
+	private boolean player1isLost() {
+		for(int i = 0; i < 3; i++) {
+			Character character = characterPane1.getCharacters().get(i);
+			if(!character.isDead()) return false;
+		}
+		return true;
+	}
+	
+	private boolean player2isLost() {
+		for(int i = 0; i < 3; i++) {
+			Character character = characterPane2.getCharacters().get(i);
+			if(!character.isDead()) return false;
+		}
+		return true;
+	}
+	
+	private void checkVictoryAndThrowAlert() {
+		if(player1isLost() || player2isLost()) {
+			KUSHALA.doStop();
+			VICTORY.start();
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Alert!");
+			alert.setHeaderText("We have a winner!");
+			alert.setContentText(player1isLost() ? "Player 2 Won, congratulations! Want to play again?" : "Player 1 Won, congratulations! Want to play again?");
+			
+			ButtonType ok = new ButtonType("Ok");
+	    	ButtonType cancel = new ButtonType("Cancel");
+	    	
+	    	alert.getButtonTypes().setAll(ok, cancel);
+			
+			Optional<ButtonType> result = alert.showAndWait();
+	    	
+	    	Character returnCharacter;
+	    	if (result.get() == ok) {
+	    		VICTORY.doStop();
+	    		this.primaryStage.close();
+				start(new Stage());
+	    	}
+	    	else if (result.get() == cancel) {
+	    		System.out.println("End Credits!");
+	    	}
 		}
 	}
 	

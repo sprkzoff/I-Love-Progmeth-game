@@ -12,6 +12,12 @@ public class Assassin extends Character {
 		setImage("resources/assassin.jpg");
 		setDeadImage("resources/assassin_dead.jpg");
 		setSkillNames("Stealth Attack", "Evade", "Bleeding Blade");
+		addDescription("Attack damage: " + Integer.toString((int)(getAtk() * 1.5)) + "\n"
+				+ "Target: single enemy\n" 
+				+ "Attack a single enemy with perceptive, dealing thrice damage if the target is below 35% HP.");
+		addDescription("Assassin2");
+		addDescription("Attack damage: " + Integer.toString((int)(getAtk())) + "\n"
+				+ "Marking your foe with your sharp blade, making the target vulnerable and takes 1.5x damage from any sources.");
 		Stealth = false;
 	}
 	public boolean isStealth() {

@@ -12,6 +12,15 @@ public class Guardian extends Character {
 		setImage("resources/guardian.jpg");
 		setDeadImage("resources/guardian_dead.jpg");
 		setSkillNames("Merciful Intervention", "Shield of Courage", "Echo of Liberation");
+		addDescription("Healing: " + Integer.toString(MERCIFUL_HEALING) + "\n"
+				+ "Target: All allies\n"
+				+ "Heal all of your allies by a small amount while cleanse one of their debuffs (Prioritize: Stun > Bleed > Freeze > Burn)");
+		addDescription("Attack damage: " + Integer.toString(getAtk()) + "\n"
+				+ "Target: 1 enemy and 1 ally\n"
+				+ "Damage your opponent, then shield your ally for one turn. Making them take only half damage from direct damage sources.");
+		addDescription("Attack Damage: " + Integer.toString((int)(getAtk() / 2)) + " + 50% of your current virtues\n"
+				+ "Target: All enemies\n"
+				+ "Release all of your virtues to damage all enemies, will consume all of your vitrues afterward.");
 	}
 	
 	public boolean mercifulIntervention(ArrayList<Character> friends) // removes 1 debuff and heal each unit = MERCIFUL_HEALING

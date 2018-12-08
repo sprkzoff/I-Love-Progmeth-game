@@ -15,6 +15,7 @@ public abstract class Character {
 	private ImageView imageView;
 	private ImageView deadImage;
 	
+	private ArrayList<String> skillDescriptions;
 	private ArrayList<String> buffs;
 	private ArrayList<String> debuffs;
 	private boolean dead;
@@ -42,6 +43,7 @@ public abstract class Character {
 	
 	public Character() {
 		super();
+		this.skillDescriptions = new ArrayList<String>();
 		setImage("resources/default.jpg");
 		this.dead = false;
 		this.stun = 0;
@@ -93,6 +95,7 @@ public abstract class Character {
 	}
 	public Character(int atk,int hp) {
 		super();
+		this.skillDescriptions = new ArrayList<String>();
 		setImage("resources/default.jpg");
 		this.dead = false;
 		this.stun = 0;
@@ -107,6 +110,7 @@ public abstract class Character {
 	
 	public Character(int atk,int hp, String imagePath) { //with imagePath
 		super();
+		this.skillDescriptions = new ArrayList<String>();
 		setImage(imagePath);
 		this.dead = false;
 		this.stun = 0;
@@ -235,5 +239,13 @@ public abstract class Character {
 	
 	public int getShield() {
 		return shield;
+	}
+	
+	public void addDescription(String s) {
+		skillDescriptions.add(s);
+	}
+	
+	public ArrayList<String> getSkillDescriptions() {
+		return skillDescriptions;
 	}
 }

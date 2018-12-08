@@ -6,11 +6,20 @@ public class Mage extends Character {
 	private int mp;
 	
 	public Mage() {
-		super(120, 700);
+		super(120, 1);
 		setImage("resources/mage.jpg");
 		setDeadImage("resources/mage_dead.jpg");
 		setSkillNames("Freezing Field", "Chaos Meteor", "Detonate");
 		this.mp = 100;
+		addDescription("Attack Damage: " + Integer.toString((int)(getAtk())) + "\n"
+				+ "Target: All enemies\n"
+				+ "Make all of your foes freeze for 2 turns.");
+		addDescription("Attack Damage: " + Integer.toString((int)(getAtk())) + "\n"
+				+ "Target: All enemies\n"
+				+ "Make all of your foes burn for 2 turn, if they're already burned, deals 2x damage to them instead.");
+		addDescription("Attack Damage: Missing MP x 5\n"
+				+ "Target: single enemy\n"
+				+ "Detonate the target, making them take damage based on your missing MP.");
 	}
 	public int getMp() {
 		return mp;
@@ -45,16 +54,9 @@ public class Mage extends Character {
 		}
 		return true;
 	}
-	public boolean detonate(Character character) { //denonate away enemy's debuffs to deal damage based on remaining mp
+	public boolean detonate(Character character) { //deal damage based on missing mp
 		if(this.getMp() < 15) return false;
-		if(character.isBurn()) {
-			character.setBurn(0);
-			character.attackByEnemy(this.getMp() * 3); // attack by remaining mp
-		}
-		if(character.isFreeze()) {
-			character.setFreeze(0);
-			character.attackByEnemy(this.getMp() * 3);
-		}
+		character.attackByEnemy((100 - this.mp) * 5); // attack by missing mp
 		this.mp -= 15;
 		return true;
 	}

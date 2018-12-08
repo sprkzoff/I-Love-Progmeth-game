@@ -86,6 +86,7 @@ public class CharacterField extends GridPane {
 			add(virtues, 2, 1);
 		}
 		getStylesheets().add(getClass().getResource("progress.css").toExternalForm());
+		updateHp();
 	}
 
 	public Text getName() {
@@ -128,6 +129,15 @@ public class CharacterField extends GridPane {
 		this.burn.setText("Burn: " + Integer.toString(owner.getBurn()));
 		this.bleed.setText("Bleed: " + Integer.toString(owner.getBleed()));
 		this.shield.setText("Shield: " + Integer.toString(owner.getShield()));
+		
+		bleed.setVisible(owner.isBleed());
+		burn.setVisible(owner.isBurn());
+		freeze.setVisible(owner.isFreeze());
+		shield.setVisible(owner.isShield());
+		stun.setVisible(owner.isStun());
+		
+		
+		
 		if(owner instanceof Guardian) {
 			Guardian guardian = (Guardian)owner;
 			this.virtues.setText(" " + Integer.toString(guardian.getVirtues()) + "/500");
