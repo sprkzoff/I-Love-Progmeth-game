@@ -10,13 +10,7 @@ public class Warrior extends Character {
 	public static int MAX_HP = 1200;
 
 	public Warrior() {
-<<<<<<< HEAD
 		super(200,1200);
-||||||| merged common ancestors
-		super(200,1);
-=======
-		super(200, 1200);
->>>>>>> b363f7df9b82499ddafa0a002e193b926303b357
 		setImage("resources/warrior.jpg");
 		setDeadImage("resources/warrior_dead.jpg");
 		setSkillNames("War Cry", "Direct Strike", "Berserk");
