@@ -26,7 +26,17 @@ public class CharacterPane extends GridPane {
 	private ArrayList<ImageView> imageViews;
 	private ArrayList<ImageView> deadImageViews;
 	
-	private ImageView burnImage;
+	private ArrayList<ImageView> burnImages;
+	private ArrayList<ImageView> freezeImages;
+	private ArrayList<ImageView> bleedImages;
+	private ArrayList<ImageView> stunImages;
+	private ArrayList<ImageView> shieldImages;
+	
+	private static final String BURN_URL = "resources/fire.gif";
+	private static final String FREEZE_URL = "resources/freeze.gif";
+	private static final String BLEED_URL = "resources/bleed.gif";
+	private static final String STUN_URL = "resources/stun.gif";
+	private static final String SHIELD_URL = "resources/shield.gif";
 
 	public CharacterPane(ArrayList<Character> characters) {
 		setAlignment(Pos.CENTER);
@@ -39,11 +49,17 @@ public class CharacterPane extends GridPane {
 		characterFields = new ArrayList<CharacterField>();
 		imageViews = new ArrayList<ImageView>();
 		deadImageViews = new ArrayList<ImageView>();
+		burnImages = new ArrayList<ImageView>();
+		bleedImages = new ArrayList<ImageView>();
+		freezeImages = new ArrayList<ImageView>();
+		stunImages = new ArrayList<ImageView>();
+		shieldImages = new ArrayList<ImageView>();
 		
-		burnImage = new ImageView();
-		setBurnImage("resources/fire.gif");
-		burnImage.setOpacity(0.5);
-		burnImage.setTranslateX(125);
+		addBurnImages();
+		addFreezeImages();
+		addBleedImages();
+		addStunImages();
+		addShieldImages();
 		
 		setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
@@ -59,18 +75,79 @@ public class CharacterPane extends GridPane {
 			add(characterField, 0, 2 * i + 1);
 		}
 		
-		add(burnImage, 0, 0);
+		for(int i = 0; i < 3; i++) {
+			add(burnImages.get(i), 0, 2 * i);
+			//burnImages.get(i).setVisible(false);
+		}
 	}
 	
-	public void setBurnImage(String url) {
-		FileInputStream input;
-		try {
-			input = new FileInputStream(url);
-			Image image = new Image(input, 150, 150, false, false);
-			burnImage = new ImageView(image);
-			System.out.println("test");
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+	public void addBurnImages() {
+		for(int i = 0; i < 3; i++) {
+			FileInputStream input;
+			try {
+				input = new FileInputStream(BURN_URL);
+				Image image = new Image(input, 150, 150, false, false);
+				ImageView imageView = new ImageView(image);
+				burnImages.add(imageView);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void addFreezeImages() {
+		for(int i = 0; i < 3; i++) {
+			FileInputStream input;
+			try {
+				input = new FileInputStream(FREEZE_URL);
+				Image image = new Image(input, 150, 150, false, false);
+				ImageView imageView = new ImageView(image);
+				freezeImages.add(imageView);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void addBleedImages() {
+		for(int i = 0; i < 3; i++) {
+			FileInputStream input;
+			try {
+				input = new FileInputStream(BLEED_URL);
+				Image image = new Image(input, 150, 150, false, false);
+				ImageView imageView = new ImageView(image);
+				bleedImages.add(imageView);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void addStunImages() {
+		for(int i = 0; i < 3; i++) {
+			FileInputStream input;
+			try {
+				input = new FileInputStream(STUN_URL);
+				Image image = new Image(input, 150, 150, false, false);
+				ImageView imageView = new ImageView(image);
+				stunImages.add(imageView);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void addShieldImages() {
+		for(int i = 0; i < 3; i++) {
+			FileInputStream input;
+			try {
+				input = new FileInputStream(SHIELD_URL);
+				Image image = new Image(input, 150, 150, false, false);
+				ImageView imageView = new ImageView(image);
+				shieldImages.add(imageView);
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -83,6 +160,7 @@ public class CharacterPane extends GridPane {
 			if (characters.get(i).isDead()) {
 				imageViews.get(i).setVisible(false);
 			}
+			burnImages.get(i).setVisible(characters.get(i).isBurn());
 		}
 	}
 
@@ -93,7 +171,7 @@ public class CharacterPane extends GridPane {
 		}
 		return true;
 	}
-
+	
 	public ArrayList<CharacterField> getCharacterFields() {
 		return this.characterFields;
 	}
