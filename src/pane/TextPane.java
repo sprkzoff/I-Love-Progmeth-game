@@ -13,10 +13,10 @@ import javafx.scene.paint.Color;
 
 public class TextPane extends StackPane {
 	private TextField textField;
-	
+
 	public TextPane() {
-		setBorder(new Border(new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, 
-				CornerRadii.EMPTY, BorderWidths.DEFAULT)));
+		setBorder(new Border(
+				new BorderStroke(Color.GREEN, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		setBackground(new Background(new BackgroundFill(Color.IVORY, null, null)));
 		textField = new TextField("Your skills...");
 		textField.setEditable(false);
@@ -31,5 +31,5 @@ public class TextPane extends StackPane {
 	public void setTextField(String text) {
 		this.textField.setText(text);
 	}
-	
+
 }

@@ -10,11 +10,11 @@ public class MusicPlayer extends Thread {
 	private String dir;
 	private Clip clip;
 	private AudioInputStream audio;
-	
+
 	public MusicPlayer(String dir) {
 		this.dir = dir;
 	}
-	
+
 	@Override
 	public void start() {
 		try {
@@ -22,12 +22,11 @@ public class MusicPlayer extends Thread {
 			clip = AudioSystem.getClip();
 			clip.open(audio);
 			clip.start();
-		}
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void doStop() {
 		clip.stop();
 	}
