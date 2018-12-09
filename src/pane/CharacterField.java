@@ -2,11 +2,15 @@ package pane;
 
 import javafx.geometry.Insets;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+
 import character.Archer;
 import character.Character;
 import character.Guardian;
 import character.Mage;
-
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.GridPane;
@@ -30,6 +34,10 @@ public class CharacterField extends GridPane {
 	private ColoredProgressBar mpBar;
 	
 	private Character owner;
+	
+	
+	
+	private static final int ROW_PUSHER = 1;
 
 	public CharacterField(Character character) {
 		setPadding(new Insets(10));
@@ -46,33 +54,34 @@ public class CharacterField extends GridPane {
 		hpBar = new ColoredProgressBar("green-bar", 1);
 		hpBar.setPrefWidth(100);
 		hpBar.setPrefHeight(18);
-		add(name, 0, 0);
-		add(hpBar, 1, 0);
-		add(hp, 2, 0);
-		add(stun, 3, 0);
-		add(freeze, 4, 0);
-		add(burn, 3, 1);
-		add(bleed, 4, 1);
-		add(shield, 5, 0);
+		
+		add(name, 0, 0 + ROW_PUSHER);
+		add(hpBar, 1, 0 + ROW_PUSHER);
+		add(hp, 2, 0 + ROW_PUSHER);
+		add(stun, 3, 0 + ROW_PUSHER);
+		add(freeze, 4, 0 + ROW_PUSHER);
+		add(burn, 3, 1 + ROW_PUSHER);
+		add(bleed, 4, 1 + ROW_PUSHER);
+		add(shield, 5, 0 + ROW_PUSHER);
 		if (character instanceof Mage) {
 			mp = new Text(" 100/100");
 			mpBar = new ColoredProgressBar("blue-bar", 1);
 			mpBar.setPrefWidth(100);
 			mpBar.setPrefHeight(18);
-			add(mpBar, 1, 1);
-			add(mp, 2, 1);
+			add(mpBar, 1, 1 + ROW_PUSHER);
+			add(mp, 2, 1 + ROW_PUSHER);
 		}
 		if (character instanceof Archer) {
 			focus = new Text("Focus: 0");
-			add(focus, 1, 1);
+			add(focus, 1, 1 + ROW_PUSHER);
 		}
 		if (character instanceof Guardian) {
 			virtues = new Text(" 150/500");
 			virtuesBar = new ColoredProgressBar("skyblue-bar", 0.3);
 			virtuesBar.setPrefWidth(100);
 			virtuesBar.setPrefHeight(18);
-			add(virtuesBar, 1, 1);
-			add(virtues, 2, 1);
+			add(virtuesBar, 1, 1 + ROW_PUSHER);
+			add(virtues, 2, 1 + ROW_PUSHER);
 		}
 		getStylesheets().add(getClass().getResource("progress.css").toExternalForm());
 		updateHp();
@@ -109,7 +118,7 @@ public class CharacterField extends GridPane {
 	public void setOwner(Character owner) {
 		this.owner = owner;
 	}
-
+	
 	public void updateHp() {
 		this.hp.setText(" " + Integer.toString(owner.getHp()) + "/" + Integer.toString(owner.MAX_HP));
 		hpBar.setProgress((double) owner.getHp() / (double) owner.MAX_HP);

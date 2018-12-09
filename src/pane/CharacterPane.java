@@ -1,11 +1,14 @@
 package pane;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 import character.Character;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -22,6 +25,8 @@ public class CharacterPane extends GridPane {
 	private ArrayList<CharacterField> characterFields;
 	private ArrayList<ImageView> imageViews;
 	private ArrayList<ImageView> deadImageViews;
+	
+	private ImageView burnImage;
 
 	public CharacterPane(ArrayList<Character> characters) {
 		setAlignment(Pos.CENTER);
@@ -34,7 +39,12 @@ public class CharacterPane extends GridPane {
 		characterFields = new ArrayList<CharacterField>();
 		imageViews = new ArrayList<ImageView>();
 		deadImageViews = new ArrayList<ImageView>();
-
+		
+		burnImage = new ImageView();
+		setBurnImage("resources/fire.gif");
+		burnImage.setOpacity(0.5);
+		burnImage.setTranslateX(125);
+		
 		setBorder(new Border(
 				new BorderStroke(Color.BLACK, BorderStrokeStyle.SOLID, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
 		setBackground(new Background(new BackgroundFill(Color.IVORY, null, null)));
@@ -48,8 +58,22 @@ public class CharacterPane extends GridPane {
 
 			add(characterField, 0, 2 * i + 1);
 		}
+		
+		add(burnImage, 0, 0);
 	}
-
+	
+	public void setBurnImage(String url) {
+		FileInputStream input;
+		try {
+			input = new FileInputStream(url);
+			Image image = new Image(input, 150, 150, false, false);
+			burnImage = new ImageView(image);
+			System.out.println("test");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public ArrayList<Character> getCharacters() {
 		return this.characters;
 	}
