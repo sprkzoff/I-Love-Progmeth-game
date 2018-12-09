@@ -76,8 +76,22 @@ public class CharacterPane extends GridPane {
 		}
 		
 		for(int i = 0; i < 3; i++) {
+			add(shieldImages.get(i), 0, 2 * i);
 			add(burnImages.get(i), 0, 2 * i);
-			//burnImages.get(i).setVisible(false);
+			add(freezeImages.get(i), 0, 2 * i);
+			add(bleedImages.get(i), 0, 2 * i);
+			add(stunImages.get(i), 0, 2 * i);
+			
+			
+			bleedImages.get(i).setTranslateX(125);
+			stunImages.get(i).setTranslateX(125);
+			shieldImages.get(i).setTranslateX(125);
+			
+			burnImages.get(i).setVisible(false);
+			freezeImages.get(i).setVisible(false);
+			bleedImages.get(i).setVisible(false);
+			stunImages.get(i).setVisible(false);
+			shieldImages.get(i).setVisible(false);
 		}
 	}
 	
@@ -86,8 +100,9 @@ public class CharacterPane extends GridPane {
 			FileInputStream input;
 			try {
 				input = new FileInputStream(BURN_URL);
-				Image image = new Image(input, 150, 150, false, false);
+				Image image = new Image(input, 400, 150, false, false);
 				ImageView imageView = new ImageView(image);
+				imageView.setOpacity(0.5);
 				burnImages.add(imageView);
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -161,6 +176,10 @@ public class CharacterPane extends GridPane {
 				imageViews.get(i).setVisible(false);
 			}
 			burnImages.get(i).setVisible(characters.get(i).isBurn());
+			freezeImages.get(i).setVisible(characters.get(i).isFreeze());
+			bleedImages.get(i).setVisible(characters.get(i).isBleed());
+			stunImages.get(i).setVisible(characters.get(i).isStun());
+			shieldImages.get(i).setVisible(characters.get(i).isShield());
 		}
 	}
 

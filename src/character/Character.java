@@ -165,6 +165,18 @@ public abstract class Character implements AlertThrowable {
 	public int getMaxHp() {
 		return this.MAX_HP;
 	}
+	
+	public boolean isLowHp() {
+		return (double)getHp() / (double)getMaxHp() < 0.35;
+	}
+	
+	public boolean isMediumHp() {
+		return (double)getHp() / (double)getMaxHp() >= 0.35 && (double)getHp() / (double)getMaxHp() < 0.60;
+	}
+	
+	public boolean isHighHp() {
+		return (double)getHp() / (double)getMaxHp() >= 0.60;
+	}
 
 	public void attack(Character enemy) {
 		enemy.attackByEnemy(this.getAtk());

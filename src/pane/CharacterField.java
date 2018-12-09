@@ -35,9 +35,7 @@ public class CharacterField extends GridPane {
 	
 	private Character owner;
 	
-	
-	
-	private static final int ROW_PUSHER = 1;
+	private static final int ROW_PUSHER = 0;
 
 	public CharacterField(Character character) {
 		setPadding(new Insets(10));
