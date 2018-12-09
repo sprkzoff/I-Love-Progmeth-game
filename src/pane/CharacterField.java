@@ -31,6 +31,8 @@ public class CharacterField extends GridPane {
 	
 	private ColoredProgressBar virtuesBar;
 	private ColoredProgressBar hpBar;
+	private ColoredProgressBar hpBarMed;
+	private ColoredProgressBar hpBarLow;
 	private ColoredProgressBar mpBar;
 	
 	private Character owner;
@@ -52,9 +54,17 @@ public class CharacterField extends GridPane {
 		hpBar = new ColoredProgressBar("green-bar", 1);
 		hpBar.setPrefWidth(100);
 		hpBar.setPrefHeight(18);
+		hpBarMed = new ColoredProgressBar("orange-bar", 1);
+		hpBarMed.setPrefSize(100, 18);
+		hpBarLow = new ColoredProgressBar("red-bar", 1);
+		hpBarLow.setPrefSize(100, 18);
+		hpBarMed.setVisible(false);
+		hpBarLow.setVisible(false);
 		
 		add(name, 0, 0 + ROW_PUSHER);
 		add(hpBar, 1, 0 + ROW_PUSHER);
+		add(hpBarMed, 1, 0 + ROW_PUSHER);
+		add(hpBarLow, 1, 0 + ROW_PUSHER);
 		add(hp, 2, 0 + ROW_PUSHER);
 		add(stun, 3, 0 + ROW_PUSHER);
 		add(freeze, 4, 0 + ROW_PUSHER);
@@ -120,6 +130,8 @@ public class CharacterField extends GridPane {
 	public void updateHp() {
 		this.hp.setText(" " + Integer.toString(owner.getHp()) + "/" + Integer.toString(owner.MAX_HP));
 		hpBar.setProgress((double) owner.getHp() / (double) owner.MAX_HP);
+		hpBarMed.setProgress((double) owner.getHp() / (double) owner.MAX_HP);
+		hpBarLow.setProgress((double) owner.getHp() / (double) owner.MAX_HP);
 		this.stun.setText("Stun: " + Integer.toString(owner.getStun()));
 		this.freeze.setText("Freeze: " + Integer.toString(owner.getFreeze()));
 		this.burn.setText("Burn: " + Integer.toString(owner.getBurn()));
@@ -137,6 +149,9 @@ public class CharacterField extends GridPane {
 			this.virtues.setText(" " + Integer.toString(guardian.getVirtues()) + "/500");
 			virtuesBar.setProgress((double) guardian.getVirtues() / (double) 500);
 		}
+		
+		hpBarMed.setVisible(owner.isMediumHp());
+		hpBarLow.setVisible(owner.isLowHp());
 	}
 
 	public void updateMp() {

@@ -145,27 +145,31 @@ public class Main extends Application implements AlertThrowable {
 			handleCharacterField();
 			runGameLoop();
 		}
-		if (current.isStun()) {
-			current.setStun(current.getStun() - 1);
-			throwAlert(current, "Stun");
-			handleCharacterField();
-			runGameLoop();
-		}
+		
 		if (current.isBleed())
 			current.setBleed(current.getBleed() - 1);
 		if (current.isShield())
 			current.setShield(current.getShield() - 1);
-		if (current.isBurn() || !current.isDead()) {
-			current.setBurn(current.getBurn() - 1);
+		if (current.isBurn() && !current.isDead()) {
 			current.setHp(current.getHp() - BURN_AMOUNT);
+			current.setBurn(current.getBurn() - 1);
+			
 			if (current.getHp() < 0) {
 				current.setHp(0);
 				current.setDead(true);
 			}
+		}
+		
+		if (current.isStun()) {
+			throwAlert(current, "Stun");
+			handleCharacterField();
+			current.setStun(current.getStun() - 1);
+			runGameLoop();
 		} else if (current.isFreeze()) {
 			current.setFreeze(current.getFreeze() - 1);
 			Random r = new Random();
 			int ran = r.nextInt(100);
+			System.out.println(Integer.toString(ran));
 			if (ran <= FREEZING_CHANCE) {
 				throwAlert(current, "Frozen");
 				handleCharacterField();
