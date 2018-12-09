@@ -92,7 +92,7 @@ public class CharacterField extends GridPane {
 			add(virtues, 2, 1 + ROW_PUSHER);
 		}
 		getStylesheets().add(getClass().getResource("progress.css").toExternalForm());
-		updateHp();
+		update();
 	}
 
 	public Text getName() {
@@ -127,7 +127,7 @@ public class CharacterField extends GridPane {
 		this.owner = owner;
 	}
 	
-	public void updateHp() {
+	public void update() {
 		this.hp.setText(" " + Integer.toString(owner.getHp()) + "/" + Integer.toString(owner.MAX_HP));
 		hpBar.setProgress((double) owner.getHp() / (double) owner.MAX_HP);
 		hpBarMed.setProgress((double) owner.getHp() / (double) owner.MAX_HP);

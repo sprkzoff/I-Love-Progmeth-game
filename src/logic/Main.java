@@ -176,6 +176,7 @@ public class Main extends Application implements AlertThrowable {
 				runGameLoop();
 			}
 		}
+		handleCharacterField();
 		characterPane1.update();
 		characterPane2.update();
 	}
@@ -345,8 +346,8 @@ public class Main extends Application implements AlertThrowable {
 		for (int i = 0; i < 3; i++) {
 			pane.CharacterField c1 = characterPane1.getCharacterFields().get(i);
 			pane.CharacterField c2 = characterPane2.getCharacterFields().get(i);
-			c1.updateHp();
-			c2.updateHp();
+			c1.update();
+			c2.update();
 			if (c1.getOwner() instanceof Mage) {
 				c1.updateMp();
 			}
