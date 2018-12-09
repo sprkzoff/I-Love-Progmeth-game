@@ -171,7 +171,13 @@ public class CharacterPane extends GridPane {
 	}
 
 	public void update() {
+		
+		
+		
 		for (int i = 0; i < 3; i++) {
+			if(characters.get(i).getHp() <= 0) {
+				characters.get(i).setDead(true);
+			}
 			if (characters.get(i).isDead()) {
 				imageViews.get(i).setVisible(false);
 			}

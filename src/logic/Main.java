@@ -53,7 +53,7 @@ public class Main extends Application implements AlertThrowable {
 	public int turnNumber = 0;
 
 	private final static int FREEZING_CHANCE = 20;
-	private final static int BURN_AMOUNT = 50;
+	private final static int BURN_AMOUNT = 200;
 	private boolean firstTime = true;
 
 	@Override
@@ -137,7 +137,8 @@ public class Main extends Application implements AlertThrowable {
 				mage.updateMage();
 		}
 		handleCharacterField();
-
+		characterPane1.update();
+		characterPane2.update();
 		controlPanes.get(turnNumber % 6).setVisible(true);
 		controlPanes.get((turnNumber - 1) % 6).setVisible(false);
 
@@ -154,7 +155,7 @@ public class Main extends Application implements AlertThrowable {
 			current.setHp(current.getHp() - BURN_AMOUNT);
 			current.setBurn(current.getBurn() - 1);
 			
-			if (current.getHp() < 0) {
+			if (current.getHp() <= 0) {
 				current.setHp(0);
 				current.setDead(true);
 			}
@@ -176,6 +177,7 @@ public class Main extends Application implements AlertThrowable {
 				runGameLoop();
 			}
 		}
+		
 		handleCharacterField();
 		characterPane1.update();
 		characterPane2.update();
@@ -555,8 +557,8 @@ public class Main extends Application implements AlertThrowable {
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Alert!");
 			alert.setHeaderText("We have a winner!");
-			alert.setContentText(player1isLost() ? "Player 2 Won, congratulations! Want to play again?"
-					: "Player 1 Won, congratulations! Want to play again?");
+			alert.setContentText(player1isLost() ? "CONGRATULATIONS!! Player 2 is the one who really loves PROGMETH!! \nWant to play again?"
+					: "CONGRATULATIONS!! Player 1 is the one who really loves PROGMETH!! \nWant to play again?");
 
 			ButtonType ok = new ButtonType("Ok");
 			ButtonType cancel = new ButtonType("Cancel");
@@ -570,6 +572,7 @@ public class Main extends Application implements AlertThrowable {
 				start(new Stage());
 			} else if (result.get() == cancel) {
 				System.out.println("End Credits!");
+				this.primaryStage.close();
 			}
 		}
 	}
