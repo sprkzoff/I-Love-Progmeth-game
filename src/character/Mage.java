@@ -6,7 +6,7 @@ public class Mage extends Character {
 	private int mp;
 	
 	public Mage() {
-		super(120, 1);
+		super(120, 700);
 		setImage("resources/mage.jpg");
 		setDeadImage("resources/mage_dead.jpg");
 		setSkillNames("Freezing Field", "Chaos Meteor", "Detonate");

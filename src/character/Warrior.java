@@ -8,7 +8,7 @@ public class Warrior extends Character {
 	public static int MAX_HP=1200;
 	
 	public Warrior() {
-		super(200,1);
+		super(200,1200);
 		setImage("resources/warrior.jpg");
 		setDeadImage("resources/warrior_dead.jpg");
 		setSkillNames("War Cry", "Direct Strike", "Berserk");
