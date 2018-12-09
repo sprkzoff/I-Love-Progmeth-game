@@ -26,7 +26,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
-public class CharacterSelectionPane extends Stage {
+public class CharacterSelectionStage extends Stage {
 	
 	private GridPane root;
 	private ArrayList<String> player1Characters;
@@ -57,7 +57,7 @@ public class CharacterSelectionPane extends Stage {
 	
 	private int charCount = 0;
 	
-	public CharacterSelectionPane() {
+	public CharacterSelectionStage() {
 		root = new GridPane();
 		root.getStylesheets().add(getClass().getResource("\\..\\logic\\application.css").toExternalForm());
 		root.setAlignment(Pos.CENTER_RIGHT);

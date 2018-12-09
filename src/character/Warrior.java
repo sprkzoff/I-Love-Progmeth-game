@@ -2,13 +2,16 @@ package character;
 
 import java.util.ArrayList;
 import java.util.Random;
+
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import logic.Main;
 
 public class Warrior extends Character {
 	public static int MAX_HP=1200;
 	
 	public Warrior() {
-		super(200,1);
+		super(200, 1200);
 		setImage("resources/warrior.jpg");
 		setDeadImage("resources/warrior_dead.jpg");
 		setSkillNames("War Cry", "Direct Strike", "Berserk");
@@ -45,7 +48,7 @@ public class Warrior extends Character {
 		enemy.attackByEnemy(damage);
 		if(ran <= 50) {
 			enemy.setStun(1);
-			Main.throwAlert(this, "Stun");
+			throwAlert(this, "Stun");
 		}
 	}
 	
@@ -62,4 +65,18 @@ public class Warrior extends Character {
 		return "Warrior";
 	}
 	
+	public void throwAlert(Character character, String reason) {
+		String title = "Caution";
+		String headerText = "you're so noob";
+		String contentText = "ggez";
+		Alert alert = new Alert(AlertType.INFORMATION);
+		
+	    headerText = "Your character is " + (reason == "Stun" ? "Stunned" : "Frozen");
+	    contentText = character.getInstance() + " is " + (reason == "Stun" ? "stunned" : "frozen") + ". Sadly, he/she won't be able to act this turn.";
+		
+		alert.setTitle(title);
+    	alert.setHeaderText(headerText);
+    	alert.setContentText(contentText);
+    	alert.showAndWait();
+	}
 }

@@ -22,11 +22,13 @@ import javafx.scene.media.AudioClip;
 import javafx.stage.Stage;
 import pane.CharacterField;
 import pane.CharacterPane;
-import pane.CharacterSelectionPane;
+import pane.CharacterSelectionStage;
 import pane.ControlPane;
 import pane.LandingPane;
 import pane.TextPane;
+import utility.AlertThrowable;
 import utility.MusicPlayer;
+import utility.NotEnoughManaException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,7 +47,7 @@ import character.Healer;
 import character.Mage;
 import character.Warrior;
 
-public class Main extends Application{
+public class Main extends Application implements AlertThrowable {
 	
 	private ArrayList<Character> player1Characters;
 	private ArrayList<Character> player2Characters;
@@ -54,7 +56,7 @@ public class Main extends Application{
 	private ArrayList<ControlPane> controlPanes;
 	private ArrayList<CharacterField> characterFields;
 	private TextPane textPane;
-	private CharacterSelectionPane select;
+	private CharacterSelectionStage select;
 	private LandingPane landing;
 	private static MusicPlayer PROOF_OF_A_HERO = new MusicPlayer("resources/001.wav");
 	private static MusicPlayer KUSHALA = new MusicPlayer("resources/Kushala.wav");
@@ -79,7 +81,7 @@ public class Main extends Application{
 		firstTime = !firstTime;
 		
 		
-		select = new CharacterSelectionPane();
+		select = new CharacterSelectionStage();
 		PROOF_OF_A_HERO.start();
 		select.showAndWait();
 		if(!select.isReady()) System.exit(1);
@@ -240,17 +242,35 @@ public class Main extends Application{
 		    	else if(character instanceof Mage) {
 		    		Mage mage = (Mage)character;
 		    		if(skillName == "Chaos Meteor") {
-		    			success = mage.chaosMeteor(getTargetCharacters());
+		    			try {
+		    				mage.chaosMeteor(getTargetCharacters());
+		    			}
+		    			catch(NotEnoughManaException ee) {
+		    				success = false;
+		    				ee.throwAlert(character, "");
+		    			}
 			    	}
 			    	else if(skillName == "Freezing Field") {
-			    		success = mage.freezingField(getTargetCharacters());
+			    		try {
+			    			mage.freezingField(getTargetCharacters());
+			    		}
+			    		catch(NotEnoughManaException ee) {
+			    			success = false;
+			    			ee.throwAlert(character, "");
+			    		}
 			    	}
 			    	else if(skillName == "Detonate") {
 			    		selectedCharacter = selectTarget(character);
 			    		if(selectedCharacter == null) return;
-			    		success = mage.detonate(selectedCharacter);
+			    		try {
+			    			mage.detonate(selectedCharacter);
+			    		}
+			    		catch(NotEnoughManaException ee) {
+			    			success = false;
+			    			ee.throwAlert(character, "");
+			    		}
 			    	}
-		    		if(!success) throwAlert(character, "Not enough mana");
+		    		//if(!success) throwAlert(character, "Not enough mana");
 		    	}
 		    	
 		    	else if(character instanceof Healer) {
@@ -344,16 +364,12 @@ public class Main extends Application{
 		characterFields.get((turnNumber - 1) % 6).setBackground(false);
 	}
 	
-	public static void throwAlert(Character character, String reason) {
+	public void throwAlert(Character character, String reason) {
 		String title = "Caution";
 		String headerText = "you're so noob";
 		String contentText = "ggez";
 		Alert alert = new Alert(AlertType.INFORMATION);
-		if(reason == "Not enough mana") {
-	    	headerText = "Not Enough Mana!";
-	    	contentText = "You need more mana to activate that skill";
-		}
-		else if(reason == "Your friend is dead") {
+		if(reason == "Your friend is dead") {
 			headerText = "You can't heal that target";
 			contentText = "The character you chose is already dead, please choose to heal someone else";
 		}

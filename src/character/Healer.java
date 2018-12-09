@@ -7,7 +7,7 @@ public class Healer extends Character {
 	private static final int HEALING_POWER = 400;
 	private static final int ALL_HEAL_HEALING_POWER = 200;
 	public Healer() {
-		super(80,1);
+		super(80, 1000);
 		setImage("resources/druid.jpg");
 		setDeadImage("resources/druid_dead.jpg");
 		setSkillNames("Heal", "Cleansing", "Hands Of God");

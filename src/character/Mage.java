@@ -2,11 +2,13 @@ package character;
 
 import java.util.ArrayList;
 
+import utility.NotEnoughManaException;
+
 public class Mage extends Character {
 	private int mp;
 	
 	public Mage() {
-		super(120, 1);
+		super(120, 700);
 		setImage("resources/mage.jpg");
 		setDeadImage("resources/mage_dead.jpg");
 		setSkillNames("Freezing Field", "Chaos Meteor", "Detonate");
@@ -27,9 +29,11 @@ public class Mage extends Character {
 	public void setMp(int mp) {
 		this.mp = mp;
 	}
-	public boolean freezingField(ArrayList<Character> characters) { //AoE cc with moderate amount of dmg
+	public void freezingField(ArrayList<Character> characters) throws NotEnoughManaException { //AoE cc with moderate amount of dmg
 		int damage = this.getAtk();
-		if(this.getMp() < 40) return false;
+		if(this.getMp() < 40) {
+			throw new NotEnoughManaException(this);
+		}
 		this.mp -= 40;
 		for(int i = 0; i < characters.size(); i++) {
 			Character temp = characters.get(i);
@@ -38,11 +42,12 @@ public class Mage extends Character {
 				temp.attackByEnemy(damage);
 			}
 		}
-		return true;
 	}
-	public boolean chaosMeteor(ArrayList<Character> characters) { //deal dmg to all enemy and set burn on them, deal additional dmg if they're already burned
+	public void chaosMeteor(ArrayList<Character> characters) throws NotEnoughManaException { //deal dmg to all enemy and set burn on them, deal additional dmg if they're already burned
 		int damage = this.getAtk();
-		if(this.getMp() < 60) return false;
+		if(this.getMp() <  60) {
+			throw new NotEnoughManaException(this);
+		}
 		this.mp -= 60;
 		for(int i = 0; i < characters.size(); i++) {
 			Character temp = characters.get(i);
@@ -52,13 +57,13 @@ public class Mage extends Character {
 				else temp.attackByEnemy(damage * 2);
 			}
 		}
-		return true;
 	}
-	public boolean detonate(Character character) { //deal damage based on missing mp
-		if(this.getMp() < 15) return false;
+	public void detonate(Character character) throws NotEnoughManaException { //deal damage based on missing mp
+		if(this.getMp() < 15) {
+			throw new NotEnoughManaException(this);
+		}
 		character.attackByEnemy((100 - this.mp) * 5); // attack by missing mp
 		this.mp -= 15;
-		return true;
 	}
 	public void updateMage() { //call this when game loop occurs 
 		this.mp += 15;

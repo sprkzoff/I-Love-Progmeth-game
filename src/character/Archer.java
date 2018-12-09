@@ -2,6 +2,8 @@ package character;
 
 import java.util.Random;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import logic.Main;
 
 public class Archer extends Character {
@@ -59,11 +61,11 @@ public class Archer extends Character {
 		Random random = new Random();
 		int ran = random.nextInt(100);
 		boolean check = minorAttackWithCritical(enemy);
-		if(check) Main.throwAlert(this, "Critical");
+		if(check) throwAlert(this, "Critical");
 		if(ran > 50) {
 			enemy.setStun(1);
 			setFocus(this.focus + 2);
-			Main.throwAlert(this, "Stun");
+			throwAlert(this, "Stun");
 			return true;
 		}
 		else {
@@ -105,5 +107,24 @@ public class Archer extends Character {
 		return "Archer";
 	}
 	
-	
+	public void throwAlert(Character character, String reason) {
+		String title = "Caution";
+		String headerText = "you're so noob";
+		String contentText = "ggez";
+		Alert alert = new Alert(AlertType.INFORMATION);
+		if(reason == "Critical") {
+			title = "Success!";
+			headerText = "Critical Hit!";
+			contentText = "Your archer has landed a critical hit, nice job!";
+		}
+		else if(reason == "Stun") {
+			title = "Success!";
+			headerText = "Stunned!";
+			contentText = "Quick! use this chance to wipe the enemy out";
+		}
+		alert.setTitle(title);
+    	alert.setHeaderText(headerText);
+    	alert.setContentText(contentText);
+    	alert.showAndWait();
+	}
 }

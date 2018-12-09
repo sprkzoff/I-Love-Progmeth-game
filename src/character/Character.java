@@ -5,11 +5,14 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import logic.Main;
+import utility.AlertThrowable;
 
-public abstract class Character {
+public abstract class Character implements AlertThrowable {
 	private int atk;
 	private int hp;
 	private ImageView imageView;
@@ -205,7 +208,7 @@ public abstract class Character {
 			Random random = new Random();
 			int ran = random.nextInt(100);
 			if(ran < Assassin.EVADE_CHANCE) {
-				Main.throwAlert(this, "Evade");
+				throwAlert(this, "Evade");
 				return 0;
 			}
 		}
@@ -247,5 +250,21 @@ public abstract class Character {
 	
 	public ArrayList<String> getSkillDescriptions() {
 		return skillDescriptions;
+	}
+	
+	public void throwAlert(Character character, String reason) {
+		String title = "Caution";
+		String headerText = "you're so noob";
+		String contentText = "ggez";
+		Alert alert = new Alert(AlertType.INFORMATION);
+		if(reason == "Evade") {
+			title = "Evade";
+			headerText = "Awww";
+			contentText = "The assassin has evaded your attack! what a lucky bastard!!";
+		}
+		alert.setTitle(title);
+    	alert.setHeaderText(headerText);
+    	alert.setContentText(contentText);
+    	alert.showAndWait();
 	}
 }

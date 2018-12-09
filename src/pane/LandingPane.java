@@ -36,19 +36,19 @@ public class LandingPane extends Stage {
 		root = new StackPane();
 		click=false;
 		root.getStylesheets().add(getClass().getResource("\\..\\logic\\application.css").toExternalForm());
-		root.setAlignment(Pos.CENTER_RIGHT);
+		root.setAlignment(Pos.CENTER);
 		FileInputStream input;
 		try {
 			input = new FileInputStream("resources\\landingpic.jpg");
-			Image image = new Image(input, 599, 449 , false, false);
+			Image image = new Image(input, 800, 600, false, false);
 			bg = new ImageView(image);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 		//start button
 		startButton = new Button();
-		startButton.setTranslateX(-230);
-		startButton.setTranslateY(188);
+		startButton.setTranslateX(0);
+		startButton.setTranslateY(250);
 		startButton.getStylesheets().add(getClass().getResource("startButtonstyle.css").toExternalForm());
 		startButton.setOnAction(new EventHandler<ActionEvent>() {
 		    @Override 
