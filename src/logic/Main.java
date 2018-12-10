@@ -194,7 +194,7 @@ public class Main extends Application implements AlertThrowable {
 
 	private void setButtonDescription(Button b, String description) {
 		Tooltip tooltip = new Tooltip(description);
-		tooltip.setStyle("-fx-font-family: Arial; " + "-fx-base: #AE3522; " + "-fx-text-fill: orange;");
+		tooltip.setStyle("-fx-font-family: Arial; " + "-fx-base: #AE3522; " + "-fx-text-fill: orange;"+"-fx-font-size: 15");
 		b.setTooltip(tooltip);
 
 	}
