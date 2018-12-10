@@ -22,7 +22,7 @@ public class LandingPane extends Stage {
 	public LandingPane() {
 		root = new StackPane();
 		click = false;
-		root.getStylesheets().add(getClass().getResource("\\..\\logic\\application.css").toExternalForm());
+		root.getStylesheets().add(getClass().getResource("/logic/application.css").toExternalForm());
 		root.setAlignment(Pos.CENTER);
 		FileInputStream input;
 		try {

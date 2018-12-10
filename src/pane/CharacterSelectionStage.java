@@ -57,7 +57,7 @@ public class CharacterSelectionStage extends Stage {
 
 	public CharacterSelectionStage() {
 		root = new GridPane();
-		root.getStylesheets().add(getClass().getResource("\\..\\logic\\application.css").toExternalForm());
+		root.getStylesheets().add(getClass().getResource("/logic/application.css").toExternalForm());
 		root.setAlignment(Pos.CENTER_RIGHT);
 
 		player1Characters = new ArrayList<String>();

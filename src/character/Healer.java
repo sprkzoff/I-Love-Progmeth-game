@@ -2,6 +2,9 @@ package character;
 
 import java.util.ArrayList;
 
+import exception.FullHpException;
+import exception.NoDebuffException;
+
 public class Healer extends Character {
 	private static final int HEALING_POWER = 400;
 	private static final int ALL_HEAL_HEALING_POWER = 200;
@@ -31,7 +34,7 @@ public class Healer extends Character {
 		return true;
 	}
 
-	public boolean cleansing(Character friend) {
+	public void cleansing(Character friend) throws NoDebuffException {
 		if (friend.getHp() + HEALING_POWER / 2 > friend.getMaxHp())
 			friend.setHp(friend.getMaxHp());
 		else
@@ -41,16 +44,16 @@ public class Healer extends Character {
 			friend.setBurn(0);
 			friend.setFreeze(0);
 			friend.setStun(0);
-			return true;
+			return;
 		}
-		return false;
+		throw new NoDebuffException();
 	}
 
-	public boolean handsOfGod(ArrayList<Character> friends) {
+	public void handsOfGod(ArrayList<Character> friends) throws FullHpException {
 		boolean success = false;
 		for (int i = 0; i < friends.size(); i++) {
 			Character temp = friends.get(i);
-			if (!temp.isDead()) {
+			if (!temp.isDead() && temp.getHp() < temp.getMaxHp()) {
 				if (temp.getHp() + ALL_HEAL_HEALING_POWER > temp.getMaxHp())
 					temp.setHp(temp.getMaxHp());
 				else
@@ -58,7 +61,7 @@ public class Healer extends Character {
 				success = true;
 			}
 		}
-		return success;
+		if(!success) throw new FullHpException();
 	}
 
 	@Override

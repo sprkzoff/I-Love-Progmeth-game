@@ -21,7 +21,6 @@ import pane.LandingPane;
 import pane.TextPane;
 import utility.AlertThrowable;
 import utility.MusicPlayer;
-import utility.NotEnoughManaException;
 
 import java.util.ArrayList;
 import java.util.Optional;
@@ -34,6 +33,9 @@ import character.Guardian;
 import character.Healer;
 import character.Mage;
 import character.Warrior;
+import exception.FullHpException;
+import exception.NoDebuffException;
+import exception.NotEnoughManaException;
 
 public class Main extends Application implements AlertThrowable {
 
@@ -49,11 +51,18 @@ public class Main extends Application implements AlertThrowable {
 	private static MusicPlayer PROOF_OF_A_HERO = new MusicPlayer("resources/001.wav");
 	private static MusicPlayer KUSHALA = new MusicPlayer("resources/Kushala.wav");
 	private static MusicPlayer VICTORY = new MusicPlayer("resources/victory.wav");
+	private static MusicPlayer HEAL = new MusicPlayer("resources/heal.wav");
+	private static MusicPlayer FREEZE = new MusicPlayer("resources/freeze.wav");
+	private static MusicPlayer EXPLOSION = new MusicPlayer("resources/explosion.wav");
+	private static MusicPlayer CRIT = new MusicPlayer("resources/pa.wav");
+	private static MusicPlayer ATTACK = new MusicPlayer("resources/attack.wav");
+	private static MusicPlayer WARCRY = new MusicPlayer("resources/warcry.wav");
+	
 	private Stage primaryStage;
-	public int turnNumber = 0;
+	private int turnNumber = 0;
 
 	private final static int FREEZING_CHANCE = 20;
-	private final static int BURN_AMOUNT = 200;
+	private final static int BURN_AMOUNT = 50;
 	private boolean firstTime = true;
 
 	@Override
@@ -208,29 +217,37 @@ public class Main extends Application implements AlertThrowable {
 						if (archer.isFocus()) {
 							archer.setFocus(archer.getFocus() - 1);
 						}
-						if (check)
+						if (check) {
 							throwAlert(character, "Critical");
+							CRIT.start();
+						}
+						else 
+							ATTACK.start();
 					} else {
 						selectedCharacter = selectTarget(character);
 						if (selectedCharacter == null)
 							return;
 						selectedCharacter.attackByEnemy(character.getAtk());
+						ATTACK.start();
 					}
 
 				} else if (character instanceof Warrior) {
 					Warrior warrior = (Warrior) character;
 					if (skillName == "War Cry") {
 						warrior.warcry(getTargetCharacters());
+						WARCRY.start();
 					} else if (skillName == "Direct Strike") {
 						selectedCharacter = selectTarget(character);
 						if (selectedCharacter == null)
 							return;
 						warrior.directStrike(selectedCharacter);
+						ATTACK.start();
 					} else if (skillName == "Berserk") {
 						selectedCharacter = selectTarget(character);
 						if (selectedCharacter == null)
 							return;
 						warrior.berserk(selectedCharacter);
+						ATTACK.start();
 					}
 				}
 
@@ -239,6 +256,7 @@ public class Main extends Application implements AlertThrowable {
 					if (skillName == "Chaos Meteor") {
 						try {
 							mage.chaosMeteor(getTargetCharacters());
+							EXPLOSION.start();
 						} catch (NotEnoughManaException ee) {
 							success = false;
 							ee.throwAlert(character, "");
@@ -246,6 +264,7 @@ public class Main extends Application implements AlertThrowable {
 					} else if (skillName == "Freezing Field") {
 						try {
 							mage.freezingField(getTargetCharacters());
+							FREEZE.start();
 						} catch (NotEnoughManaException ee) {
 							success = false;
 							ee.throwAlert(character, "");
@@ -256,6 +275,7 @@ public class Main extends Application implements AlertThrowable {
 							return;
 						try {
 							mage.detonate(selectedCharacter);
+							ATTACK.start();
 						} catch (NotEnoughManaException ee) {
 							success = false;
 							ee.throwAlert(character, "");
@@ -272,17 +292,28 @@ public class Main extends Application implements AlertThrowable {
 						success = healer.heal(selectedCharacter);
 						if (!success)
 							throwAlert(character, "Your friend is dead");
+						else HEAL.start();
 					} else if (skillName == "Cleansing") {
 						selectedCharacter = selectFriendlyTarget(character);
 						if (selectedCharacter == null)
 							return;
-						success = healer.cleansing(selectedCharacter);
-						if (!success)
-							throwAlert(character, "No debuff");
+						try {
+							healer.cleansing(selectedCharacter);
+							HEAL.start();
+						} catch (NoDebuffException ee) {
+							success = false;
+							ee.throwAlert(character, "");
+						}
+
+							
 					} else if (skillName == "Hands Of God") {
-						success = healer.handsOfGod(getFriendlyTargetCharacters());
-						if (!success)
-							throwAlert(character, "Full HP");
+						try {
+							healer.handsOfGod(getFriendlyTargetCharacters());
+							HEAL.start();
+						} catch (FullHpException ee) {
+							success = false;
+							ee.throwAlert(character, "");
+						}
 					}
 				}
 
@@ -293,13 +324,17 @@ public class Main extends Application implements AlertThrowable {
 						if (selectedCharacter == null)
 							return;
 						assassin.stealthAttack(selectedCharacter);
+						CRIT.start();
 					} else if (skillName == "Bleeding Blade") {
 						selectedCharacter = selectTarget(character);
 						if (selectedCharacter == null)
 							return;
 						success = assassin.bleedingBlade(selectedCharacter);
+						
 						if (!success)
 							throwAlert(character, "Is already bleeding");
+						else
+							CRIT.start();
 					}
 				}
 
@@ -314,6 +349,7 @@ public class Main extends Application implements AlertThrowable {
 						if (selectedCharacter == null)
 							return;
 						archer.Knockback(selectedCharacter);
+						ATTACK.start();
 					}
 				}
 
@@ -323,16 +359,21 @@ public class Main extends Application implements AlertThrowable {
 						success = guardian.mercifulIntervention(getFriendlyTargetCharacters());
 						if (!success)
 							throwAlert(character, "No debuff and already at full HP");
+						else
+							HEAL.start();
 					} else if (skillName == "Shield of Courage") {
 						selectedCharacter = selectTarget(character);
 						Character friendlySelectedCharacter = selectFriendlyTarget(character);
 						if (selectedCharacter == null || friendlySelectedCharacter == null)
 							return;
 						guardian.shieldOfCourage(selectedCharacter, friendlySelectedCharacter);
+						ATTACK.start();
 					} else if (skillName == "Echo of Liberation") {
 						success = guardian.echoOfLiberation(getTargetCharacters());
 						if (!success)
 							throwAlert(character, "No virtues");
+						else
+							ATTACK.start();
 					}
 				}
 
@@ -374,12 +415,6 @@ public class Main extends Application implements AlertThrowable {
 		if (reason == "Your friend is dead") {
 			headerText = "You can't heal that target";
 			contentText = "The character you chose is already dead, please choose to heal someone else";
-		} else if (reason == "No debuff") {
-			headerText = "You can't cleanse that target";
-			contentText = "The character you chose has no debuff, no need to cleanse him/her!!!";
-		} else if (reason == "Full HP") {
-			headerText = "All of your character is still at full HP";
-			contentText = "Don't use that skill you fool!";
 		} else if (reason == "Is already bleeding") {
 			headerText = "The target is already bleeded";
 			contentText = "The character you chose is already bleed, please choose to attack someone else";
@@ -423,7 +458,7 @@ public class Main extends Application implements AlertThrowable {
 		return turnNumber % 2 == 0 ? player1Characters : player2Characters;
 	}
 
-	public Character selectTarget(Character character) {
+	private Character selectTarget(Character character) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Select your HOSTILE target");
 		alert.setHeaderText("Choose your option.");
@@ -462,7 +497,7 @@ public class Main extends Application implements AlertThrowable {
 		return returnCharacter;
 	}
 
-	public Character selectFriendlyTarget(Character character) {
+	private Character selectFriendlyTarget(Character character) {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Select your FRIENDLY target");
 		alert.setHeaderText("Choose your option.");

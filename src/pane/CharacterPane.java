@@ -41,7 +41,7 @@ public class CharacterPane extends GridPane {
 	public CharacterPane(ArrayList<Character> characters) {
 		setAlignment(Pos.CENTER);
 		this.characters = characters;
-		getStylesheets().add(getClass().getResource("\\..\\logic\\application.css").toExternalForm());
+		getStylesheets().add(getClass().getResource("/logic/application.css").toExternalForm());
 		setPrefWidth(450);
 		setPadding(new Insets(15));
 		setVgap(10);

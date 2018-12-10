@@ -2,7 +2,7 @@ package character;
 
 import java.util.ArrayList;
 
-import utility.NotEnoughManaException;
+import exception.NotEnoughManaException;
 
 public class Mage extends Character {
 	private int mp;
@@ -32,7 +32,7 @@ public class Mage extends Character {
 	public void freezingField(ArrayList<Character> characters) throws NotEnoughManaException {
 		int damage = this.getAtk();
 		if (this.getMp() < 40) {
-			throw new NotEnoughManaException(this);
+			throw new NotEnoughManaException();
 		}
 		this.mp -= 40;
 		for (int i = 0; i < characters.size(); i++) {
@@ -47,7 +47,7 @@ public class Mage extends Character {
 	public void chaosMeteor(ArrayList<Character> characters) throws NotEnoughManaException { 
 		int damage = this.getAtk();
 		if (this.getMp() < 60) {
-			throw new NotEnoughManaException(this);
+			throw new NotEnoughManaException();
 		}
 		this.mp -= 60;
 		for (int i = 0; i < characters.size(); i++) {
@@ -64,7 +64,7 @@ public class Mage extends Character {
 
 	public void detonate(Character character) throws NotEnoughManaException { // deal damage based on missing mp
 		if (this.getMp() < 15) {
-			throw new NotEnoughManaException(this);
+			throw new NotEnoughManaException();
 		}
 		character.attackByEnemy((100 - this.mp) * 5); // attack by missing mp
 		this.mp -= 15;
