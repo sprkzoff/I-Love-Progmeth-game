@@ -11,8 +11,8 @@ public class Healer extends Character {
 
 	public Healer() {
 		super(80,1000);
-		setImage("resources/druid.jpg");
-		setDeadImage("resources/druid_dead.jpg");
+		setImage("druid.jpg");
+		setDeadImage("druid_dead.jpg");
 		setSkillNames("Heal", "Cleansing", "Hands Of God");
 		addSkillDescription("Healing: " + Integer.toString(HEALING_POWER) + "\n" + "Target: single ally\n"
 				+ "Heal a targeted ally.");

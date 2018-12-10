@@ -32,11 +32,11 @@ public class CharacterPane extends GridPane {
 	private ArrayList<ImageView> stunImages;
 	private ArrayList<ImageView> shieldImages;
 	
-	private static final String BURN_URL = "resources/fire.gif";
-	private static final String FREEZE_URL = "resources/freeze.gif";
-	private static final String BLEED_URL = "resources/bleed.gif";
-	private static final String STUN_URL = "resources/stun.gif";
-	private static final String SHIELD_URL = "resources/shield.gif";
+	private static final String BURN_URL = "fire.gif";
+	private static final String FREEZE_URL = "freeze.gif";
+	private static final String BLEED_URL = "bleed.gif";
+	private static final String STUN_URL = "stun.gif";
+	private static final String SHIELD_URL = "shield.gif";
 
 	public CharacterPane(ArrayList<Character> characters) {
 		setAlignment(Pos.CENTER);
@@ -97,72 +97,46 @@ public class CharacterPane extends GridPane {
 	
 	public void addBurnImages() {
 		for(int i = 0; i < 3; i++) {
-			FileInputStream input;
-			try {
-				input = new FileInputStream(BURN_URL);
-				Image image = new Image(input, 400, 150, false, false);
-				ImageView imageView = new ImageView(image);
-				imageView.setOpacity(0.5);
-				burnImages.add(imageView);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+			String imagePath = ClassLoader.getSystemResource(BURN_URL).toString();
+			Image image = new Image(imagePath, 400, 150, false, false);
+			ImageView imageView = new ImageView(image);
+			burnImages.add(imageView);
 		}
 	}
 	
 	public void addFreezeImages() {
 		for(int i = 0; i < 3; i++) {
-			FileInputStream input;
-			try {
-				input = new FileInputStream(FREEZE_URL);
-				Image image = new Image(input, 150, 150, false, false);
-				ImageView imageView = new ImageView(image);
-				freezeImages.add(imageView);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+			String imagePath = ClassLoader.getSystemResource(FREEZE_URL).toString();
+			Image image = new Image(imagePath, 150, 150, false, false);
+			ImageView imageView = new ImageView(image);
+			freezeImages.add(imageView);
 		}
 	}
 	
 	public void addBleedImages() {
 		for(int i = 0; i < 3; i++) {
-			FileInputStream input;
-			try {
-				input = new FileInputStream(BLEED_URL);
-				Image image = new Image(input, 150, 150, false, false);
-				ImageView imageView = new ImageView(image);
-				bleedImages.add(imageView);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+			String imagePath = ClassLoader.getSystemResource(BLEED_URL).toString();
+			Image image = new Image(imagePath, 150, 150, false, false);
+			ImageView imageView = new ImageView(image);
+			bleedImages.add(imageView);
 		}
 	}
 	
 	public void addStunImages() {
 		for(int i = 0; i < 3; i++) {
-			FileInputStream input;
-			try {
-				input = new FileInputStream(STUN_URL);
-				Image image = new Image(input, 150, 150, false, false);
-				ImageView imageView = new ImageView(image);
-				stunImages.add(imageView);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+			String imagePath = ClassLoader.getSystemResource(STUN_URL).toString();
+			Image image = new Image(imagePath, 150, 150, false, false);
+			ImageView imageView = new ImageView(image);
+			stunImages.add(imageView);
 		}
 	}
 	
 	public void addShieldImages() {
 		for(int i = 0; i < 3; i++) {
-			FileInputStream input;
-			try {
-				input = new FileInputStream(SHIELD_URL);
-				Image image = new Image(input, 150, 150, false, false);
-				ImageView imageView = new ImageView(image);
-				shieldImages.add(imageView);
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
+			String imagePath = ClassLoader.getSystemResource(SHIELD_URL).toString();
+			Image image = new Image(imagePath, 150, 150, false, false);
+			ImageView imageView = new ImageView(image);
+			shieldImages.add(imageView);
 		}
 	}
 	

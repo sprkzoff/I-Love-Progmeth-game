@@ -11,8 +11,8 @@ public class Warrior extends Character {
 
 	public Warrior() {
 		super(200,1200);
-		setImage("resources/warrior.jpg");
-		setDeadImage("resources/warrior_dead.jpg");
+		setImage("warrior.jpg");
+		setDeadImage("warrior_dead.jpg");
 		setSkillNames("War Cry", "Direct Strike", "Berserk");
 		addSkillDescription("Attack Damage: 120\n" + "Target: All enemies\n"
 				+ "Release your beastly roar to deal damage to all of your enemies.");

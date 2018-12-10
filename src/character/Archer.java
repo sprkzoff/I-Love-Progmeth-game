@@ -13,8 +13,8 @@ public class Archer extends Character {
 	public Archer() {
 		super(200, 800);
 		this.focus = 0;
-		setImage("resources/archer.jpg");
-		setDeadImage("resources/archer_dead.jpg");
+		setImage("archer.jpg");
+		setDeadImage("archer_dead.jpg");
 		setSkillNames("Focus Shot", "Critical", "Knockback");
 		addSkillDescription("Target: yourself\n"
 				+ "Set yourself into a focus state for 2 turns, while you're in focus state you have a total of 75% critical chance.");

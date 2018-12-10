@@ -1,8 +1,5 @@
 package pane;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
@@ -24,14 +21,11 @@ public class LandingPane extends Stage {
 		click = false;
 		root.getStylesheets().add(getClass().getResource("/logic/application.css").toExternalForm());
 		root.setAlignment(Pos.CENTER);
-		FileInputStream input;
-		try {
-			input = new FileInputStream("resources\\landingpic.jpg");
-			Image image = new Image(input, 800, 600, false, false);
-			bg = new ImageView(image);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+
+		String imagePath = ClassLoader.getSystemResource("landingpic.jpg").toString();
+		Image image = new Image(imagePath, 800, 600, false, false);
+		bg = new ImageView(image);
+
 		// start button
 		startButton = new Button();
 		startButton.setTranslateX(0);

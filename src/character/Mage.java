@@ -9,8 +9,8 @@ public class Mage extends Character {
 
 	public Mage() {
 		super(120, 700);
-		setImage("resources/mage.jpg");
-		setDeadImage("resources/mage_dead.jpg");
+		setImage("mage.jpg");
+		setDeadImage("mage_dead.jpg");
 		setSkillNames("Freezing Field", "Chaos Meteor", "Detonate");
 		this.mp = 100;
 		addSkillDescription("Attack Damage: " + Integer.toString((int) (getAtk())) + "\n" + "Target: All enemies\n"

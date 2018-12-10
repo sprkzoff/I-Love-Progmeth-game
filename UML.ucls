@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.2.2" icons="true" automaticImage="PNG" always-add-relationships="false" generalizations="true" 
   realizations="true" associations="false" dependencies="false" nesting-relationships="true" router="FAN">  
-  <class id="1" language="java" name="character.Warrior" project="game-proj" 
-    file="/game-proj/src/character/Warrior.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="1" language="java" name="character.Warrior" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/character/Warrior.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="61" y="-153"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -10,8 +10,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="character.Assassin" project="game-proj" 
-    file="/game-proj/src/character/Assassin.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="2" language="java" name="character.Assassin" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/character/Assassin.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="58" y="47"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -19,8 +19,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="3" language="java" name="character.Archer" project="game-proj" file="/game-proj/src/character/Archer.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="3" language="java" name="character.Archer" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/character/Archer.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="53" y="314"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -28,8 +28,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="4" language="java" name="character.Character" project="game-proj" 
-    file="/game-proj/src/character/Character.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="4" language="java" name="character.Character" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/character/Character.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="1017" width="215" x="199" y="-249"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -37,8 +37,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="5" language="java" name="character.Guardian" project="game-proj" 
-    file="/game-proj/src/character/Guardian.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="5" language="java" name="character.Guardian" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/character/Guardian.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="43" y="624"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -46,8 +46,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="6" language="java" name="character.Healer" project="game-proj" file="/game-proj/src/character/Healer.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="6" language="java" name="character.Healer" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/character/Healer.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="579" y="484"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -55,8 +55,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="7" language="java" name="character.Mage" project="game-proj" file="/game-proj/src/character/Mage.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="7" language="java" name="character.Mage" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/character/Mage.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="572" y="265"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -64,8 +64,9 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="8" language="java" name="exception.NotEnoughManaException" project="game-proj" 
-    file="/game-proj/src/exception/NotEnoughManaException.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="8" language="java" name="exception.NotEnoughManaException" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/exception/NotEnoughManaException.java" binary="false" 
+    corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="521" y="-75"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -73,8 +74,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="9" language="java" name="exception.NoDebuffException" project="game-proj" 
-    file="/game-proj/src/exception/NoDebuffException.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="9" language="java" name="exception.NoDebuffException" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/exception/NoDebuffException.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="671" y="-190"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -82,8 +83,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="10" language="java" name="exception.FullHpException" project="game-proj" 
-    file="/game-proj/src/exception/FullHpException.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="10" language="java" name="exception.FullHpException" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/exception/FullHpException.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="762" y="-81"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -91,8 +92,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="11" language="java" name="logic.Main" project="game-proj" file="/game-proj/src/logic/Main.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="11" language="java" name="logic.Main" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/logic/Main.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="857" y="380"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -100,8 +101,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="12" language="java" name="pane.LandingPane" project="game-proj" file="/game-proj/src/pane/LandingPane.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="12" language="java" name="pane.LandingPane" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/pane/LandingPane.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="483" y="678"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -109,8 +110,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="13" language="java" name="pane.ColoredProgressBar" project="game-proj" 
-    file="/game-proj/src/pane/ColoredProgressBar.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="13" language="java" name="pane.ColoredProgressBar" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/pane/ColoredProgressBar.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="877" y="-194"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -118,8 +119,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="14" language="java" name="pane.TextPane" project="game-proj" file="/game-proj/src/pane/TextPane.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="14" language="java" name="pane.TextPane" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/pane/TextPane.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="634" y="677"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -127,8 +128,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="15" language="java" name="pane.CharacterPane" project="game-proj" 
-    file="/game-proj/src/pane/CharacterPane.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="15" language="java" name="pane.CharacterPane" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/pane/CharacterPane.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="720" y="1041"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -136,8 +137,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="16" language="java" name="pane.ControlPane" project="game-proj" file="/game-proj/src/pane/ControlPane.java" 
-    binary="false" corner="BOTTOM_RIGHT">    
+  <class id="16" language="java" name="pane.ControlPane" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/pane/ControlPane.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="22" y="854"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -145,8 +146,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="17" language="java" name="pane.CharacterField" project="game-proj" 
-    file="/game-proj/src/pane/CharacterField.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="17" language="java" name="pane.CharacterField" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/pane/CharacterField.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="239" y="1077"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -154,8 +155,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="18" language="java" name="pane.CharacterSelectionStage" project="game-proj" 
-    file="/game-proj/src/pane/CharacterSelectionStage.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="18" language="java" name="pane.CharacterSelectionStage" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/pane/CharacterSelectionStage.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="466" y="1080"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -163,8 +164,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <interface id="19" language="java" name="utility.AlertThrowable" project="game-proj" 
-    file="/game-proj/src/utility/AlertThrowable.java" binary="false" corner="BOTTOM_RIGHT">    
+  <interface id="19" language="java" name="utility.AlertThrowable" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/utility/AlertThrowable.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="594" y="49"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -172,8 +173,8 @@
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </interface>  
-  <class id="20" language="java" name="utility.MusicPlayer" project="game-proj" 
-    file="/game-proj/src/utility/MusicPlayer.java" binary="false" corner="BOTTOM_RIGHT">    
+  <class id="20" language="java" name="utility.MusicPlayer" project="2110215_Project_2018_Meme_team" 
+    file="/2110215_Project_2018_Meme_team/src/utility/MusicPlayer.java" binary="false" corner="BOTTOM_RIGHT">    
     <position height="-1" width="-1" x="-7" y="1057"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
@@ -186,43 +187,43 @@
     <end type="TARGET" refId="4"/>  
   </generalization>  
   <generalization id="22">    
-    <end type="SOURCE" refId="7"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <realization id="23">    
-    <end type="SOURCE" refId="11"/>    
-    <end type="TARGET" refId="19"/>  
-  </realization>  
-  <generalization id="24">    
-    <end type="SOURCE" refId="5"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <realization id="25">    
-    <end type="SOURCE" refId="8"/>    
-    <end type="TARGET" refId="19"/>  
-  </realization>  
-  <realization id="26">    
-    <end type="SOURCE" refId="4"/>    
-    <end type="TARGET" refId="19"/>  
-  </realization>  
-  <generalization id="27">    
-    <end type="SOURCE" refId="1"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <generalization id="28">    
-    <end type="SOURCE" refId="6"/>    
-    <end type="TARGET" refId="4"/>  
-  </generalization>  
-  <realization id="29">    
-    <end type="SOURCE" refId="9"/>    
-    <end type="TARGET" refId="19"/>  
-  </realization>  
-  <generalization id="30">    
     <end type="SOURCE" refId="3"/>    
     <end type="TARGET" refId="4"/>  
   </generalization>  
-  <realization id="31">    
+  <generalization id="23">    
+    <end type="SOURCE" refId="7"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <generalization id="24">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <realization id="25">    
+    <end type="SOURCE" refId="11"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <generalization id="26">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <generalization id="27">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="4"/>  
+  </generalization>  
+  <realization id="28">    
+    <end type="SOURCE" refId="8"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <realization id="29">    
     <end type="SOURCE" refId="10"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <realization id="30">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="19"/>  
+  </realization>  
+  <realization id="31">    
+    <end type="SOURCE" refId="9"/>    
     <end type="TARGET" refId="19"/>  
   </realization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 

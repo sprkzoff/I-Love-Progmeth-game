@@ -9,8 +9,8 @@ public class Guardian extends Character {
 	public Guardian() {
 		super(200, 1100);
 		this.virtues = 150;
-		setImage("resources/guardian.jpg");
-		setDeadImage("resources/guardian_dead.jpg");
+		setImage("guardian.jpg");
+		setDeadImage("guardian_dead.jpg");
 		setSkillNames("Merciful Intervention", "Shield of Courage", "Echo of Liberation");
 		addSkillDescription("Healing: " + Integer.toString(MERCIFUL_HEALING) + "\n" + "Target: All allies\n"
 				+ "Heal all of your allies by a small amount while cleanse one of their debuffs (Prioritize: Stun > Bleed > Freeze > Burn)");

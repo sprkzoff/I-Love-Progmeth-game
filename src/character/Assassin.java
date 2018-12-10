@@ -7,8 +7,8 @@ public class Assassin extends Character {
 
 	public Assassin() {
 		super(140, 900);
-		setImage("resources/assassin.jpg");
-		setDeadImage("resources/assassin_dead.jpg");
+		setImage("assassin.jpg");
+		setDeadImage("assassin_dead.jpg");
 		setSkillNames("Stealth Attack", "Evade", "Bleeding Blade");
 		addSkillDescription("Attack damage: " + Integer.toString((int) (getAtk() * 1.5)) + "\n"
 				+ "Target: single enemy\n"

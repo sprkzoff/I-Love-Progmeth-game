@@ -1,6 +1,7 @@
 package utility;
 
 import java.io.File;
+import java.net.URL;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -18,7 +19,8 @@ public class MusicPlayer extends Thread {
 	@Override
 	public void start() {
 		try {
-			audio = AudioSystem.getAudioInputStream(new File(dir));
+			URL url = getClass().getClassLoader().getResource(dir);
+			audio = AudioSystem.getAudioInputStream(url);
 			clip = AudioSystem.getClip();
 			clip.open(audio);
 			clip.start();

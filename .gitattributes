@@ -1,0 +1,2 @@
+*.jar filter=lfs diff=lfs merge=lfs -text
+Project_2018_Meme_team.jar filter=lfs diff=lfs merge=lfs -text

@@ -22,6 +22,7 @@ import pane.TextPane;
 import utility.AlertThrowable;
 import utility.MusicPlayer;
 
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Random;
@@ -48,15 +49,15 @@ public class Main extends Application implements AlertThrowable {
 	private TextPane textPane;
 	private CharacterSelectionStage select;
 	private LandingPane landing;
-	private static MusicPlayer PROOF_OF_A_HERO = new MusicPlayer("resources/001.wav");
-	private static MusicPlayer KUSHALA = new MusicPlayer("resources/Kushala.wav");
-	private static MusicPlayer VICTORY = new MusicPlayer("resources/victory.wav");
-	private static MusicPlayer HEAL = new MusicPlayer("resources/heal.wav");
-	private static MusicPlayer FREEZE = new MusicPlayer("resources/freeze.wav");
-	private static MusicPlayer EXPLOSION = new MusicPlayer("resources/explosion.wav");
-	private static MusicPlayer CRIT = new MusicPlayer("resources/pa.wav");
-	private static MusicPlayer ATTACK = new MusicPlayer("resources/attack.wav");
-	private static MusicPlayer WARCRY = new MusicPlayer("resources/warcry.wav");
+	private static MusicPlayer PROOF_OF_A_HERO = new MusicPlayer("001.wav");
+	private static MusicPlayer KUSHALA = new MusicPlayer("Kushala.wav");
+	private static MusicPlayer VICTORY = new MusicPlayer("victory.wav");
+	private static MusicPlayer HEAL = new MusicPlayer("heal.wav");
+	private static MusicPlayer FREEZE = new MusicPlayer("freeze.wav");
+	private static MusicPlayer EXPLOSION = new MusicPlayer("explosion.wav");
+	private static MusicPlayer CRIT = new MusicPlayer("pa.wav");
+	private static MusicPlayer ATTACK = new MusicPlayer("attack.wav");
+	private static MusicPlayer WARCRY = new MusicPlayer("warcry.wav");
 	
 	private Stage primaryStage;
 	private int turnNumber = 0;
@@ -379,7 +380,7 @@ public class Main extends Application implements AlertThrowable {
 
 				if (success)
 					runGameLoop();
-				checkVictoryAndThrowAlert();
+					checkVictoryAndThrowAlert();
 			}
 
 		});

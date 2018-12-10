@@ -47,7 +47,7 @@ public abstract class Character implements AlertThrowable {
 	public Character(int atk, int hp) {
 		super();
 		this.skillDescriptions = new ArrayList<String>();
-		setImage("resources/default.jpg");
+		setImage("default.jpg");
 		this.dead = false;
 		this.stun = 0;
 		this.freeze = 0;
@@ -183,25 +183,16 @@ public abstract class Character implements AlertThrowable {
 	}
 
 	public void setImage(String url) {
-		FileInputStream input;
-		try {
-			input = new FileInputStream(url);
-			Image image = new Image(input, 400, 150, false, false);
-			imageView = new ImageView(image);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		String imagePath = ClassLoader.getSystemResource(url).toString();
+		Image image = new Image(imagePath, 400, 150, false, false);
+		imageView = new ImageView(image);
+
 	}
 
 	public void setDeadImage(String url) {
-		FileInputStream input;
-		try {
-			input = new FileInputStream(url);
-			Image image = new Image(input, 400, 150, false, false);
-			deadImage = new ImageView(image);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+		String imagePath = ClassLoader.getSystemResource(url).toString();
+		Image image = new Image(imagePath, 400, 150, false, false);
+		deadImage = new ImageView(image);
 	}
 
 	public ImageView getDeadImage() {
