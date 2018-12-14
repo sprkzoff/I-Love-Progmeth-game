@@ -168,7 +168,9 @@ public class Main extends Application implements AlertThrowable {
 			if (current.getHp() <= 0) {
 				current.setHp(0);
 				current.setDead(true);
+				runGameLoop();
 			}
+			
 		}
 		
 		if (current.isStun()) {
@@ -380,7 +382,7 @@ public class Main extends Application implements AlertThrowable {
 
 				if (success)
 					runGameLoop();
-					checkVictoryAndThrowAlert();
+				checkVictoryAndThrowAlert();
 			}
 
 		});
@@ -610,7 +612,9 @@ public class Main extends Application implements AlertThrowable {
 				System.out.println("End Credits!");
 				this.primaryStage.close();
 			}
+			turnNumber = 0;
 		}
+		
 	}
 
 	public static void main(String[] args) {
